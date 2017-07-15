@@ -1,0 +1,19 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore dirs
+!*/
+
+## Above combination ignore all files without extension
+
+# ignore output
+*.op
+*.dat
+*.txt
+*.log
+
+# ignore binaray
+*.bin
