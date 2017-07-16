@@ -1,0 +1,282 @@
+ Number of species                 =      10
+ Number of streams                 =       3
+ Flow rates of streams             =  0.0000  0.3237  0.6763
+ PASR starting: number of particles=    1000
+ Residence time, tres (seconds)    =   4.0000E-03
+ 04/06/2012: Prior to this date, due to a bug tres was twice the specified tres
+ Mixing time, tmix (seconds)       =   7.0000E-04
+ Pairing time, tpair (seconds)     =   7.0000E-04
+ Min. and max. time step (seconds) =   7.0000E-05   7.0000E-05
+ Number of steps                   =   2.8571E+03
+ Number of sub-steps per step      =       3
+ Number of particle-sub-steps      =   8.5714E+06
+ Maximum pressure (atm.)           =   1.0000E+00
+ Minumum pressure (atm.)           =   1.0000E+00
+ Period of pressure variation (sec)=   1.0000E-03
+ Particle data read from file
+ PaSR starting
+ ...
+q, mu_s, sec, min, hour   6.00E+03  3.59E+02  2.15E+00  3.59E-02  5.98E-04
+q, mu_s, sec, min, hour   1.20E+04  4.07E+02  4.89E+00  8.14E-02  1.36E-03
+q, mu_s, sec, min, hour   1.80E+04  3.79E+02  6.82E+00  1.14E-01  1.90E-03
+q, mu_s, sec, min, hour   2.40E+04  3.44E+02  8.25E+00  1.37E-01  2.29E-03
+q, mu_s, sec, min, hour   3.00E+04  3.21E+02  9.63E+00  1.61E-01  2.68E-03
+q, mu_s, sec, min, hour   3.60E+04  3.04E+02  1.09E+01  1.82E-01  3.04E-03
+q, mu_s, sec, min, hour   4.20E+04  2.93E+02  1.23E+01  2.05E-01  3.42E-03
+q, mu_s, sec, min, hour   4.80E+04  2.83E+02  1.36E+01  2.27E-01  3.78E-03
+q, mu_s, sec, min, hour   5.40E+04  2.72E+02  1.47E+01  2.45E-01  4.09E-03
+q, mu_s, sec, min, hour   6.00E+04  2.67E+02  1.60E+01  2.67E-01  4.44E-03
+q, mu_s, sec, min, hour   6.60E+04  2.70E+02  1.78E+01  2.97E-01  4.95E-03
+q, mu_s, sec, min, hour   7.20E+04  2.66E+02  1.92E+01  3.20E-01  5.33E-03
+q, mu_s, sec, min, hour   7.80E+04  2.61E+02  2.04E+01  3.39E-01  5.65E-03
+q, mu_s, sec, min, hour   8.40E+04  2.59E+02  2.18E+01  3.63E-01  6.05E-03
+q, mu_s, sec, min, hour   9.00E+04  2.53E+02  2.28E+01  3.80E-01  6.34E-03
+q, mu_s, sec, min, hour   9.60E+04  2.50E+02  2.40E+01  4.00E-01  6.66E-03
+q, mu_s, sec, min, hour   1.02E+05  2.46E+02  2.51E+01  4.18E-01  6.97E-03
+q, mu_s, sec, min, hour   1.08E+05  2.42E+02  2.61E+01  4.35E-01  7.26E-03
+q, mu_s, sec, min, hour   1.14E+05  2.39E+02  2.73E+01  4.54E-01  7.57E-03
+q, mu_s, sec, min, hour   1.20E+05  2.37E+02  2.84E+01  4.74E-01  7.89E-03
+q, mu_s, sec, min, hour   1.26E+05  2.34E+02  2.94E+01  4.91E-01  8.18E-03
+q, mu_s, sec, min, hour   1.32E+05  2.31E+02  3.05E+01  5.08E-01  8.47E-03
+q, mu_s, sec, min, hour   1.38E+05  2.29E+02  3.15E+01  5.26E-01  8.76E-03
+q, mu_s, sec, min, hour   1.44E+05  2.27E+02  3.26E+01  5.44E-01  9.07E-03
+q, mu_s, sec, min, hour   1.50E+05  2.24E+02  3.36E+01  5.60E-01  9.34E-03
+q, mu_s, sec, min, hour   1.56E+05  2.22E+02  3.47E+01  5.78E-01  9.64E-03
+q, mu_s, sec, min, hour   1.65E+05  2.20E+02  3.63E+01  6.05E-01  1.01E-02
+q, mu_s, sec, min, hour   1.74E+05  2.18E+02  3.80E+01  6.33E-01  1.05E-02
+q, mu_s, sec, min, hour   1.83E+05  2.16E+02  3.95E+01  6.58E-01  1.10E-02
+q, mu_s, sec, min, hour   1.92E+05  2.14E+02  4.11E+01  6.86E-01  1.14E-02
+q, mu_s, sec, min, hour   2.01E+05  2.13E+02  4.28E+01  7.14E-01  1.19E-02
+q, mu_s, sec, min, hour   2.10E+05  2.12E+02  4.46E+01  7.43E-01  1.24E-02
+q, mu_s, sec, min, hour   2.19E+05  2.11E+02  4.62E+01  7.69E-01  1.28E-02
+q, mu_s, sec, min, hour   2.28E+05  2.09E+02  4.77E+01  7.94E-01  1.32E-02
+q, mu_s, sec, min, hour   2.37E+05  2.08E+02  4.92E+01  8.20E-01  1.37E-02
+q, mu_s, sec, min, hour   2.46E+05  2.06E+02  5.08E+01  8.47E-01  1.41E-02
+q, mu_s, sec, min, hour   2.55E+05  2.07E+02  5.27E+01  8.78E-01  1.46E-02
+q, mu_s, sec, min, hour   2.64E+05  2.06E+02  5.43E+01  9.04E-01  1.51E-02
+q, mu_s, sec, min, hour   2.73E+05  2.05E+02  5.58E+01  9.31E-01  1.55E-02
+q, mu_s, sec, min, hour   2.82E+05  2.04E+02  5.74E+01  9.57E-01  1.59E-02
+q, mu_s, sec, min, hour   2.91E+05  2.03E+02  5.91E+01  9.84E-01  1.64E-02
+q, mu_s, sec, min, hour   3.00E+05  2.02E+02  6.07E+01  1.01E+00  1.69E-02
+q, mu_s, sec, min, hour   3.09E+05  2.02E+02  6.24E+01  1.04E+00  1.73E-02
+q, mu_s, sec, min, hour   3.21E+05  2.01E+02  6.45E+01  1.07E+00  1.79E-02
+q, mu_s, sec, min, hour   3.33E+05  1.99E+02  6.63E+01  1.10E+00  1.84E-02
+q, mu_s, sec, min, hour   3.45E+05  1.98E+02  6.82E+01  1.14E+00  1.89E-02
+q, mu_s, sec, min, hour   3.57E+05  1.97E+02  7.02E+01  1.17E+00  1.95E-02
+q, mu_s, sec, min, hour   3.69E+05  1.95E+02  7.21E+01  1.20E+00  2.00E-02
+q, mu_s, sec, min, hour   3.81E+05  1.95E+02  7.42E+01  1.24E+00  2.06E-02
+q, mu_s, sec, min, hour   3.93E+05  1.94E+02  7.64E+01  1.27E+00  2.12E-02
+q, mu_s, sec, min, hour   4.05E+05  1.94E+02  7.86E+01  1.31E+00  2.18E-02
+q, mu_s, sec, min, hour   4.17E+05  1.93E+02  8.05E+01  1.34E+00  2.24E-02
+q, mu_s, sec, min, hour   4.29E+05  1.92E+02  8.25E+01  1.38E+00  2.29E-02
+q, mu_s, sec, min, hour   4.41E+05  1.91E+02  8.44E+01  1.41E+00  2.35E-02
+q, mu_s, sec, min, hour   4.53E+05  1.91E+02  8.65E+01  1.44E+00  2.40E-02
+q, mu_s, sec, min, hour   4.68E+05  1.90E+02  8.91E+01  1.48E+00  2.47E-02
+q, mu_s, sec, min, hour   4.83E+05  1.90E+02  9.17E+01  1.53E+00  2.55E-02
+q, mu_s, sec, min, hour   4.98E+05  1.89E+02  9.42E+01  1.57E+00  2.62E-02
+q, mu_s, sec, min, hour   5.13E+05  1.89E+02  9.69E+01  1.61E+00  2.69E-02
+q, mu_s, sec, min, hour   5.28E+05  1.88E+02  9.93E+01  1.66E+00  2.76E-02
+q, mu_s, sec, min, hour   5.43E+05  1.88E+02  1.02E+02  1.70E+00  2.84E-02
+q, mu_s, sec, min, hour   5.58E+05  1.87E+02  1.05E+02  1.74E+00  2.91E-02
+q, mu_s, sec, min, hour   5.73E+05  1.87E+02  1.07E+02  1.79E+00  2.98E-02
+q, mu_s, sec, min, hour   5.88E+05  1.87E+02  1.10E+02  1.83E+00  3.06E-02
+q, mu_s, sec, min, hour   6.03E+05  1.86E+02  1.12E+02  1.87E+00  3.12E-02
+q, mu_s, sec, min, hour   6.21E+05  1.86E+02  1.15E+02  1.92E+00  3.20E-02
+q, mu_s, sec, min, hour   6.39E+05  1.85E+02  1.18E+02  1.97E+00  3.29E-02
+q, mu_s, sec, min, hour   6.57E+05  1.85E+02  1.21E+02  2.02E+00  3.37E-02
+q, mu_s, sec, min, hour   6.75E+05  1.84E+02  1.24E+02  2.07E+00  3.45E-02
+q, mu_s, sec, min, hour   6.93E+05  1.84E+02  1.27E+02  2.12E+00  3.54E-02
+q, mu_s, sec, min, hour   7.11E+05  1.84E+02  1.31E+02  2.18E+00  3.63E-02
+q, mu_s, sec, min, hour   7.29E+05  1.83E+02  1.33E+02  2.22E+00  3.71E-02
+q, mu_s, sec, min, hour   7.47E+05  1.83E+02  1.36E+02  2.27E+00  3.79E-02
+q, mu_s, sec, min, hour   7.65E+05  1.82E+02  1.39E+02  2.32E+00  3.87E-02
+q, mu_s, sec, min, hour   7.86E+05  1.82E+02  1.43E+02  2.38E+00  3.96E-02
+q, mu_s, sec, min, hour   8.07E+05  1.81E+02  1.46E+02  2.44E+00  4.07E-02
+q, mu_s, sec, min, hour   8.28E+05  1.81E+02  1.50E+02  2.50E+00  4.17E-02
+q, mu_s, sec, min, hour   8.49E+05  1.81E+02  1.54E+02  2.56E+00  4.27E-02
+q, mu_s, sec, min, hour   8.70E+05  1.81E+02  1.58E+02  2.63E+00  4.38E-02
+q, mu_s, sec, min, hour   8.91E+05  1.81E+02  1.61E+02  2.69E+00  4.48E-02
+q, mu_s, sec, min, hour   9.12E+05  1.81E+02  1.65E+02  2.75E+00  4.58E-02
+q, mu_s, sec, min, hour   9.36E+05  1.80E+02  1.69E+02  2.81E+00  4.68E-02
+q, mu_s, sec, min, hour   9.60E+05  1.80E+02  1.73E+02  2.88E+00  4.80E-02
+q, mu_s, sec, min, hour   9.84E+05  1.80E+02  1.77E+02  2.95E+00  4.91E-02
+q, mu_s, sec, min, hour   1.01E+06  1.79E+02  1.81E+02  3.01E+00  5.02E-02
+q, mu_s, sec, min, hour   1.03E+06  1.79E+02  1.85E+02  3.08E+00  5.14E-02
+q, mu_s, sec, min, hour   1.06E+06  1.79E+02  1.89E+02  3.15E+00  5.25E-02
+q, mu_s, sec, min, hour   1.08E+06  1.79E+02  1.94E+02  3.23E+00  5.38E-02
+q, mu_s, sec, min, hour   1.11E+06  1.79E+02  1.98E+02  3.31E+00  5.51E-02
+q, mu_s, sec, min, hour   1.14E+06  1.78E+02  2.03E+02  3.38E+00  5.63E-02
+q, mu_s, sec, min, hour   1.16E+06  1.78E+02  2.07E+02  3.46E+00  5.76E-02
+q, mu_s, sec, min, hour   1.19E+06  1.78E+02  2.12E+02  3.53E+00  5.89E-02
+q, mu_s, sec, min, hour   1.22E+06  1.78E+02  2.17E+02  3.61E+00  6.02E-02
+q, mu_s, sec, min, hour   1.25E+06  1.78E+02  2.22E+02  3.69E+00  6.16E-02
+q, mu_s, sec, min, hour   1.28E+06  1.77E+02  2.27E+02  3.78E+00  6.30E-02
+q, mu_s, sec, min, hour   1.31E+06  1.77E+02  2.32E+02  3.86E+00  6.43E-02
+q, mu_s, sec, min, hour   1.34E+06  1.77E+02  2.37E+02  3.94E+00  6.57E-02
+q, mu_s, sec, min, hour   1.37E+06  1.77E+02  2.42E+02  4.03E+00  6.72E-02
+q, mu_s, sec, min, hour   1.40E+06  1.77E+02  2.48E+02  4.13E+00  6.88E-02
+q, mu_s, sec, min, hour   1.43E+06  1.77E+02  2.54E+02  4.23E+00  7.05E-02
+q, mu_s, sec, min, hour   1.47E+06  1.77E+02  2.60E+02  4.33E+00  7.21E-02
+q, mu_s, sec, min, hour   1.50E+06  1.77E+02  2.66E+02  4.43E+00  7.38E-02
+q, mu_s, sec, min, hour   1.53E+06  1.76E+02  2.70E+02  4.51E+00  7.51E-02
+q, mu_s, sec, min, hour   1.57E+06  1.76E+02  2.76E+02  4.60E+00  7.66E-02
+q, mu_s, sec, min, hour   1.60E+06  1.75E+02  2.82E+02  4.69E+00  7.82E-02
+q, mu_s, sec, min, hour   1.64E+06  1.75E+02  2.87E+02  4.79E+00  7.98E-02
+q, mu_s, sec, min, hour   1.68E+06  1.75E+02  2.93E+02  4.88E+00  8.14E-02
+q, mu_s, sec, min, hour   1.72E+06  1.74E+02  2.99E+02  4.99E+00  8.31E-02
+q, mu_s, sec, min, hour   1.76E+06  1.74E+02  3.05E+02  5.09E+00  8.48E-02
+q, mu_s, sec, min, hour   1.79E+06  1.74E+02  3.11E+02  5.19E+00  8.65E-02
+q, mu_s, sec, min, hour   1.83E+06  1.73E+02  3.18E+02  5.29E+00  8.82E-02
+q, mu_s, sec, min, hour   1.88E+06  1.73E+02  3.25E+02  5.41E+00  9.01E-02
+q, mu_s, sec, min, hour   1.92E+06  1.73E+02  3.31E+02  5.52E+00  9.21E-02
+q, mu_s, sec, min, hour   1.96E+06  1.72E+02  3.38E+02  5.63E+00  9.38E-02
+q, mu_s, sec, min, hour   2.00E+06  1.72E+02  3.45E+02  5.74E+00  9.57E-02
+q, mu_s, sec, min, hour   2.05E+06  1.72E+02  3.52E+02  5.86E+00  9.77E-02
+q, mu_s, sec, min, hour   2.09E+06  1.72E+02  3.59E+02  5.99E+00  9.98E-02
+q, mu_s, sec, min, hour   2.14E+06  1.71E+02  3.67E+02  6.11E+00  1.02E-01
+q, mu_s, sec, min, hour   2.19E+06  1.71E+02  3.74E+02  6.24E+00  1.04E-01
+q, mu_s, sec, min, hour   2.24E+06  1.71E+02  3.82E+02  6.36E+00  1.06E-01
+q, mu_s, sec, min, hour   2.28E+06  1.71E+02  3.90E+02  6.50E+00  1.08E-01
+q, mu_s, sec, min, hour   2.33E+06  1.70E+02  3.98E+02  6.63E+00  1.10E-01
+q, mu_s, sec, min, hour   2.38E+06  1.70E+02  4.06E+02  6.77E+00  1.13E-01
+q, mu_s, sec, min, hour   2.44E+06  1.70E+02  4.15E+02  6.91E+00  1.15E-01
+q, mu_s, sec, min, hour   2.49E+06  1.70E+02  4.23E+02  7.06E+00  1.18E-01
+q, mu_s, sec, min, hour   2.54E+06  1.70E+02  4.32E+02  7.20E+00  1.20E-01
+q, mu_s, sec, min, hour   2.60E+06  1.70E+02  4.41E+02  7.35E+00  1.23E-01
+q, mu_s, sec, min, hour   2.66E+06  1.70E+02  4.51E+02  7.51E+00  1.25E-01
+q, mu_s, sec, min, hour   2.71E+06  1.70E+02  4.60E+02  7.67E+00  1.28E-01
+q, mu_s, sec, min, hour   2.77E+06  1.70E+02  4.70E+02  7.84E+00  1.31E-01
+q, mu_s, sec, min, hour   2.83E+06  1.70E+02  4.80E+02  8.01E+00  1.33E-01
+q, mu_s, sec, min, hour   2.89E+06  1.70E+02  4.91E+02  8.18E+00  1.36E-01
+q, mu_s, sec, min, hour   2.96E+06  1.69E+02  5.00E+02  8.33E+00  1.39E-01
+q, mu_s, sec, min, hour   3.02E+06  1.69E+02  5.10E+02  8.51E+00  1.42E-01
+q, mu_s, sec, min, hour   3.08E+06  1.69E+02  5.21E+02  8.69E+00  1.45E-01
+q, mu_s, sec, min, hour   3.15E+06  1.69E+02  5.33E+02  8.88E+00  1.48E-01
+q, mu_s, sec, min, hour   3.22E+06  1.69E+02  5.43E+02  9.05E+00  1.51E-01
+q, mu_s, sec, min, hour   3.28E+06  1.68E+02  5.53E+02  9.21E+00  1.54E-01
+q, mu_s, sec, min, hour   3.35E+06  1.68E+02  5.64E+02  9.41E+00  1.57E-01
+q, mu_s, sec, min, hour   3.43E+06  1.68E+02  5.77E+02  9.61E+00  1.60E-01
+q, mu_s, sec, min, hour   3.50E+06  1.68E+02  5.88E+02  9.81E+00  1.63E-01
+q, mu_s, sec, min, hour   3.57E+06  1.68E+02  6.01E+02  1.00E+01  1.67E-01
+q, mu_s, sec, min, hour   3.65E+06  1.68E+02  6.14E+02  1.02E+01  1.71E-01
+q, mu_s, sec, min, hour   3.73E+06  1.69E+02  6.28E+02  1.05E+01  1.75E-01
+q, mu_s, sec, min, hour   3.80E+06  1.69E+02  6.42E+02  1.07E+01  1.78E-01
+q, mu_s, sec, min, hour   3.88E+06  1.69E+02  6.56E+02  1.09E+01  1.82E-01
+q, mu_s, sec, min, hour   3.97E+06  1.69E+02  6.69E+02  1.11E+01  1.86E-01
+q, mu_s, sec, min, hour   4.05E+06  1.69E+02  6.83E+02  1.14E+01  1.90E-01
+q, mu_s, sec, min, hour   4.13E+06  1.69E+02  6.97E+02  1.16E+01  1.94E-01
+q, mu_s, sec, min, hour   4.22E+06  1.69E+02  7.12E+02  1.19E+01  1.98E-01
+q, mu_s, sec, min, hour   4.31E+06  1.69E+02  7.27E+02  1.21E+01  2.02E-01
+q, mu_s, sec, min, hour   4.40E+06  1.69E+02  7.42E+02  1.24E+01  2.06E-01
+q, mu_s, sec, min, hour   4.49E+06  1.69E+02  7.58E+02  1.26E+01  2.10E-01
+q, mu_s, sec, min, hour   4.59E+06  1.69E+02  7.73E+02  1.29E+01  2.15E-01
+q, mu_s, sec, min, hour   4.68E+06  1.68E+02  7.88E+02  1.31E+01  2.19E-01
+q, mu_s, sec, min, hour   4.78E+06  1.68E+02  8.05E+02  1.34E+01  2.24E-01
+q, mu_s, sec, min, hour   4.88E+06  1.68E+02  8.22E+02  1.37E+01  2.28E-01
+q, mu_s, sec, min, hour   4.98E+06  1.68E+02  8.39E+02  1.40E+01  2.33E-01
+q, mu_s, sec, min, hour   5.09E+06  1.68E+02  8.56E+02  1.43E+01  2.38E-01
+q, mu_s, sec, min, hour   5.19E+06  1.68E+02  8.74E+02  1.46E+01  2.43E-01
+q, mu_s, sec, min, hour   5.30E+06  1.68E+02  8.93E+02  1.49E+01  2.48E-01
+q, mu_s, sec, min, hour   5.41E+06  1.68E+02  9.12E+02  1.52E+01  2.53E-01
+q, mu_s, sec, min, hour   5.53E+06  1.69E+02  9.31E+02  1.55E+01  2.59E-01
+q, mu_s, sec, min, hour   5.64E+06  1.69E+02  9.51E+02  1.59E+01  2.64E-01
+q, mu_s, sec, min, hour   5.76E+06  1.69E+02  9.71E+02  1.62E+01  2.70E-01
+q, mu_s, sec, min, hour   5.88E+06  1.69E+02  9.91E+02  1.65E+01  2.75E-01
+q, mu_s, sec, min, hour   6.00E+06  1.69E+02  1.01E+03  1.69E+01  2.81E-01
+q, mu_s, sec, min, hour   6.12E+06  1.69E+02  1.03E+03  1.72E+01  2.87E-01
+q, mu_s, sec, min, hour   6.25E+06  1.69E+02  1.06E+03  1.76E+01  2.93E-01
+q, mu_s, sec, min, hour   6.38E+06  1.69E+02  1.08E+03  1.79E+01  2.99E-01
+q, mu_s, sec, min, hour   6.51E+06  1.69E+02  1.10E+03  1.83E+01  3.05E-01
+q, mu_s, sec, min, hour   6.64E+06  1.69E+02  1.12E+03  1.87E+01  3.12E-01
+q, mu_s, sec, min, hour   6.78E+06  1.69E+02  1.15E+03  1.91E+01  3.18E-01
+q, mu_s, sec, min, hour   6.92E+06  1.69E+02  1.17E+03  1.95E+01  3.25E-01
+q, mu_s, sec, min, hour   7.07E+06  1.69E+02  1.19E+03  1.99E+01  3.32E-01
+q, mu_s, sec, min, hour   7.22E+06  1.69E+02  1.22E+03  2.03E+01  3.39E-01
+q, mu_s, sec, min, hour   7.36E+06  1.69E+02  1.24E+03  2.07E+01  3.46E-01
+q, mu_s, sec, min, hour   7.52E+06  1.69E+02  1.27E+03  2.12E+01  3.53E-01
+q, mu_s, sec, min, hour   7.67E+06  1.69E+02  1.30E+03  2.16E+01  3.60E-01
+q, mu_s, sec, min, hour   7.83E+06  1.69E+02  1.32E+03  2.21E+01  3.68E-01
+q, mu_s, sec, min, hour   8.00E+06  1.69E+02  1.35E+03  2.25E+01  3.76E-01
+q, mu_s, sec, min, hour   8.16E+06  1.69E+02  1.38E+03  2.30E+01  3.84E-01
+q, mu_s, sec, min, hour   8.33E+06  1.69E+02  1.41E+03  2.35E+01  3.92E-01
+q, mu_s, sec, min, hour   8.50E+06  1.69E+02  1.44E+03  2.40E+01  4.00E-01
+ Particle data written to file
+ Particle mixing data written to file
+ pasr: stopped, t, cpu_secs, nrec =  0.2000637       1451.529              -2
+ pasr: stopped, t, cpu_secs, nrec =  0.2000637       1451.529              -2
+  
+MFU: fraction, index =    9.0000E-01      291
+  
+ Retrieve errors
+ Fraction    error
+   9.0000E-01   0.0000E+00
+   9.9000E-01   0.0000E+00
+   9.9900E-01   0.0000E+00
+   9.9990E-01   0.0000E+00
+   9.9999E-01   0.0000E+00
+  
+     j    x_min(j)    x_max(j)    x_diff(j)   x_mean(j)
+     1    4.53E-05    3.24E-01    3.24E-01    4.74E-02
+     2    1.02E-06    7.12E-02    7.12E-02    1.71E-02
+     3    2.74E-01    3.32E-01    5.76E-02    2.93E-01
+     4    0.00E+00    9.39E-03    9.39E-03    2.00E-03
+     5    0.00E+00    1.32E-03    1.32E-03    3.00E-04
+     6    0.00E+00    3.07E-03    3.07E-03    9.53E-04
+     7    0.00E+00    9.78E-02    9.78E-02    6.17E-02
+     8    0.00E+00    3.45E-05    3.45E-05    5.26E-06
+     9    0.00E+00    3.23E-06    3.23E-06    1.08E-06
+    10    0.00E+00    0.00E+00    0.00E+00    0.00E+00
+    11    3.01E-02    2.64E-01    2.34E-01    1.77E-01
+   
+     j    f_min(j)    f_max(j)    f_diff(j)   fp_diff(j)    f_mean(j)
+     1    4.53E-05    3.24E-01    3.24E-01    1.24E-02    4.60E-02
+     2    1.01E-06    7.12E-02    7.12E-02    5.00E-03    1.64E-02
+     3    2.74E-01    3.32E-01    5.76E-02    1.45E-16    2.93E-01
+     4    1.63E-41    9.83E-03    9.83E-03    7.43E-03    2.29E-03
+     5    2.37E-48    1.46E-03    1.46E-03    1.18E-03    3.36E-04
+     6    1.15E-48    3.12E-03    3.12E-03    1.56E-03    9.92E-04
+     7    1.69E-49    9.78E-02    9.78E-02    8.80E-03    6.30E-02
+     8    3.67E-39    3.16E-05    3.16E-05    2.43E-05    5.18E-06
+     9    2.56E-54    4.25E-06    4.25E-06    1.59E-06    1.15E-06
+    10    0.00E+00    0.00E+00    0.00E+00    0.00E+00    0.00E+00
+    11    3.01E-02    2.64E-01    2.34E-01    8.97E-03    1.79E-01
+    12    1.48E-01    9.82E-01    8.34E-01    1.07E-01    6.75E-01
+  
+queries  =    8.5770E+06
+prim_ret =    7.7992E+06
+sec_ret  =    7.6756E+05
+grow     =    9.2450E+03
+add      =    1.0360E+03
+replace  =    0.0000E+00
+dir eval =    0.0000E+00
+ 
+CPU (mu s)/query =    1.6924E+02
+ -------------------------------------------------------------------------------
+ -
+                Operation     Calls  Failures         Time (mu s)    Time/call (mu s)
+ -------------------------------------------------------------------------------
+ -
+                   ci_ceq         0         0            0.00E+00            0.00E+00
+  ci_ice_chem_map (map=0)         0         0            0.00E+00            0.00E+00
+  ci_ice_chem_map (map=1)         0         0            0.00E+00            0.00E+00
+               ci_cem_tan         0         0            0.00E+00            0.00E+00
+               ci_ice_tan         0         0            0.00E+00            0.00E+00
+         ci_ice_pic_bound         0         0            0.00E+00            0.00E+00
+                       lp         0         0            0.00E+00            0.00E+00
+          rmap2 (map = 0)     10283         0            5.58E+06            5.42E+02
+          rmap2 (map = 1)         2         0            9.83E+02            4.92E+02
+                  ceq_nrs         0         0            0.00E+00            0.00E+00
+               ci_linrmap         0         0            0.00E+00            0.00E+00
+                     expm      8206         0            1.11E+05            1.36E+01
+      ci_ice_facet_newton         0         0            0.00E+00            0.00E+00
+ ci_ice_facet_newton_lmap         0         0            0.00E+00            0.00E+00
+        ci_ice_pic_newton         0         0            0.00E+00            0.00E+00
+   ci_ice_pic_newton_lmap         0         0            0.00E+00            0.00E+00
+         ci_ice_recon_pic         0         0            0.00E+00            0.00E+00
+    ci_ice_recon_pic_lmap         0         0            0.00E+00            0.00E+00
+          ci_ice_recon_bc         0         0            0.00E+00            0.00E+00
+     ci_ice_recon_bc_lmap         0         0            0.00E+00            0.00E+00
+             ci_ice_recon         0         0            0.00E+00            0.00E+00
+             ci_dens_temp         0         0            0.00E+00            0.00E+00
+                 cidpt_dr         0         0            0.00E+00            0.00E+00
+ ------------------------------------------------------------------------------
