@@ -1,0 +1,12 @@
+&pasrnml
+n=1000
+anres=50
+tres=4.e-3
+tmix=7.e-4
+tpair=7.e-4
+flstrmd=0.0, 0.8, 2.288
+xp=0.6
+part_in=.true.
+part_out=.true.
+mxmode=1
+/
