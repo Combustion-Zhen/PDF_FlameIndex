@@ -37,10 +37,12 @@ for p in particle:
     if abs(p[-1]) > SMALL or abs(p[-2]) > SMALL:
         Z.append(p[0])
         I.append(p[3])
-        dC = abs(p[-2])/max(p[1],SMALL)
         dZ = abs(p[-3])/max(p[0],SMALL)
+        dC = abs(p[-2])
+        #dC = abs(p[-2])/max(p[1],SMALL)
+        dE = abs(p[-1])/max(p[2],SMALL)
         #NI=abs(p[-1])/(abs(p[-1])+abs(p[-2]))
-        NI=dC/(dC+dZ)
+        NI=dC/(dC+dE)
         I_S.append(NI)
     else:
         print(p)

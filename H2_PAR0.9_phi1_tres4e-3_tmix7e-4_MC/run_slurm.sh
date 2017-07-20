@@ -11,6 +11,6 @@ cp /home/luz0a/ISAT-CK7/ISAT/bin/PaSR_MixingModels .
 
 srun ./PaSR_MixingModels
 
-cp /home/luz0a/ISAT-CK7/ISAT/bin/PaSR_particle_post .
+cp /home/luz0a/ISAT-CK7/ISAT/bin/PaSR_particles_post .
 
 srun ./PaSR_particle_post

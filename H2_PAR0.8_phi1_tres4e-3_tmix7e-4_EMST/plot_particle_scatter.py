@@ -34,7 +34,8 @@ Z=[]
 I=[]
 I_S=[]
 for p in particle:
-    if abs(p[-1]) > SMALL or abs(p[-2]) > SMALL:
+    if ( abs(p[-1]) > SMALL or abs(p[-2]) > SMALL ) and p[0] > 1e-4 and p[0] < 1.-1.1e-4 :
+    #if ( abs(p[-1]) > SMALL or abs(p[-2]) > SMALL ):
         Z.append(p[0])
         I.append(p[3])
         dC = abs(p[-2])/max(p[1],SMALL)
