@@ -15,7 +15,7 @@ SMALL = 1.e-20
 
 idx_Z = 0
 idx_C = 1
-idx_I = 3
+idx_I = 2
 idx_T = 4
 
 # model names
@@ -54,7 +54,8 @@ for i, model in enumerate(models):
             I.append(p[idx_I])
     I_ave = np.average(np.array(I))
     # plot the temperature scatter
-    axes[0,i].scatter(particles[:,idx_Z],particles[:,idx_T],
+    # plot the progress variable scatter
+    axes[0,i].scatter(particles[:,idx_Z],particles[:,idx_C],
             marker='.',c='k',edgecolor='none')
     axes[1,i].scatter(Z,I,
             marker='.',c='k',edgecolor='none')
@@ -65,8 +66,9 @@ for i, model in enumerate(models):
     axes[1,i].set_xlabel('$Z$',fontsize=ftsize)
     axes[0,i].set_title(model,fontsize=ftsize)
 
-axes[0,0].set_ylim(250,2100)
-axes[0,0].set_ylabel(r'$T\;\left(\mathrm{K}\right)$',fontsize=ftsize)
+#axes[0,0].set_ylim(250,2100)
+#axes[0,0].set_ylabel(r'$T\;\left(\mathrm{K}\right)$',fontsize=ftsize)
+axes[0,0].set_ylabel(r'$C$',fontsize=ftsize)
 axes[1,0].set_ylim(0.0,1.0)
 axes[1,0].set_ylabel(r'$\mathrm{FI}$',fontsize=ftsize)
 

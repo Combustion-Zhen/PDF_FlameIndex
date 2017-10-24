@@ -18,7 +18,7 @@ SMALL = 1.e-20
 
 idx_Z = 0
 idx_C = 1
-idx_I = 3
+idx_I = 2
 idx_T = 4
 
 # model names
