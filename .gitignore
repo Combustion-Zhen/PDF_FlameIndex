@@ -17,6 +17,7 @@
 *.png
 *.eps
 *.pdf
+*.xml
 
 # ignore binaray
 *.bin
