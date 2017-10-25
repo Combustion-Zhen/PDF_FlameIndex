@@ -18,6 +18,10 @@
 *.eps
 *.pdf
 *.xml
+*.tout
+*.dout
 
 # ignore binaray
 *.bin
+
+*/Out*

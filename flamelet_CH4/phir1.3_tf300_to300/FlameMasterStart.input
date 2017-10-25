@@ -1,0 +1,125 @@
+############
+# Numerics #
+############
+
+#### Newton solver ####
+
+TimeDepFlag = TRUE
+DeltaTStart = 1.0e-4
+
+DampFlag = TRUE
+LambdaMin = 1.0e-2
+
+UseNumericalJac is TRUE
+#UseSecOrdJac is TRUE
+UseModifiedNewton = TRUE
+
+MaxIter = 25
+TolRes = 1.0e-12
+TolDy = 1.0e-8
+
+#### grid ####
+
+DeltaNewGrid = 15
+OneSoluOneGrid is TRUE
+initialgridpoints = 80
+maxgridpoints = 199
+q = -0.25
+R = 60
+
+
+########################
+# Sensitivity Analysis #
+########################
+
+ReactionFluxAnal is TRUE
+
+#######
+# I/O #
+#######
+
+OutputPath is ./OutUnsteady
+
+WriteRes is TRUE
+#WriteFullRes is TRUE
+WriteEverySolution is TRUE
+
+#StartProfilesFile is ./CH4_p01_0a00100_0tf0300to0300
+#StartProfilesFile is ./CH4_p01_0chi004.5tf0300to0300
+#StartProfilesFile is ./OutUnsteady/CH4_p01t3.000e+01ms.tout
+
+#############
+# Chemistry #
+#############
+
+MechanismFile is gri.30.pre
+globalReaction is CH4 + 2O2 == CO2 + 2H2O;
+
+fuel is CH4
+oxidizer is O2
+
+#########
+# Flame #
+#########
+
+#Flame is CounterFlowDiffusion
+#StrainRate = 100
+
+#ArclengthCont = TRUE
+ConstLewisNumber is TRUE
+LewisNumberFile is LewisNumberOne
+
+#Flame is Counterflow Diffusion in Mixture Fraction Space
+Flame is Transient Flamelet
+CAinFile = ./CA.in
+
+#Scalar DissipationRate = 2
+#Scalar DissipationRate = 3
+#Scalar DissipationRate = 5
+#Scalar DissipationRate = 7
+#Scalar DissipationRate = 10
+#Scalar DissipationRate = 15
+#Scalar DissipationRate = 20
+#Scalar DissipationRate = 30
+#Scalar DissipationRate = 50
+#Scalar DissipationRate = 70
+#Scalar DissipationRate = 100
+#Scalar DissipationRate = 150
+#Scalar DissipationRate = 200
+#Scalar DissipationRate = 300
+#Scalar DissipationRate = 500
+#Scalar DissipationRate = 700
+#Scalar DissipationRate = 1000
+
+#ComputeWithRadiation is TRUE
+
+#pressure = 1.0e5
+pressure = 100615.0
+
+#######################
+# Boundary conditions #
+#######################
+
+#ToSpecies N2
+#FromSpecies CH4
+#ContInc = -18.0
+#ContSide is left
+#ContType is Temperature
+#ContBound = 294.0
+
+Fuel Side {
+	dirichlet {
+		t = 294.0
+		y->CH4 = 0.15637
+		y->O2 = 0.1965
+		y->N2 = 0.64713
+	}
+}
+
+Oxidizer Side {
+	dirichlet {
+		t = 291.0
+		x->o2 = 0.21
+		x->n2 = 0.79
+	}
+}
