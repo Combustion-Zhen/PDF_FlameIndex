@@ -21,6 +21,8 @@
 *.tout
 *.dout
 
+*.swp
+
 # ignore binaray
 *.bin
 
