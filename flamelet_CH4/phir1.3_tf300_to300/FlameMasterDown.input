@@ -95,7 +95,7 @@ Scalar DissipationRate = 0.001
 
 #ComputeWithRadiation is TRUE
 
-pressure = 100615.0
+pressure = 101325.0
 
 #######################
 # Boundary conditions #
@@ -103,16 +103,16 @@ pressure = 100615.0
 
 Fuel Side {
 	dirichlet {
-		t = 294.0
-		y->CH4 = 0.15637
-		y->O2 = 0.1965
-		y->N2 = 0.64713
+		t = 300.0
+		x->CH4 = 0.12
+		x->O2 = 0.185
+		x->N2 = 0.695
 	}
 }
 
 Oxidizer Side {
 	dirichlet {
-		t = 291.0
+		t = 300.0
 		x->o2 = 0.21
 		x->n2 = 0.79
 	}
