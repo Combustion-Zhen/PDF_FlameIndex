@@ -20,6 +20,10 @@
 *.xml
 *.tout
 *.dout
+*.sample
+*.err
+*.out
+*.inp
 
 *.swp
 CA.inCompress
