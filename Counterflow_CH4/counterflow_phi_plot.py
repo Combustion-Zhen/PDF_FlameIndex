@@ -55,7 +55,7 @@ for i, var in enumerate(var_names):
     if i ==0 :
         axes[i].set_xlim(0.0,1.0)
     else:
-        axes[i].set_xlim(0.03,0.08)
+        axes[i].set_xlim(0.0,0.08)
     axes[i].set_xlabel('$Z$',fontsize=ftsize)
     axes[i].set_ylabel('${}$'.format(var),fontsize=ftsize)
     axes[i].legend(fontsize=ftsize,frameon=False)
