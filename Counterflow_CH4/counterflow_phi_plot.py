@@ -42,8 +42,8 @@ for i, var in enumerate(var_names):
 for case in glob.glob('*.xml'):
 
     flame = case[:-4]
-    flame_params = flame.split('_')
-    phi_str = flame_params[3][4:]
+    flame_param = flame.split('_')
+    phi_str = flame_param[3]+flame_param[4]
 
     file_name = '{}.dat'.format(flame)
     data = np.genfromtxt(file_name,skip_header=3,names=True)

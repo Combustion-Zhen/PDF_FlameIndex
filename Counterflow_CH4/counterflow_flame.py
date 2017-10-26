@@ -4,20 +4,45 @@ An opposed-flow methane/air counterflow flame
 
 import cantera as ct
 import numpy as np
+import sys
 
 def counterflow_flame(mech='gri30.xml', transport='Multi', flag_soret = True,
         fuel_name='CH4', strain_rate=100., width=0.01, p=1.,
-        phi_f=10., phi_o=0., tin_f=300., tin_o=300.):
+        phi_f='inf', phi_o=0., tin_f=300., tin_o=300.):
 
 ################################################################################
 # Create the gas object used to evaluate all thermodynamic, kinetic, and
 # transport properties.
     gas = ct.Solution('gri30.xml', 'gri30_mix')
+
+    phi_f = float(phi_f)
+    if phi_f <= 1.:
+        sys.exit('Equivalence ratio of fuel side {:g}'.format(phi_f))
+    if phi_o >= 1.:
+        sys.exit('Equivalence ratio of oxidizer side {:g}'.format(phi_o))
+
+    flame_param = []
+    flame_param.append(fuel_name)
+    flame_param.append('p{:g}'.format(p))
+    flame_param.append('a{:g}'.format(strain_rate))
+    flame_param.append('phif{:g}'.format(phi_f))
+    flame_param.append('phio{:g}'.format(phi_o))
+    flame_param.append('tf{:g}'.format(tin_f))
+    flame_param.append('to{:g}'.format(tin_o))
+
     p *= ct.one_atm  # pressure
 
-    case_name = '{0}_p{1:g}_a{2:g}_phif{3:g}_phio{4:g}_tf{5:g}_to{6:g}' \
-            .format(fuel_name,p/ct.one_atm,strain_rate,phi_f,phi_o,tin_f,tin_o)
+    case_name = '_'.join(flame_param)
 
+#    if phi_f < 10.0:
+#        case_name = '{0}_p{1:g}_a{2:g}_phif{3:g}_phio{4:g}_tf{5:g}_to{6:g}'\
+#                .format(fuel_name,p/ct.one_atm,strain_rate,
+#                        phi_f,phi_o,tin_f,tin_o)
+#    else:
+#        case_name = '{0}_p{1:g}_a{2:g}_phifinf_phio{3:g}_tf{4:g}_to{5:g}'\
+#                .format(fuel_name,p/ct.one_atm,strain_rate,
+#                        phi_f,phi_o,tin_f,tin_o)
+#
 ## parameters of the counterflow flame
 ## a = (U_f+U+o)/width
 #strain_rate = 100 # 1/s
@@ -42,12 +67,12 @@ def counterflow_flame(mech='gri30.xml', transport='Multi', flag_soret = True,
     stoich_nu = gas.n_atoms(fuel_index,'C')+gas.n_atoms(fuel_index,'H')/4.
 
     comp_f = {}
+    comp_o = {}
     comp_f[fuel_name] = 1
-    if phi_f < 10.0 :
-        for k, v in oxy.items():
-            comp_f[k] = v*stoich_nu/phi_f
+    for k, v in oxy.items():
+        comp_o[k] = v
+        comp_f[k] = v*stoich_nu/phi_f
 
-    comp_o = oxy
     comp_o[fuel_name] = phi_o
 
 # fuel and oxidizer streams have the same velocity
