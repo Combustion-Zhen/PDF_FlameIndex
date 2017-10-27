@@ -6,6 +6,16 @@ import cantera as ct
 import numpy as np
 import sys
 
+def params2name(params):
+    params_str = []
+    for k, v in params.items():
+        try:
+            param_str = '{0}-{1:g}'.format(k,v)
+        except ValueError:
+            param_str = '{0}-{1}'.format(k,v)
+        params_str.append(param_str)
+    return '_'.join(params_str)
+
 def counterflow_flame(mech='gri30.xml', transport='Multi',
         flag_soret = True, flag_radiation = False,
         fuel_name='CH4', strain_rate=100., width=0.01, p=1.,
@@ -22,18 +32,28 @@ def counterflow_flame(mech='gri30.xml', transport='Multi',
     if phi_o >= 1.:
         sys.exit('Equivalence ratio of oxidizer side {:g}'.format(phi_o))
 
-    flame_param = []
-    flame_param.append(fuel_name)
-    flame_param.append('p{:g}'.format(p))
-    flame_param.append('a{:g}'.format(strain_rate))
-    flame_param.append('phif{:g}'.format(phi_f))
-    flame_param.append('phio{:g}'.format(phi_o))
-    flame_param.append('tf{:g}'.format(tin_f))
-    flame_param.append('to{:g}'.format(tin_o))
+    # construct case name
+    flame_params = {}
+    flame_params['F'] = fuel_name
+    flame_params['p'] = p
+    flame_params['a'] = strain_rate
+    flame_params['phif'] = phi_f
+    flame_params['phio'] = phi_o
+    flame_params['tf'] = tin_f
+    flame_params['to'] = tin_o
+
+#    flame_params_str = []
+#    for k, v in flame_params.items():
+#        try:
+#            param_str = '{0}-{1:g}'.format(k,v)
+#        except ValueError:
+#            param_str = '{0}-{1}'.format(k,v)
+#        flame_params_str.append(param_str)
+#
+#    case_name = '_'.join(flame_params_str)
+    case_name = params2name(flame_params)
 
     p *= ct.one_atm  # pressure
-
-    case_name = '_'.join(flame_param)
 
 #    if phi_f < 10.0:
 #        case_name = '{0}_p{1:g}_a{2:g}_phif{3:g}_phio{4:g}_tf{5:g}_to{6:g}'\
@@ -265,7 +285,10 @@ def counterflow_flame(mech='gri30.xml', transport='Multi',
                 +' '.join(data_names)),
             comments='')
 
-    return 0
+    if np.max(f.T) < np.max((tin_f,tin_o))+100:
+        return -1
+    else:
+        return 0
 
 if __name__ == '__main__':
     counterflow_flame()

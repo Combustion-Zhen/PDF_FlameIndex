@@ -98,8 +98,8 @@ for case in glob.glob('*.xml'):
         # beta pdf
         alpha = Zst*(1./var-1.)
         beta = (1.-Zst)*(1./var-1.)
-        print(file_name)
-        print('{:g} {:g}'.format(alpha,beta))
+        #print(file_name)
+        #print('{:g} {:g}'.format(alpha,beta))
         Z = np.random.beta(alpha,beta,npts)
 
         # Y, T, chi
