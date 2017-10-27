@@ -6,14 +6,15 @@ import cantera as ct
 import numpy as np
 import sys
 
-def counterflow_flame(mech='gri30.xml', transport='Multi', flag_soret = True,
+def counterflow_flame(mech='gri30.xml', transport='Multi',
+        flag_soret = True, flag_radiation = False,
         fuel_name='CH4', strain_rate=100., width=0.01, p=1.,
-        phi_f='inf', phi_o=0., tin_f=300., tin_o=300.):
+        phi_f='inf', phi_o=0., tin_f=300., tin_o=300., solution=None):
 
 ################################################################################
 # Create the gas object used to evaluate all thermodynamic, kinetic, and
 # transport properties.
-    gas = ct.Solution('gri30.xml', 'gri30_mix')
+    gas = ct.Solution(mech)
 
     phi_f = float(phi_f)
     if phi_f <= 1.:
@@ -91,6 +92,13 @@ def counterflow_flame(mech='gri30.xml', transport='Multi', flag_soret = True,
 # which consists of a fuel inlet on the left, the flow in the middle,
 # and the oxidizer inlet on the right.
     f = ct.CounterflowDiffusionFlame(gas, width=width)
+
+    if solution is not None:
+        try:
+            f.restore(solution, loglevel=0)
+        except Exception as e:
+            print(e,'Start to solve from initialization')
+
     f.transport_model = transport
 
 # Set the state of the two inlets
@@ -114,6 +122,14 @@ def counterflow_flame(mech='gri30.xml', transport='Multi', flag_soret = True,
         f.solve(loglevel=0, auto=True)
     except Exception as e:
         print('Error: not converge for case:',e)
+        return -1
+
+    if flag_radiation:
+        f.radiation_enabled = True
+        try:
+            f.solve(loglevel=0, auto=True)
+        except Exception as e:
+            print('Error: not converge for case:',e)
 
     if flag_soret:
         f.soret_enabled = True
@@ -248,6 +264,8 @@ def counterflow_flame(mech='gri30.xml', transport='Multi', flag_soret = True,
                 +'Zst = {:g}; Z1st = {:g}\n'.format(Zst,Z1st)
                 +' '.join(data_names)),
             comments='')
+
+    return 0
 
 if __name__ == '__main__':
     counterflow_flame()
