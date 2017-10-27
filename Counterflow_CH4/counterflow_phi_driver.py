@@ -27,6 +27,7 @@ case_name = None
 for a in strain:
 
     for phi in phif:
+        flame_params['phio'] = 0.
         flame_params['phif'] = phi
         case_name = params2name(flame_params)
         counterflow_flame(strain_rate = a,
@@ -35,6 +36,7 @@ for a in strain:
 
     for phi in phio:
         flame_params['phio'] = phi
+        flame_params['phif'] = 'inf'
         case_name = params2name(flame_params)
         counterflow_flame(strain_rate = a,
                 phi_f = 'inf', phi_o = phi,
