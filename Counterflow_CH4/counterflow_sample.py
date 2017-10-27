@@ -142,4 +142,4 @@ for case in glob.glob('*.xml'):
                             left = oxy_YTchi[j],
                             right = fuel_YTchi[j])
 
-        np.savetxt('{0}_var{1:g}.sample'.format(flame,var),samples,fmt='%12.5f')
+        np.savetxt('{0}_var-{1:g}.sample'.format(flame,var),samples,fmt='%12.5f')
