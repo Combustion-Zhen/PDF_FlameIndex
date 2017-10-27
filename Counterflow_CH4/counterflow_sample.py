@@ -45,6 +45,7 @@ for case in glob.glob('*.xml'):
         Z1st = float(zst_str[1].split()[-1])
 
         name_str = f.readline()[:-1].split()
+        comp_str = name_str[name_str.index('T'):name_str.index('Z')]
 
     data = np.genfromtxt(file_name,skip_header=3,names=True)
 
@@ -65,10 +66,18 @@ for case in glob.glob('*.xml'):
 
     dt = {'names':comp_names, 'formats':[np.float64]*len(comp_names)}
     data_interp = np.zeros(len(Z_interp), dtype=dt)
+    fuel_YTchi = []
+    oxy_YTchi = []
 
+    # guarantee the sequence of compositions
     for name in comp_names[:-1]:
         data_interp[name] = data[data_names[name_str.index(name)]][flag]
+        fuel_YTchi.append(fuel_TY[comp_str.index(name)])
+        oxy_YTchi.append(oxy_TY[comp_str.index(name)])
+
     data_interp['chi'] = chi[flag]
+    fuel_YTchi.append(0.)
+    oxy_YTchi.append(0.)
 
     # check whether the mixture fraction is monotonic
     flag_mono = Z_interp[1:] > Z_interp[:-1]
@@ -102,18 +111,21 @@ for case in glob.glob('*.xml'):
                     if Z_sample > Z_loc_max:
                         samples[i,j] = np.interp(Z_sample,
                                 Z_interp[index_loc[0]::-1],
-                                data_interp[name][index_loc[0]::-1])
+                                data_interp[name][index_loc[0]::-1],
+                                right = fuel_YTchi[j])
                     elif Z_sample < Z_loc_min:
                         samples[i,j] = np.interp(Z_sample,
                                 Z_interp[-1:index_loc[1]-1:-1],
-                                data_interp[name][-1:index_loc[1]-1:-1])
+                                data_interp[name][-1:index_loc[1]-1:-1],
+                                left = oxy_YTchi[j])
                     else:
                         # randomly choose one section to interpolate
                         sec_ran = np.random.uniform()
                         if sec_ran < 1./3.:
                             samples[i,j] = np.interp(Z_sample,
                                     Z_interp[index_loc[0]::-1],
-                                    data_interp[name][index_loc[0]::-1])
+                                    data_interp[name][index_loc[0]::-1],
+                                    right = fuel_YTchi[j])
                         elif sec_ran < 2./3.:
                             samples[i,j] = np.interp(Z_sample,
                                     Z_interp[index_loc[0]:index_loc[1]+1],
@@ -121,10 +133,13 @@ for case in glob.glob('*.xml'):
                         else:
                             samples[i,j] = np.interp(Z_sample,
                                     Z_interp[-1:index_loc[1]-1:-1],
-                                    data_interp[name][-1:index_loc[1]-1:-1])
+                                    data_interp[name][-1:index_loc[1]-1:-1],
+                                    left = oxy_YTchi[j])
                 else:
                     samples[i,j] = np.interp(Z_sample,
                             Z_interp[::-1],
-                            data_interp[name][::-1])
+                            data_interp[name][::-1],
+                            left = oxy_YTchi[j],
+                            right = fuel_YTchi[j])
 
         np.savetxt('{0}_var{1:g}.sample'.format(flame,var),samples,fmt='%12.5f')
