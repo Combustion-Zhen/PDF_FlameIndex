@@ -1,3 +1,7 @@
+"""
+Zhen Lu 2017/10/27
+plot counterflow flames with different inlet equivalence ratio
+"""
 
 import numpy as np
 import glob

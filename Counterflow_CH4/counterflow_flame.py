@@ -16,6 +16,18 @@ def params2name(params):
         params_str.append(param_str)
     return '_'.join(params_str)
 
+def name2params(name):
+    params = {}
+    params_str = name.split('_')
+    for param_str in params_str:
+        param = param_str.split('-',maxsplit=1)
+        key = param[0]
+        try:
+            params[key] = float( param[1] )
+        except ValueError:
+            params[key] = param[1]
+    return params
+
 def counterflow_flame(mech='gri30.xml', transport='Multi',
         flag_soret = True, flag_radiation = False,
         fuel_name='CH4', strain_rate=100., width=0.01, p=1.,
@@ -150,6 +162,7 @@ def counterflow_flame(mech='gri30.xml', transport='Multi',
             f.solve(loglevel=0, auto=True)
         except Exception as e:
             print('Error: not converge for case:',e)
+            return -1
 
     if flag_soret:
         f.soret_enabled = True
@@ -157,6 +170,7 @@ def counterflow_flame(mech='gri30.xml', transport='Multi',
             f.solve(loglevel=0, auto=True)
         except Exception as e:
             print('Error: not converge for case:',e)
+            return -1
 
     f.save('{}.xml'.format(case_name))
 
@@ -286,7 +300,7 @@ def counterflow_flame(mech='gri30.xml', transport='Multi',
             comments='')
 
     if np.max(f.T) < np.max((tin_f,tin_o))+100:
-        return -1
+        return 1
     else:
         return 0
 
