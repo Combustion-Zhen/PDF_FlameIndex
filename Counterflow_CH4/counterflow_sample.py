@@ -49,6 +49,10 @@ for case in glob.glob('*.xml'):
 
     data = np.genfromtxt(file_name,skip_header=3,names=True)
 
+    if np.max(data['T']) < 500.:
+        print(flame,'Extinction')
+        continue
+
     # scalar dissipation rate
     gradZ = np.gradient(data['Z'],data['grid'])
     chi = 2.*data['nu']/0.7*gradZ*gradZ
@@ -90,7 +94,8 @@ for case in glob.glob('*.xml'):
         Z_loc_min = Z_interp[index_loc[0]]
         Z_loc_max = Z_interp[index_loc[1]]
     elif len(index_loc) != 0:
-        sys.exit('Unexpected Z profile')
+        print(flame,'Unexpected Z profile')
+        continue
 
     # interpolate
     # xp must be increasing
