@@ -8,11 +8,7 @@ import glob
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-from counterflow_flame import name2params
-
-def cm2inch(*tupl):
-    inch = 2.54
-    return tuple(i/inch for i in tupl)
+from counterflow_file import *
 
 var_names = ['T','C_o','C_4spe','C_2spe','Q']
 

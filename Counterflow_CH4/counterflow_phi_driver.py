@@ -5,7 +5,8 @@ Driver to loop over phif
 """
 
 import numpy as np
-from counterflow_flame import counterflow_flame, params2name
+from counterflow_flame import counterflow_flame
+from counterflow_file import params2name
 
 # run cases
 strain = [100., 150., 200., 250., 270., 280., 290., 300.]

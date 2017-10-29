@@ -6,7 +6,8 @@ A driver to loop over the strain rate of counterflow flames
 
 import numpy as np
 import sys
-from counterflow_flame import counterflow_flame, params2name
+from counterflow_flame import counterflow_flame
+from counterflow_file import params2name
 
 strain_init = 100.
 strain_max = 1000.
