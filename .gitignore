@@ -32,4 +32,5 @@ CA.inCompress
 *.bin
 
 */Out*
+*/test*
 Counterflow_*/*/
