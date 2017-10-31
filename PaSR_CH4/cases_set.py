@@ -1,100 +1,99 @@
 """
-Zhen Lu 2017/10/21
-A python script to generate cases for PaSR simulations of soot
+Zhen Lu 2017/10/31
+A python script to generate cases for PaSR simulations of
+partially premixed combution
 """
 
 import numpy as np
 import re
 import os
+import shutil
 from subprocess import run
+from counterflow_file import params2name
 
-mixing_models = ('IEM','MC','EMST')
-time_res = np.array([2.e-3,])
+global Zst, Phif, Zf
+
+def equiv2Z( Phi ):
+    a = Phi*Zst/(1.-Zst)
+    Z = a/(1.+a)
+    return Z
+
+def air_flow_rate( Z ):
+    return (Zf - Z)/Z
+
+# constants
+CH4 = 16.043
+O2 = 31.999
+N2 = 28.013
+Zst = 0.05518
+Phif = 4.76
+Zf = equiv2Z( Phif )
+
+print('{:g}'.format(air_flow_rate(Zst)))
+
+
+mixing_models = {'IEM':1,'MC':2,'EMST':3}
+time_res = np.array([4.e-3,])
 max_res_ratio = 50.
-mix_res_ratio = np.power(10., np.arange(-2,0,0.25))
-num_particles = {1600:5,}
-mom_methods = {'MOMIC':(1,6),'CQMOM':(4,6)}
-#mom_methods = {'SEMI':(0,2),'MOMIC':(1,6),'HMOM':(2,7),'DQMOM':(3,4),'CQMOM':(4,6)}
-soot_mix = {'off':'.true.','on':'.false.'}
-stoich_fuel_rate = 0.066719
-equiv_ratio = [0.5, 0.8, 1.0, 1.5, 2.0]
+mix_res_ratio = np.array([0.02, 0.03, 0.05, 0.07, 0.1, 0.2, 0.3, 0.5])
+equiv_ratio = [0.8, 1.0, 1.2, 1.5, 2.0]
+Zf_variance = [0.01, 0.02, 0.05, 0.1]
 
-with open('input_template','r') as template:
-    lines = template.readlines();
-with open('run_shaheen_template.sh','r') as template:
+with open('template/pasr.nml','r') as template:
+    lines_nml = template.readlines();
+with open('template/run_shaheen.sh','r') as template:
     lines_job = template.readlines();
 
 # case name string is combined with case parameters, in the sequence
-# MOM method, Mixing model, Equivalence ratio, Residence time,
-# Mixing time, Number of particles, Soot mixing flag
-case_param = [None]*7
-for mom, mom_v  in mom_methods.items():
-    case_param[0] = mom
-    for mix in mixing_models:
-        case_param[1] = mix
-        for phi in equiv_ratio:
-            fuel_rate = phi*stoich_fuel_rate
-            case_param[2] = 'phi{:.1f}'.format(phi)
-            for tres in time_res:
-                tmax = max_res_ratio*tres
-                case_param[3] = 'tres{:.3e}'.format(tres)
-                for tmix_ratio in mix_res_ratio:
-                    tmix = tmix_ratio*tres
-                    case_param[4] = 'tmix{:.3e}'.format(tmix)
-                    for np, nd in num_particles.items():
-                        case_param[5] = 'np{:g}'.format(np)
-                        for soot_k, soot_v in soot_mix.items():
-                            case_param[6] = 'soot-{}'.format(soot_k)
-                            case = '_'.join(case_param)
-                            # make case directory
-                            os.makedirs(case,exist_ok=True)
-                            # set input file
-                            with open('input','w') as input:
-                                for line in lines:
-                                    line = re.sub('@MOMINDEX@',
-                                            '{:g}'.format(mom_v[0]),
-                                            line)
-                                    line = re.sub('@MOMNUM@',
-                                            '{:g}'.format(mom_v[1]),
-                                            line)
-                                    line = re.sub('@MIXMODEL@',
-                                            mix,
-                                            line)
-                                    line = re.sub('@TRES@',
-                                            '{:.3e}'.format(tres),
-                                            line)
-                                    line = re.sub('@TMAX@',
-                                            '{:.3e}'.format(tmax),
-                                            line)
-                                    line = re.sub('@TMIX@',
-                                            '{:.3e}'.format(tmix),
-                                            line)
-                                    line = re.sub('@NP@',
-                                            '{:g}'.format(np),
-                                            line)
-                                    line = re.sub('@NOSOOTMIX@',
-                                            soot_v,
-                                            line)
-                                    line = re.sub('@FUELRATE@',
-                                            '{:.8f}'.format(fuel_rate),
-                                            line)
-                                    input.write(line)
-                            # set job script
-                            with open('run_shaheen.sh','w') as job:
-                                for line in lines_job:
-                                    line = re.sub('@JOBNAME@',
-                                            case,
-                                            line)
-                                    line = re.sub('@NUMNODE@',
-                                            '{:g}'.format(nd),
-                                            line)
-                                    job.write(line)
-                            # mv to case folder
-                            os.rename('input',
-                                    '{}/input'.format(case))
-                            os.rename('run_shaheen.sh',
-                                    '{}/run_shaheen.sh'.format(case))
-                            # change directory
-                            os.chdir(case)
-                            run(['sbatch','run_shaheen.sh'])
-                            os.chdir('..')
+# mixing model, tres, tmix/tres, equivalence ratio, variance of Zf
+params = {}
+for mix_k, mix_v in mixing_models.items():
+    params['MIX'] = mix_k
+    for tres in time_res:
+        params['tres'] = tres
+        for tmix_ratio in mix_res_ratio:
+            tmix = tmix_ratio*tres
+            params['tmix'] = tmix_ratio
+            for Phi in equiv_ratio:
+                params['eqv'] = Phi
+                air_rate = air_flow_rate( equiv2Z( Phi ) )
+                for var in Zf_variance:
+                    params['Zfvar'] = var
+                    case = params2name(params)
+
+if os.path.isdir(case):
+    shutil.rmtree(case)
+shutil.copytree('template',case)
+os.chdir(case)
+
+# pasr namelist
+with open('pasr.nml','w') as nml:
+    for line in lines_nml:
+        line = re.sub('@MIXMODEL@',
+                '{:g}'.format(mix_v),
+                line)
+        line = re.sub('@TRES@',
+                '{:e}'.format(tres),
+                line)
+        line = re.sub('@TMIX@',
+                '{:e}'.format(tmix),
+                line)
+        line = re.sub('@AIRRATE@',
+                '{:g}'.format(air_rate),
+                line)
+        line = re.sub('@ZFMEAN@',
+                '{:g}'.format(Zf),
+                line)
+        line = re.sub('@ZFVAR@',
+                '{:g}'.format(var),
+                line)
+        nml.write(line)
+# job script
+with open('run_shaheen.sh','w') as job:
+    for line in lines_job:
+        line = re.sub('@JOBNAME@',
+                case,
+                line)
+        job.write(line)
+
+os.chdir('..')
