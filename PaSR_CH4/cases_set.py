@@ -22,15 +22,9 @@ def air_flow_rate( Z ):
     return (Zf - Z)/Z
 
 # constants
-CH4 = 16.043
-O2 = 31.999
-N2 = 28.013
 Zst = 0.05518
 Phif = 4.76
 Zf = equiv2Z( Phif )
-
-print('{:g}'.format(air_flow_rate(Zst)))
-
 
 mixing_models = {'IEM':1,'MC':2,'EMST':3}
 time_res = np.array([4.e-3,])
@@ -61,39 +55,41 @@ for mix_k, mix_v in mixing_models.items():
                     params['Zfvar'] = var
                     case = params2name(params)
 
-if os.path.isdir(case):
-    shutil.rmtree(case)
-shutil.copytree('template',case)
-os.chdir(case)
+                    if os.path.isdir(case):
+                        shutil.rmtree(case)
+                    shutil.copytree('template',case)
+                    os.chdir(case)
 
-# pasr namelist
-with open('pasr.nml','w') as nml:
-    for line in lines_nml:
-        line = re.sub('@MIXMODEL@',
-                '{:g}'.format(mix_v),
-                line)
-        line = re.sub('@TRES@',
-                '{:e}'.format(tres),
-                line)
-        line = re.sub('@TMIX@',
-                '{:e}'.format(tmix),
-                line)
-        line = re.sub('@AIRRATE@',
-                '{:g}'.format(air_rate),
-                line)
-        line = re.sub('@ZFMEAN@',
-                '{:g}'.format(Zf),
-                line)
-        line = re.sub('@ZFVAR@',
-                '{:g}'.format(var),
-                line)
-        nml.write(line)
-# job script
-with open('run_shaheen.sh','w') as job:
-    for line in lines_job:
-        line = re.sub('@JOBNAME@',
-                case,
-                line)
-        job.write(line)
+                    # pasr namelist
+                    with open('pasr.nml','w') as nml:
+                        for line in lines_nml:
+                            line = re.sub('@MIXMODEL@',
+                                    '{:g}'.format(mix_v),
+                                    line)
+                            line = re.sub('@TRES@',
+                                    '{:e}'.format(tres),
+                                    line)
+                            line = re.sub('@TMIX@',
+                                    '{:e}'.format(tmix),
+                                    line)
+                            line = re.sub('@AIRRATE@',
+                                    '{:g}'.format(air_rate),
+                                    line)
+                            line = re.sub('@ZFMEAN@',
+                                    '{:g}'.format(Zf),
+                                    line)
+                            line = re.sub('@ZFVAR@',
+                                    '{:g}'.format(var),
+                                    line)
+                            nml.write(line)
+                    # job script
+                    with open('run_shaheen.sh','w') as job:
+                        for line in lines_job:
+                            line = re.sub('@JOBNAME@',
+                                    case,
+                                    line)
+                            job.write(line)
 
-os.chdir('..')
+                    run(['sbatch','run_shaheen.sh'])
+
+                    os.chdir('..')
