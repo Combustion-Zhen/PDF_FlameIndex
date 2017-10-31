@@ -1,0 +1,21 @@
+&pasrnml
+n=1000
+anres=50
+tres=4.e-3
+tmix=7.e-4
+tpair=7.e-4
+flstrmd=0.0, 1.0, 2.942
+part_in=.true.
+part_out=.true.
+full_op=.false.
+etola=1.e-5
+stomby=800.
+mxmode=1
+defC=2
+dCdZ_lean=5
+dCdZ_rich=5
+Zdist=2
+Zmean=0.2175
+Zvar=0.1
+mech='CH4'
+/
