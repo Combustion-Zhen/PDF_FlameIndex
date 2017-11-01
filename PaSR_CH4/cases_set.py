@@ -27,10 +27,9 @@ Phif = 4.76
 Zf = equiv2Z( Phif )
 
 mixing_models = {'IEM':1,'MC':2,'EMST':3}
-time_res = np.array([4.e-3,])
-max_res_ratio = 50.
-mix_res_ratio = np.array([0.02, 0.03, 0.05, 0.07, 0.1, 0.2, 0.3, 0.5])
-equiv_ratio = [0.8, 1.0, 1.2, 1.5, 2.0]
+time_res = np.array([4.e-3, 1.e-2])
+mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
+equiv_ratio = [1.0, 1.2]
 Zf_variance = [0.01, 0.02, 0.05, 0.1]
 
 with open('template/pasr.nml','r') as template:
