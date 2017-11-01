@@ -36,7 +36,7 @@ MODECI         ISAT_DI
 STREAM BEGIN PILOT [MOLE] [EQUIL] ! use the equilibrium state for the PILOT stream
     P          1                    ! pressure (atm)
     T          300                  ! temperature (K)
-    CH4        1
+    CH4        1.2
     O2         2
     N2         7.52
 STREAM END PILOT
