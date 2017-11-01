@@ -9,5 +9,4 @@
 
 OMP_NUM_THREADS=1
 
-srun --hint=nomultithread PaSR_particles_init
 srun --hint=nomultithread PaSR_PPF_MIX
