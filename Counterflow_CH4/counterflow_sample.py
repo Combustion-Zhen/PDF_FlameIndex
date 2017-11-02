@@ -9,8 +9,15 @@ conflict with the conda environment of cantera, with numpy 1.12
 import numpy as np
 import glob
 
+def equiv2Z( Phi, Zst ):
+    a = Phi*Zst/(1.-Zst)
+    Z = a/(1.+a)
+    return Z
+
 npts = 1000
-variance = np.arange(0.1,1.0,0.2)
+variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
+eqv_ratio = [1.3, 1.4]
+#eqv_ratio = [0.8, 1.0, 1.1, 1.2]
 
 # read the species names from chem.inp, guarantee the sequence
 comp_names = []
@@ -99,52 +106,56 @@ for case in glob.glob('*.xml'):
 
     # interpolate
     # xp must be increasing
-    for var in variance:
-        # beta pdf
-        alpha = Zst*(1./var-1.)
-        beta = (1.-Zst)*(1./var-1.)
-        #print(file_name)
-        #print('{:g} {:g}'.format(alpha,beta))
-        Z = np.random.beta(alpha,beta,npts)
+    for eqv in eqv_ratio:
+        Z1mean = equiv2Z( eqv, Z1st )
+        Zmean = Z1mean/Z1st*Zst
+        for var in variance:
+            # beta pdf
+            alpha = Zmean*(1./var-1.)
+            beta = (1.-Zmean)*(1./var-1.)
+            #print(file_name)
+            #print('{:g} {:g}'.format(alpha,beta))
+            Z = np.random.beta(alpha,beta,npts)
 
-        # Y, T, chi
-        samples = np.zeros((npts,len(comp_names)))
+            # Y, T, chi
+            samples = np.zeros((npts,len(comp_names)))
 
-        for i, Z_sample in enumerate(Z):
-            for j, name in enumerate(comp_names):
-                if len(index_loc) == 2:
-                    if Z_sample > Z_loc_max:
-                        samples[i,j] = np.interp(Z_sample,
-                                Z_interp[index_loc[0]::-1],
-                                data_interp[name][index_loc[0]::-1],
-                                right = fuel_YTchi[j])
-                    elif Z_sample < Z_loc_min:
-                        samples[i,j] = np.interp(Z_sample,
-                                Z_interp[-1:index_loc[1]-1:-1],
-                                data_interp[name][-1:index_loc[1]-1:-1],
-                                left = oxy_YTchi[j])
-                    else:
-                        # randomly choose one section to interpolate
-                        sec_ran = np.random.uniform()
-                        if sec_ran < 1./3.:
+            for i, Z_sample in enumerate(Z):
+                for j, name in enumerate(comp_names):
+                    if len(index_loc) == 2:
+                        if Z_sample > Z_loc_max:
                             samples[i,j] = np.interp(Z_sample,
                                     Z_interp[index_loc[0]::-1],
                                     data_interp[name][index_loc[0]::-1],
                                     right = fuel_YTchi[j])
-                        elif sec_ran < 2./3.:
-                            samples[i,j] = np.interp(Z_sample,
-                                    Z_interp[index_loc[0]:index_loc[1]+1],
-                                    data_interp[name][index_loc[0]:index_loc[1]+1])
-                        else:
+                        elif Z_sample < Z_loc_min:
                             samples[i,j] = np.interp(Z_sample,
                                     Z_interp[-1:index_loc[1]-1:-1],
                                     data_interp[name][-1:index_loc[1]-1:-1],
                                     left = oxy_YTchi[j])
-                else:
-                    samples[i,j] = np.interp(Z_sample,
-                            Z_interp[::-1],
-                            data_interp[name][::-1],
-                            left = oxy_YTchi[j],
-                            right = fuel_YTchi[j])
+                        else:
+                            # randomly choose one section to interpolate
+                            sec_ran = np.random.uniform()
+                            if sec_ran < 1./3.:
+                                samples[i,j] = np.interp(Z_sample,
+                                        Z_interp[index_loc[0]::-1],
+                                        data_interp[name][index_loc[0]::-1],
+                                        right = fuel_YTchi[j])
+                            elif sec_ran < 2./3.:
+                                samples[i,j] = np.interp(Z_sample,
+                                        Z_interp[index_loc[0]:index_loc[1]+1],
+                                        data_interp[name][index_loc[0]:index_loc[1]+1])
+                            else:
+                                samples[i,j] = np.interp(Z_sample,
+                                        Z_interp[-1:index_loc[1]-1:-1],
+                                        data_interp[name][-1:index_loc[1]-1:-1],
+                                        left = oxy_YTchi[j])
+                    else:
+                        samples[i,j] = np.interp(Z_sample,
+                                Z_interp[::-1],
+                                data_interp[name][::-1],
+                                left = oxy_YTchi[j],
+                                right = fuel_YTchi[j])
 
-        np.savetxt('{0}_var-{1:g}.sample'.format(flame,var),samples,fmt='%12.5f')
+            np.savetxt('{0}_eqv-{1:g}_var-{2:g}.sample'.format(flame,eqv,var),
+                                samples,fmt='%12.5f')

@@ -42,30 +42,32 @@ for i, model in enumerate(models):
 
     data = np.zeros((len(param_list['a']),2))
 
-    for var in param_list['var']:
-        for j, strain in enumerate(param_list['a']):
-            flame = {}
-            for k, v in param_list.items():
-                flame[k] = v[0]
-            flame['var'] = var
-            flame['a'] = strain
-            flame_name = params2name(flame)
+    for eqv in [1.2,]:
+        for var in param_list['var']:
+            for j, strain in enumerate(param_list['a']):
+                flame = {}
+                for k, v in param_list.items():
+                    flame[k] = v[0]
+                flame['var'] = var
+                flame['eqv'] = eqv
+                flame['a'] = strain
+                flame_name = params2name(flame)
 
-            file_name = '{0}{1}'.format(flame_name,extension)
-            particles = np.genfromtxt(file_name)
+                file_name = '{0}{1}'.format(flame_name,extension)
+                try:
+                    p = np.genfromtxt(file_name)
+                except OSError:
+                    continue
+                else:
+                    I_ave = np.average(np.array(p[:,-1]))
 
-            I = []
-            for p in particles:
-                if abs(p[-1])>SMALL or abs(p[-2])>SMALL:
-                    I.append(p[idx_I])
-            I_ave = np.average(np.array(I))
+                    data[j,0] = strain
+                    data[j,1] = I_ave
 
-            data[j,0] = strain
-            data[j,1] = I_ave
-
-        # plot for each mean and var
-        label = r'$\eta_Z$='+'{0:g}'.format(var)
-        ax.plot(data[:,0],data[:,1],label=label,linewidth=1)
+            # plot for each mean and var
+            label = r'$\tilde Z=$'+'{0:g}'.format(eqv)+r'$\eta_Z$='+'{0:g}'.format(var)
+            ax.plot(data[data[:,0]>0,0],data[data[:,0]>0,1],
+                    label=label,linewidth=1)
 
     ax.set_ylabel(r'$\tilde\mathrm{FI}$',fontsize=ftsize)
     ax.set_ylim(0.0,1.0)

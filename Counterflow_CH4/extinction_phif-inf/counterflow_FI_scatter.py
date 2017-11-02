@@ -6,19 +6,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from counterflow_file import *
 
-SMALL = 1.e-20
-models = ['IEM','MC','EMST']
+SMALL = 1.e-7
+models = ['IEM-FI','MC-FI','EMST-FI']
 
 # parameters
 flame_params = {}
 flame_params['F'] = 'CH4'
 flame_params['p'] = 1.
-flame_params['a'] = 282.626
-flame_params['phif'] = 'inf'
+flame_params['a'] = 424.742
+flame_params['phif'] = 1.7
 flame_params['phio'] = 0.
 flame_params['tf'] = 300.
 flame_params['to'] = 300.
-flame_params['var'] = 0.7
+flame_params['eqv'] = 1.2
+flame_params['var'] = 0.05
 
 case_name = params2name(flame_params)
 
@@ -44,15 +45,17 @@ fig, axes = plt.subplots(1,3,sharex='all',sharey='row',
 
 for i, model in enumerate(models):
     file_name = '{0}.{1}'.format(case_name,model)
-    particles = np.genfromtxt(file_name)
+    print(file_name)
+    p = np.genfromtxt(file_name)
 
-    Z = []
-    I = []
-    for p in particles:
-        if abs(p[-1])>SMALL or abs(p[-2])>SMALL:
-            Z.append(p[0])
-            I.append(p[2])
+    print(p.shape)
+    # too many points, sample randomly
+    npts = p.shape[0]
+    if npts > 2000:
+        pre=np.random.randint(0,npts,size=1000)
+        axes[i].scatter(p[pre,0],p[pre,2],c=p[pre,1])
+    else:
+        axes[i].scatter(p[:,0],p[:,2],c=p[:,1])
 
-    axes[i].scatter(Z,I)
 
 plt.show()
