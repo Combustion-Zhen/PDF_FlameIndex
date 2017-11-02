@@ -24,6 +24,9 @@
 *.err
 *.out
 *.inp
+*.EMST
+*.MC
+*.IEM
 
 *.swp
 CA.inCompress
@@ -34,4 +37,3 @@ CA.inCompress
 */Out*
 */test*
 */MIX-*
-Counterflow_*/*/
