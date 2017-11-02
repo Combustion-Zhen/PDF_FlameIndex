@@ -27,10 +27,15 @@ Phif = 4.76
 Zf = equiv2Z( Phif )
 
 mixing_models = {'IEM':1,'MC':2,'EMST':3}
-time_res = np.array([4.e-3, 1.e-2])
+time_res = [4.e-3, 1.e-2]
 mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
 equiv_ratio = [1.0, 1.2]
 Zf_variance = [0.01, 0.02, 0.05, 0.1]
+
+dtres = 0.05
+isave = 50
+dtmix = 0.01
+restart = '.false.'
 
 with open('template/pasr.nml','r') as template:
     lines_nml = template.readlines();
@@ -52,6 +57,10 @@ for mix_k, mix_v in mixing_models.items():
                 air_rate = air_flow_rate( equiv2Z( Phi ) )
                 for var in Zf_variance:
                     params['Zfvar'] = var
+
+                    # other parameters
+                    params['dtmix'] = dtmix
+
                     case = params2name(params)
 
                     if os.path.isdir(case):
@@ -79,6 +88,18 @@ for mix_k, mix_v in mixing_models.items():
                                     line)
                             line = re.sub('@ZFVAR@',
                                     '{:g}'.format(var),
+                                    line)
+                            line = re.sub('@CDTRP@',
+                                    '{:g}'.format(dtres),
+                                    line)
+                            line = re.sub('@SAVESTEP@',
+                                    '{:d}'.format(isave),
+                                    line)
+                            line = re.sub('@CDTMIX@',
+                                    '{:g}'.format(dtmix),
+                                    line)
+                            line = re.sub('@RESTART@',
+                                    restart,
                                     line)
                             nml.write(line)
                     # job script
