@@ -5,10 +5,10 @@ Check case status
 import subprocess
 import os
 
-date_start = '2017-10-31'
-date_end = '2017-11-01'
-jobid_lb = 4373029
-jobid_ub = 4373509
+date_start = '2017-11-02'
+date_end = '2017-11-03'
+jobid_lb = 4377401
+jobid_ub = 4377640
 
 # output files
 list_fail = open('list_fail.op','w')
