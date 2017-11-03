@@ -7,8 +7,8 @@ import os
 
 date_start = '2017-11-02'
 date_end = '2017-11-03'
-jobid_lb = 4377401
-jobid_ub = 4377640
+jobid_lb = 4378201
+jobid_ub = 4378442
 
 # output files
 list_fail = open('list_fail.op','w')
