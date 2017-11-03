@@ -27,6 +27,7 @@
 *.EMST
 *.MC
 *.IEM
+*.pyc
 
 *.swp
 CA.inCompress
