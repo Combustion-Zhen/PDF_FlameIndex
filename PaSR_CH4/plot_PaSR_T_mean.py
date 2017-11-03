@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # temperautre 17
-pasr_mean=np.genfromtxt('pasrm.op',usecols=(3,-4))
+pasr_mean=np.genfromtxt('pasrm.op',usecols=(2,-4))
 
 fig = plt.figure()
 
