@@ -28,6 +28,7 @@
 *.MC
 *.IEM
 *.pyc
+*.csv
 
 *.swp
 CA.inCompress

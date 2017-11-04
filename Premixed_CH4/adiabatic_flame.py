@@ -8,8 +8,7 @@ import numpy as np
 from flame_file import params2name
 
 def adiabatic_flame(mech = 'gri30.xml', transport = 'Multi',
-        fuel_name = 'CH4', p = 1., T = 300., eqv = 1.,
-        width = 0.03, solution=None):
+        fuel_name = 'CH4', p = 1., T = 300., eqv = 1., width = 0.03):
 
     # supress log output
     loglevel = 0
@@ -42,12 +41,7 @@ def adiabatic_flame(mech = 'gri30.xml', transport = 'Multi',
     # flame object
     f = ct.FreeFlame( gas, width = width )
 
-    if solution is not None:
-        try:
-            f.restore( solution, loglevel = loglevel )
-        except Exception as e:
-            print( e, 'Start to solve from initialization' )
-            f.set_initial_guess()
+    f.set_initial_guess()
 
     f.set_refine_criteria(ratio=3, slope=0.06, curve=0.1, prune=0.01)
     #f.soret_enabled = False
@@ -63,7 +57,7 @@ def adiabatic_flame(mech = 'gri30.xml', transport = 'Multi',
 
     f.transport_model = transport
     try:
-        f.solve( loglevel = loglevel)
+        f.solve( loglevel = loglevel )
     except Exception as e:
         print('Error: not converge for case:',e)
         return -1
@@ -78,6 +72,8 @@ def adiabatic_flame(mech = 'gri30.xml', transport = 'Multi',
     f.write_csv('{}.csv'.format(case), species='Y', quiet=False)
 
     np.savetxt('{}_diff.dat'.format(case),f.mix_diff_coeffs_mass)
+
+    return 0
 
 if __name__ == '__main__':
     adiabatic_flame()

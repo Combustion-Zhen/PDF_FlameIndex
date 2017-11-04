@@ -17,6 +17,7 @@ numpy 1.13 is required, conflict with cantera
 
 import numpy as np
 
+# not normalized, returns z, C, chi
 def flame_chi( case, spe_list=None ):
     
     # default value for spe_list
@@ -45,6 +46,7 @@ def flame_chi( case, spe_list=None ):
     return C
 
 # chi based on normalized value
+# returns C, C_n, chi_n
 def flame_chi_n( case, spe_list=None ):
 
     # default value for spe_list
@@ -60,17 +62,16 @@ def flame_chi_n( case, spe_list=None ):
     C = np.zeros((len(flame),3))
     D = np.zeros(flame.shape)
 
-    C[:,0] = flame['z_m']
     for spe in spe_list:
-        C[:,1] += flame[spe]
+        C[:,0] += flame[spe]
         D += diff[spe_names.index(spe),:]*flame[spe]
 
-    D /= C[:,1]
+    D /= C[:,0]
 
     # normalize progress variable
-    C[:,1] = (C[:,1]-C[0,1])/(C[-1,1]-C[0,1])
+    C[:,1] = (C[:,0]-C[0,0])/(C[-1,0]-C[0,0])
 
-    grad = np.gradient(C[:,1],C[:,0])
+    grad = np.gradient(C[:,1],flame['z_m'])
 
     C[:,2] = 2*D*(grad**2)
 
