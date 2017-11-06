@@ -25,12 +25,11 @@ for file_name in glob.glob('*.sample'):
         # edit the pasr.nml
         print('{}'.format(model))
         with open('mix.nml','r') as f:
-            nml = f.read()
-        nml_n = '{0}{1}{2}'.format(nml[:nml.find('mxmode')+7],
-                                   i+7,
-                                   nml[nml.find('mxmode')+8:])
+            nml = f.readlines()
         with open('mix.nml','w') as f:
-            f.write(nml_n)
-
+            for line in nml:
+                if line.startswith('mxmode'):
+                    line='mxmode={:d}\n'.format(i+7)
+                f.write(line)
         # run the mixing
         run(["Mixing"])

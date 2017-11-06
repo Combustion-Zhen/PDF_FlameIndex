@@ -16,8 +16,7 @@ def equiv2Z( Phi, Zst ):
 
 npts = 1000
 variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
-eqv_ratio = [1.3, 1.4]
-#eqv_ratio = [0.8, 1.0, 1.1, 1.2]
+eqv_ratio = [0.8,0.9,1.0,1.1,1.2,1.3,1.4]
 
 # read the species names from chem.inp, guarantee the sequence
 comp_names = []
