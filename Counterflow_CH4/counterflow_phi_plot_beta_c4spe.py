@@ -138,3 +138,5 @@ fig.subplots_adjust(
     )
 
 fig.savefig('{0}/phif_a{1:g}_{2}.pdf'.format(dst,a,var))
+fig.savefig('{0}/phif_a{1:g}_{2}.eps'.format(dst,a,var))
+
