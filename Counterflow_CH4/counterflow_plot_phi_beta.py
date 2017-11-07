@@ -11,11 +11,14 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from counterflow_file import *
 
-#phif   = [1.3, 1.5, 1.7, 2.0, 2.3, 3.2, 4.8, 9.5, float('inf')]
-phif   = [1.3, 1.7, 2.0, 2.3, 3.2, 4.8, float('inf')]
-strain = [50, 100, 150, 200, 250]
+phif   = [1.3, 1.7, 2.3, 3.2, 4.8]
+strain = [50, 100, 150, 200, 250, 300]
 
-var_names = ['T','C_o','C_4spe','C_2spe','Q']
+Zp = 0.06
+Zst = 0.0551863
+
+#var_names = ['T','C_o','C_4spe','C_2spe','Q']
+var_names = {'C_o':4,'C_4spe':5,'C_2spe':2.75}
 
 dst = 'figs_phif'
 
@@ -60,7 +63,7 @@ for a in strain:
     flame_params['a'] = a
 
     # generate figure and axes
-    for i, var in enumerate(var_names):
+    for i, var in enumerate(var_names.keys()):
         figs[i],axes[i] = plt.subplots(figsize=cm2inch(plot_width,plot_height))
 
     # get data
@@ -81,11 +84,22 @@ for a in strain:
         for i, var in enumerate(var_names):
             axes[i].plot(data['Z1'],data[var],label=label,linewidth=1)
 
-    for i, var in enumerate(var_names):
+    for i, var in enumerate(var_names.keys()):
+        axes[i].plot([0,Zp,2*Zp],[0,Zp*var_names[var],0],'--',linewidth=1)
+        axes[i].plot([Zst,Zst],[0,Zp*var_names[var]],'-.',linewidth=1)
         axes[i].set_xlim(0.0,0.12)
         axes[i].set_xlabel('$Z$',fontsize=ftsize)
+        axes[i].set_ylim(0.0,Zp*var_names[var])
         axes[i].set_ylabel('${}$'.format(var),fontsize=ftsize)
-        axes[i].legend(fontsize=ftsize,frameon=False)
+         
+        a_str = r'$a=$'+'{:g}'.format(a)+r'$\;\mathrm{1/s}$'
+        axes[i].text(0.085,0.25,a_str,
+                     fontsize=ftsize)
+
+        axes[i].legend(fontsize=ftsize-2,
+                       handlelength=1.2,
+                       handletextpad=0.3,
+                       frameon=False)
         
         figs[i].subplots_adjust(
                 left = margin_left/plot_width,

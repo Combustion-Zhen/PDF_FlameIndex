@@ -123,6 +123,8 @@ for case in glob.glob('*.xml'):
             samples = np.zeros((npts,len(comp_names)))
 
             for i, Z_sample in enumerate(Z):
+                # randomly choose one section to interpolate
+                sec_ran = np.random.uniform()
                 for j, name in enumerate(comp_names):
                     if len(index_loc) == 2:
                         if Z_sample > Z_loc_max:
@@ -136,8 +138,6 @@ for case in glob.glob('*.xml'):
                                     data_interp[name][-1:index_loc[1]-1:-1],
                                     left = oxy_YTchi[j])
                         else:
-                            # randomly choose one section to interpolate
-                            sec_ran = np.random.uniform()
                             if sec_ran < 1./3.:
                                 samples[i,j] = np.interp(Z_sample,
                                         Z_interp[index_loc[0]::-1],
