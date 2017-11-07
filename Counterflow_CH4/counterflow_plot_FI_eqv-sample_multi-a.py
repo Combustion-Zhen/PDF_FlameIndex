@@ -16,13 +16,15 @@ def equiv2Z( Phi, Zst ):
     Z = a/(1.+a)
     return Z
 
+loc_legend = (0., 0.45)
+
 Zst = 0.0551863
 
 variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
 eqv_ratio = [0.8,0.9,1.0,1.1,1.2,1.3,1.4]
 
 phif   = [1.3, 1.7, 2.3, 3.2, 4.8]
-strain = [100, 150, 200, 250]
+strain = [100, 150, 200]
 
 dst = 'figs_sample_line'
 
@@ -47,12 +49,12 @@ flame_params['var'] = None
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 19.0
-margin_left   = 1.5
+margin_left   = 1.6
 margin_right  = 0.1
 margin_bottom = 1.2
-margin_top    = 0.1
+margin_top    = 0.8
 space_width   = 0.
-space_height  = 1.0
+space_height  = 0.
 ftsize        = 12
 
 font = {'family':'serif',
@@ -65,31 +67,36 @@ plt.rc('text',usetex=True)
 plt.rc('font',**font)
 
 num_cols = len(models)
-num_rows = 1
+num_rows = len(strain)
 
 subplot_width = (plot_width
                 -margin_left
                 -margin_right
                 -(num_cols-1)*space_width)/num_cols
-subplot_height = subplot_width * 0.9
+subplot_height = subplot_width * 0.5
 
-plot_height = (subplot_height
+plot_height = (num_rows*subplot_height
               +margin_bottom
               +margin_top
               +(num_rows-1)*space_height)
 
-for a in strain:
-    flame_params['a'] = a
-    for var in variance:
-        flame_params['var'] = var
+for var in variance:
+    flame_params['var'] = var
 
-        # generate figure and axes
-        fig, ax = plt.subplots(num_rows,num_cols,sharex=True,sharey=True,
-                               figsize=cm2inch(plot_width,plot_height))
+    # generate figure and axes
+    fig, ax = plt.subplots(num_rows,num_cols,sharex=True,sharey=True,
+                           figsize=cm2inch(plot_width,plot_height))
 
-        for axes in ax:
-            axes.plot([0,1],[0.5,0.5],'k--',linewidth=1)
-        
+    fig.text(0.05,0.95,''.join([r'$\eta_Z=$','{:g}'.format(var)]))
+
+    for i in range(num_rows):
+        for j in range(num_cols):
+            ax[i,j].plot([0,1],[0.5,0.5],'k--',linewidth=1)
+        ax[i,1].text(0.045,0.52,r'$\tilde{\mathrm{FI}}=0.5$')
+
+    for i, a in enumerate(strain):
+        flame_params['a'] = a
+
         # get data
         for phi in phif:
             folder_params['phif'] = phi
@@ -116,40 +123,40 @@ for a in strain:
 
                     flag = data[:,0] > 0
 
-                ax[j].plot(data[flag,0],data[flag,1],label=label,linewidth=1)
+                ax[i,j].plot(data[flag,0],data[flag,1],
+                             label=label,linewidth=1)
             
-        ax[0].set_ylabel(r'$\tilde{\mathrm{FI}}$')
+        ax[i,0].set_ylabel(r'$\tilde{\mathrm{FI}}$')
 
-        ax[1].text(0.045,0.52,r'$\tilde{\mathrm{FI}}=0.5$')
+        ax[i,0].text(0.045,0.2,
+                     ''.join([r'$a=$',
+                      '{:g}'.format(a),
+                      r'$\;\mathrm{s}^{-1}$']))
 
-        for j, axes in enumerate(ax):
-            axes.set_xlim(0.042,0.078)
-            axes.set_xlabel('$Z$')
-            axes.text(0.066,0.74,
-                    ''.join(['{}\n'.format(models[j]),
-                             r'$a=$',
-                             '{:g}'.format(a),
-                             r'$\;\mathrm{s}^{-1}$',
-                             '\n',
-                             r'$\eta_Z=$',
-                             '{:g}'.format(var)]))
 
-        ax[0].legend(fontsize=ftsize-2,
-                     handlelength=1.2,
-                     handletextpad=0.3,
-                     frameon=False
-                     )
+    for i in range(num_cols):
+        ax[-1,i].set_xlim(0.042,0.078)
+        ax[-1,i].set_xlabel(r'$\tilde{Z}$')
+        ax[0,i].set_title(models[i])
 
-        fig.subplots_adjust(
-            left = margin_left/plot_width,
-            bottom = margin_bottom/plot_height,
-            right = 1.0-margin_right/plot_width,
-            top = 1.0-margin_top/plot_height,
-            wspace = space_width/plot_width,
-            hspace = space_height/plot_height
-            )
+    ax[0,-1].legend(fontsize=ftsize-2,
+                    loc=loc_legend,
+                    ncol=2,
+                    handlelength=1.2,
+                    handletextpad=0.3,
+                    frameon=False
+                    )
 
-        fig.savefig('{0}/FI_a{1:g}_var{2:g}.pdf'.format(dst,a,var))
-        fig.savefig('{0}/FI_a{1:g}_var{2:g}.eps'.format(dst,a,var))
-        # close figures to avoid warnings
-        plt.close('all')
+    fig.subplots_adjust(
+        left = margin_left/plot_width,
+        bottom = margin_bottom/plot_height,
+        right = 1.0-margin_right/plot_width,
+        top = 1.0-margin_top/plot_height,
+        wspace = space_width/plot_width,
+        hspace = space_height/plot_height
+        )
+
+    fig.savefig('{0}/FI_var{2:g}.pdf'.format(dst,a,var))
+    fig.savefig('{0}/FI_var{2:g}.eps'.format(dst,a,var))
+    # close figures to avoid warnings
+    plt.close('all')
