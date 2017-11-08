@@ -7,7 +7,5 @@ import matplotlib.pyplot as plt
 
 p = np.genfromtxt('particle_fi.dat')
 
-flag = [a and b for a, b in zip(p[:,-1]>1.e-20,p[:,-2]>1.e-20)]
-
-plt.scatter(p[flag,0],p[flag,1],c=p[flag,2])
+plt.scatter(p[:,1],p[:,2],c=p[:,0])
 plt.show()
