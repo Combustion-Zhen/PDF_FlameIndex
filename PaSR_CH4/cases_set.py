@@ -32,12 +32,25 @@ Zst = 0.05518
 #Zf_variance = [0.01, 0.02, 0.05, 0.1]
 #dtmix = [0.01,]
 
-mixing_models = {'IEM':7,'MC':8,'EMST':9}
+#mixing_models = {'IEM':7,'MC':8,'EMST':9}
+#time_res = [1.e-2,]
+#mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
+#equiv_ratio_f = [2.,]
+#equiv_ratio = [1.0, 1.2, 1.4,]
+#Zf_variance = [0.02, 0.04]
+#dtmix = [0.01,]
+
+mixing_models = {'IEMHYB':4,
+                 'MCHYB':5,
+                 'EMSTHYB':6,
+                 'IEM':7,
+                 'MC':8,
+                 'EMST':9}
 time_res = [1.e-2,]
 mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
-equiv_ratio_f = [2.,]
-equiv_ratio = [1.0, 1.2, 1.4,]
-Zf_variance = [0.02, 0.04]
+equiv_ratio_f = [4.76,]
+equiv_ratio = [1.0, 1.2, 1.4]
+Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
 dtmix = [0.01,]
 
 dtres = 0.05

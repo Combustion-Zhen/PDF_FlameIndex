@@ -13,10 +13,10 @@ from subprocess import run
 for case in glob.glob('MIX-EMSTHYB_tres-0.01_*'):
     os.chdir(case)
 
-    for outfile in glob.glob('job*.out'):
-        jobid = outfile[3:-4]
-        # kill possible running cases
-        run(['scancel',jobid])
+#    for outfile in glob.glob('job*.out'):
+#        jobid = outfile[3:-4]
+#        # kill possible running cases
+#        run(['scancel',jobid])
 
     with open('pasr.nml','r') as f:
         lines = f.readlines()
@@ -24,8 +24,9 @@ for case in glob.glob('MIX-EMSTHYB_tres-0.01_*'):
     # initialize the case
     with open('pasr.nml','w') as f:
         for line in lines:
-            if line[:7]=='part_in':
-                line = 'part_in=.false.\n'
+            if line.startswith('part_in'):
+                #line = 'part_in=.false.\n'
+                line = 'part_in=.true.\n'
             f.write(line)
 
     run(['sbatch','run_shaheen.sh'])

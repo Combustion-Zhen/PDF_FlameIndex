@@ -46,9 +46,9 @@ for mix_k, mix_v in mixing_models.items():
 
                             if os.path.isdir(case):
                                 print(case)
-                                shutil.copy('template/flame_C.dat',case)
-                                shutil.copy('template/flame_Z.dat',case)
-                                shutil.copy('template/flame_chi.dat',case)
+                                #shutil.copy('template/flame_C.dat',case)
+                                #shutil.copy('template/flame_Z.dat',case)
+                                #shutil.copy('template/flame_chi.dat',case)
                                 os.chdir(case)
                                 
                                 with open('pasr.nml','r') as f:
@@ -91,9 +91,9 @@ for mix_k, mix_v in mixing_models.items():
 
                             if os.path.isdir(case):
                                 print(case)
-                                shutil.copy('template/flame_C.dat',case)
-                                shutil.copy('template/flame_Z.dat',case)
-                                shutil.copy('template/flame_chi.dat',case)
+                                #shutil.copy('template/flame_C.dat',case)
+                                #shutil.copy('template/flame_Z.dat',case)
+                                #shutil.copy('template/flame_chi.dat',case)
                                 os.chdir(case)
                                 
                                 with open('pasr.nml','r') as f:
