@@ -12,8 +12,8 @@ from counterflow_file import *
 
 models = ['IEM','MC','EMST']
 
-#for file_name in glob.glob('*.sample'):
-for file_name in glob.glob('*_a-300_*.sample'):
+for file_name in glob.glob('*.sample'):
+#for file_name in glob.glob('*_a-300_*.sample'):
     flame = file_name[:file_name.find('.sample')]
     print(flame)
     params = name2params(flame)
