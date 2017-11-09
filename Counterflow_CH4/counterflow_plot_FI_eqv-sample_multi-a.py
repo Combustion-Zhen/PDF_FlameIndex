@@ -49,13 +49,13 @@ flame_params['var'] = None
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 19.0
-margin_left   = 1.6
+margin_left   = 1.3
 margin_right  = 0.1
-margin_bottom = 1.2
-margin_top    = 0.8
+margin_bottom = 1.0
+margin_top    = 0.7
 space_width   = 0.
 space_height  = 0.
-ftsize        = 12
+ftsize        = 10
 
 font = {'family':'serif',
         'weight':'normal',
@@ -139,8 +139,7 @@ for var in variance:
         ax[-1,i].set_xlabel(r'$\tilde{Z}$')
         ax[0,i].set_title(models[i])
 
-    ax[0,-1].legend(fontsize=ftsize-2,
-                    loc=loc_legend,
+    ax[0,-1].legend(loc=loc_legend,
                     ncol=2,
                     handlelength=1.2,
                     handletextpad=0.3,

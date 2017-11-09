@@ -52,7 +52,7 @@ margin_bottom = 1.2
 margin_top    = 0.1
 space_width   = 0.3
 space_height  = 1.0
-ftsize        = 12
+ftsize        = 10
 
 font = {'family':'serif',
         'weight':'normal',
@@ -75,19 +75,16 @@ fig,axes = plt.subplots(figsize=cm2inch(plot_width,plot_height))
 axes.plot([0,Zp,2*Zp],[0,Zp*beta,0],
           'k--',linewidth=1)
 axes.text(0.015,0.1,
-          r'$\beta$',
-          fontsize=ftsize-2
+          r'$\beta$'
           )
 axes.text(0.1,0.1,
-          r'$-\beta$',
-          fontsize=ftsize-2
+          r'$-\beta$'
           )
 # Zst
 axes.plot([Zst,Zst],[0,Zp*beta],
           'k-.',linewidth=1)
 axes.text(Zst-0.01,0.1,
-          '$Z_{st}$',
-          fontsize=ftsize-2
+          '$Z_{st}$'
           )
 
 # get data
@@ -119,8 +116,7 @@ axes.text(0.085,cmax*0.92,
           a_str
           )
 
-axes.legend(fontsize=ftsize-2,
-            handlelength=1.2,
+axes.legend(handlelength=1.2,
             handletextpad=0.3,
             loc=(0,0.59),
             frameon=False

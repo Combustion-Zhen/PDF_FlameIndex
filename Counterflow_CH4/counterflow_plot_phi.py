@@ -35,8 +35,6 @@ flame_params['to'] = 300
 # plot
 # use TEX for interpreter
 plt.rc('text',usetex=True)
-# use serif font
-plt.rc('font',family='serif')
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 9.0
@@ -46,7 +44,13 @@ margin_bottom = 1.2
 margin_top    = 1.0
 space_width   = 0.3
 space_height  = 1.0
-ftsize        = 12
+ftsize        = 10
+
+font = {'family':'serif',
+        'weight':'normal',
+        'size':ftsize}
+
+plt.rc('font',**font)
 
 subplot_width = plot_width-margin_left-margin_right
 subplot_height = subplot_width * 0.9
@@ -83,9 +87,9 @@ for a in strain:
 
     for i, var in enumerate(var_names):
         axes[i].set_xlim(0.0,0.12)
-        axes[i].set_xlabel('$Z$',fontsize=ftsize)
-        axes[i].set_ylabel('${}$'.format(var),fontsize=ftsize)
-        axes[i].legend(fontsize=ftsize,frameon=False)
+        axes[i].set_xlabel('$Z$')
+        axes[i].set_ylabel('${}$'.format(var))
+        axes[i].legend(frameon=False)
         
         figs[i].subplots_adjust(
                 left = margin_left/plot_width,
