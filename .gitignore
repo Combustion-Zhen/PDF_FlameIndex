@@ -29,6 +29,7 @@
 *.IEM
 *.pyc
 *.csv
+*.cema
 
 *.swp
 CA.inCompress
