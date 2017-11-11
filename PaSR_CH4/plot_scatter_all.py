@@ -95,7 +95,11 @@ for tres in time_res:
                                 params['MIX'] = model
                                 case = params2name(params)
                                 file_name = '/'.join([model,case,dat_name])
-                                FI = np.genfromtxt(file_name)
+                                if os.path.exists(file_name):
+                                    FI = np.genfromtxt(file_name)
+                                else:
+                                    print(file_name)
+                                    FI = np.zeros((10,3))
 
                                 # 1000 pts at most
                                 ntotal = FI.shape[0]
