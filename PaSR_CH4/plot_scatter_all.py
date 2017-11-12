@@ -168,4 +168,5 @@ for tres in time_res:
                         plot_name = params2name(plot_params)
 
                         fig.savefig('{}/{}.pdf'.format(dst,plot_name))
+                        fig.savefig('{}/{}.eps'.format(dst,plot_name))
                         plt.close('all')
