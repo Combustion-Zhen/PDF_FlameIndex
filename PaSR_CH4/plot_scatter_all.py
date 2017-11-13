@@ -19,7 +19,7 @@ time_res = [1.e-2,]
 mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
 equiv_ratio_f = [4.76,]
 equiv_ratio = [1.0, 1.2, 1.4]
-Zf_variance = [0.02, 0.05, 0.1]
+Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
 dtmix = [0.01,]
 
 params = {}
@@ -33,6 +33,7 @@ params['phif'] = None
 
 dst = 'figs_scatter_all'
 dat_name = 'particle_fi.dat'
+full_name = 'fifull.op'
 
 # plot
 # figure and axes parameters
@@ -99,13 +100,23 @@ for tres in time_res:
                                     FI = np.genfromtxt(file_name)
                                 else:
                                     print(file_name)
-                                    FI = np.zeros((10,3))
+                                    FI = np.zeros((1000,3))
 
                                 # 1000 pts at most
                                 ntotal = FI.shape[0]
-                                if ntotal > 1000:
-                                    idx = np.random.randint(0,ntotal,500)
+                                if ntotal > 2000:
+                                    idx = np.random.randint(0,ntotal,1000)
                                     FI = FI[idx,:]
+
+                                if ntotal < 1000:
+                                    file_name = '/'.join([model,
+                                                          case,
+                                                          full_name])
+                                    FI = np.genfromtxt(file_name,
+                                                       usecols=(1,2,3))
+                                    idx = np.random.randint(0,FI.shape[0],1000)
+                                    FI = FI[idx,:]
+
                                 cplt = ax[i,j].scatter(
                                         FI[:,1],FI[:,2],c=FI[:,0],
                                         vmin=0,vmax=1,
@@ -168,5 +179,5 @@ for tres in time_res:
                         plot_name = params2name(plot_params)
 
                         fig.savefig('{}/{}.pdf'.format(dst,plot_name))
-                        fig.savefig('{}/{}.eps'.format(dst,plot_name))
+                        #fig.savefig('{}/{}.eps'.format(dst,plot_name))
                         plt.close('all')
