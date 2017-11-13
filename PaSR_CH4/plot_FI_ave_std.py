@@ -145,13 +145,13 @@ for tres in time_res:
                 ax.set_xscale('log')
                 ax.set_xlim(0.01,1)
                 ax.set_ylim(0,1)
-                ax.set_xlabel(r'$\tau_{mix}/\tau_{res}$')
+                ax.set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
                 ax.set_ylabel(r'$\mathrm{FI}$')
 
                 ax.text(
                         0.25,0.03,
                         ''.join([
-                            r'$\tau_{res}=0.01\;\mathrm{s}$',
+                            r'$\tau_{\mathrm{res}}\,=0.01\;\mathrm{s}$',
                             '\n',
                             r'$\varphi\quad\;\!=1.2$',
                             '\n',
