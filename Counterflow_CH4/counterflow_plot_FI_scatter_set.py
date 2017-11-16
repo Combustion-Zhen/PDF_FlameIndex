@@ -40,14 +40,14 @@ folder_params['phio'] = 0
 # plot
 # figure and axes parameters
 # total width is fixed, for one column plot
-plot_width    = 19.0
-margin_left   = 1.2
+plot_width    = 14.4
+margin_left   = 1.0
 margin_right  = 0.1
-margin_bottom = 1.0
-margin_top    = 0.8
+margin_bottom = 0.8
+margin_top    = 0.6
 space_width   = 0.
-space_height  = 2.5
-ftsize        = 10
+space_height  = 2.
+ftsize        = 7
 
 font = {'family':'serif',
         'weight':'normal',
@@ -117,7 +117,7 @@ ax[0,0].set_xlim(0.043,0.072)
 ax[1,0].set_xlim(0.005,0.11)
 ax[2,0].set_xlim(0.0,0.19)
 
-ax[0,0].text(0.0432,0.51,
+ax[0,0].text(0.0432,0.55,
              ''.join(['$a=$',
                       '{:g}'.format(strain[0]),
                       r'$\;\mathrm{s}^{-1}$',
@@ -130,7 +130,7 @@ ax[0,0].text(0.0432,0.51,
                       ])
              )
 
-ax[1,0].text(0.0055,0.51,
+ax[1,0].text(0.0055,0.55,
              ''.join(['$a=$',
                       '{:g}'.format(strain[1]),
                       r'$\;\mathrm{s}^{-1}$',
@@ -143,7 +143,7 @@ ax[1,0].text(0.0055,0.51,
                       ])
              )
 
-ax[2,0].text(0.001,0.51,
+ax[2,0].text(0.001,0.55,
              ''.join(['$a=$',
                       '{:g}'.format(strain[2]),
                       r'$\;\mathrm{s}^{-1}$',
@@ -167,12 +167,12 @@ fig.subplots_adjust(
     )
 
 cax = fig.add_axes([0.2/plot_width,
-                    (plot_height-0.6)/plot_height,
-                    3/plot_width,
-                    0.15/plot_height])
+                    (plot_height-0.4)/plot_height,
+                    2.5/plot_width,
+                    0.12/plot_height])
 clb = fig.colorbar(cplt,cax=cax,orientation='horizontal')
 clb.set_ticks([0.05,0.15,0.25])
-cax.tick_params(axis='x',pad=0.1,labelsize='small')
+cax.tick_params(axis='x',pad=0.1,length=2,labelsize='small')
 cax.xaxis.set_ticks_position('top')
 
 fig.savefig('{}/FI_scatter_set.pdf'.format(dst))

@@ -14,6 +14,9 @@ from counterflow_file import *
 
 models = np.array([['IEM','MC','EMST'],
                    ['IEMHYB','MCHYB','EMSTHYB']])
+colors = np.array([
+        ['tab:purple','tab:orange','tab:brown'],
+        ['tab:blue','tab:red','tab:green']])
 
 mft = ['o','^','s']
 mfc = ['w',None]
@@ -42,8 +45,8 @@ dat_name = 'pasrm.op'
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 6.7
-margin_left   = 1.0
-margin_right  = 0.25
+margin_left   = 1.03
+margin_right  = 0.22
 margin_bottom = 0.85
 margin_top    = 0.1
 space_width   = 0.
@@ -127,6 +130,7 @@ for tres in time_res:
                                     data[flag,0],
                                     data[flag,1],
                                     yerr=3*data[flag,2],
+                                    c=colors[i,j],
                                     fmt=mft[j],
                                     ms=4,
                                     mfc=mfc[i],
@@ -146,7 +150,7 @@ for tres in time_res:
                 ax.set_xlim(0.01,1)
                 ax.set_ylim(0,1)
                 ax.set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
-                ax.set_ylabel(r'$\mathrm{FI}$')
+                ax.set_ylabel(r'$\tilde{\mathrm{FI}}$')
 
                 ax.text(
                         0.25,0.03,

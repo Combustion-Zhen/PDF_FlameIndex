@@ -21,6 +21,7 @@ phif = 4.76
 eqv = 1.2
 #Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
 Zf_variance = [0.05, 0.1, 0.15]
+line_color = ['tab:blue','tab:red','tab:green']
 line_style = ['-.','-','--']
 dtmix = 0.01
 
@@ -95,21 +96,25 @@ for i, var in enumerate(Zf_variance):
     if len(rate.shape) == 1:
         continue
 
-    # calculate the ensemble averate
-    omega = np.mean(rate[-50:,1:-1],axis=0)
-    omstd = np.std(rate[-50:,1:-1],axis=0)
-    omave = np.mean(omt[-50:])
+    # calculate the ensemble average
+    omega = np.mean(rate[:,1:-1],axis=0)
+    omstd = np.std(rate[:,1:-1],axis=0)
+    omave = np.mean(omt[:])
 
     label = ''.join(
             [r'$\eta_{Z,r}=$',
              '{:g}'.format(var),
              '\n',
-             r'$\langle\omega\rangle\;\,=$',
+             r'$\langle\tilde{\omega}\rangle\;\,=$',
              '{:.4g}'.format(omave),
              r'$\;\mathrm{s}^{-1}$'
              ])
 
-    ax.plot(Z,omega,line_style[i],linewidth=1,label=label)
+    ax.plot(Z,omega,
+            c=line_color[i],
+            ls=line_style[i],
+            linewidth=1,
+            label=label)
     #ax.fill_between(Z,omega+omstd,omega-omstd,alpha=0.1)
 
 ax.text(
@@ -124,11 +129,15 @@ ax.text(
 
 ax.legend(
         frameon=False,
+        handlelength=3,
         labelspacing=1
         )
 ax.set_xlim(0.02,0.13)
 ax.set_xlabel(r'$Z$')
-ax.set_ylabel(r'$\langle\widetilde{\omega\vert Z}\rangle$')
+ax.set_ylabel(''.join([
+            r'$\langle\widetilde{\omega\vert Z}\rangle$',
+            r'$\;\left(\mathrm{s}^{-1}\right)$']),
+        labelpad=0.5)
 ax.set_yscale('log')
 
 fig.subplots_adjust(

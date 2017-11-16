@@ -40,14 +40,14 @@ flame_params['to'] = 300
 plt.rc('text',usetex=True)
 # figure and axes parameters
 # total width is fixed, for one column plot
-plot_width    = 19.0
-margin_left   = 1.3
-margin_right  = 1.6
-margin_bottom = 1.0
-margin_top    = 0.15
+plot_width    = 14.4
+margin_left   = 1.1
+margin_right  = 1.4
+margin_bottom = 0.8
+margin_top    = 0.1
 space_width   = 0.5
 space_height  = 1.0
-ftsize        = 10
+ftsize        = 7
 
 font = {'family':'serif',
         'weight':'normal',
@@ -142,7 +142,7 @@ for a in strain:
 
     # beta
     ax[0].plot([0,Zp],[0,Zp*beta],
-               'k--',linewidth=1)
+               'k:',linewidth=1)
     ax[0].text(0.017,0.1,
                r'$\beta$'
                )
@@ -166,7 +166,7 @@ for a in strain:
     #           r'$\varphi_l=0$')
 
     ax[0].annotate(
-            r'$\varphi_l=0.3$',
+            r'$\varphi_l\!=\!0.3$',
             xy = (0.034, 0.05),
             xytext= (0.033, 0.01),
             arrowprops=dict(arrowstyle="-",
@@ -174,7 +174,7 @@ for a in strain:
                             linewidth=0.5),
             )
     ax[0].annotate(
-            r'$\varphi_l=0.2$',
+            r'$\varphi_l\!=\!0.2$',
             xy = (0.025, 0.05),
             xytext= (0.023, 0.01),
             arrowprops=dict(arrowstyle="-",
@@ -182,7 +182,7 @@ for a in strain:
                             linewidth=0.5),
             )
     ax[0].annotate(
-            r'$\varphi_l=0.1$',
+            r'$\varphi_l\!=\!0.1$',
             xy = (0.017, 0.05),
             xytext= (0.013, 0.01),
             arrowprops=dict(arrowstyle="-",
@@ -190,7 +190,7 @@ for a in strain:
                             linewidth=0.5),
             )
     ax[0].annotate(
-            r'$\varphi_l=0.05$',
+            r'$\varphi_l\!=\!0.05$',
             xy = (0.013, 0.05),
             xytext= (0.001, 0.08),
             arrowprops=dict(arrowstyle="-",
@@ -198,7 +198,7 @@ for a in strain:
                             linewidth=0.5),
             )
     ax[0].annotate(
-            r'$\varphi_l=0$',
+            r'$\varphi_l\!=\!0$',
             xy = (0.005, 0.025),
             xytext= (0.001, 0.05),
             arrowprops=dict(arrowstyle="-",
@@ -208,7 +208,7 @@ for a in strain:
 
     # beta
     ax[1].plot([Zp,2*Zp],[Zp*beta,0],
-               'k--',linewidth=1)
+               'k:',linewidth=1)
     ax[1].text(0.1,0.1,
                r'$-\beta$'
                )
@@ -234,7 +234,7 @@ for a in strain:
                r'$\varphi_r=\mathrm{inf}$')
 
     ax[1].annotate(
-            r'$\varphi_r=1.3$',
+            r'$\varphi_r\!=\!1.3$',
             xy = (0.068, 0.06),
             xytext= (0.0685, 0.013),
             arrowprops=dict(arrowstyle="-",
@@ -242,7 +242,7 @@ for a in strain:
                             linewidth=0.5),
             )
     ax[1].annotate(
-            r'$\varphi_r=1.7$',
+            r'$\varphi_r\!=\!1.7$',
             xy = (0.0835, 0.06),
             xytext= (0.088, 0.013),
             arrowprops=dict(arrowstyle="-",
@@ -250,7 +250,7 @@ for a in strain:
                             linewidth=0.5),
             )
     ax[1].annotate(
-            r'$\varphi_r=2.3$',
+            r'$\varphi_r\!=\!2.3$',
             xy = (0.1055, 0.06),
             xytext= (0.118, 0.013),
             arrowprops=dict(arrowstyle="-",
@@ -269,7 +269,7 @@ for a in strain:
     ax[1].tick_params(axis='y',length=0)
 
     ax[0].text(
-            0.002,0.17,
+            0.002,0.15,
             ''.join([r'$\mathrm{CH}_4/\mathrm{Air}$',
                      '\n',
                      '$a\;\:=\;$',
@@ -281,7 +281,9 @@ for a in strain:
                      r'$T_r=300\;\mathrm{K}$',
                      '\n',
                      r'$T_l\,=300\;\mathrm{K}$'
-                     ]))
+                     ]),
+            linespacing=1.5
+            )
 
     ax[0].text(0.027,0.26,'(a)',fontweight='bold')
     ax[1].text(0.1,0.26,'(b)',fontweight='bold')
