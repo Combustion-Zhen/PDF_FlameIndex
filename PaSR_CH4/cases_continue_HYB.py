@@ -9,9 +9,11 @@ import shutil
 from subprocess import run
 from counterflow_file import params2name
 
-mixing_models = {'IEMHYB':4,
-                 'MCHYB':5,
-                 'EMSTHYB':6}
+#mixing_models = {'IEMHYB':4,
+#                 'MCHYB':5,
+#                 'EMSTHYB':6}
+mixing_models = {'EMSTHYB':6,
+                 'EMST':9}
 time_res = [1.e-2,]
 mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
 equiv_ratio_f = [4.76,]

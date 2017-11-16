@@ -1,10 +1,10 @@
 
 import subprocess
 
-date_start = '2017-11-08'
-date_end = '2017-11-09'
-jobid_lb = 4398649
-jobid_ub = 4399137
+date_start = '2017-11-12'
+date_end = '2017-11-13'
+jobid_lb = 4410415
+jobid_ub = 4410640
 
 # get job status
 sqout = subprocess.run(['sacct',
