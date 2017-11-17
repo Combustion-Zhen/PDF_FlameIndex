@@ -16,7 +16,7 @@ models = np.array([['IEM','MC','EMST'],
                    ['IEMHYB','MCHYB','EMSTHYB']])
 colors = np.array([
         ['tab:purple','tab:orange','tab:brown'],
-        ['tab:blue','tab:red','tab:green']])
+        ['tab:blue','tab:green','tab:red']])
 
 mft = ['o','^','s']
 mfc = ['w',None]
@@ -129,7 +129,7 @@ for tres in time_res:
                             ax.errorbar(
                                     data[flag,0],
                                     data[flag,1],
-                                    yerr=3*data[flag,2],
+                                    yerr=2*data[flag,2],
                                     c=colors[i,j],
                                     fmt=mft[j],
                                     ms=4,
