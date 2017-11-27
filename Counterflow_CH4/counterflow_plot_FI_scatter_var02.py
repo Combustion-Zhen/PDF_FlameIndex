@@ -15,10 +15,15 @@ from counterflow_file import *
 models = ['IEM','MC','EMST']
 
 strain = [100, 200, 300]
-variance = [0.05, 0.1, 0.2]
+#variance = [0.05, 0.05, 0.05]
+variance = 0.2
 phif = [1.3, 2.3, 4.8]
 
 Zst = 0.0551863
+
+xlim0 = 0.046
+xlim1 = 0.072
+xfac = 0.02
 
 dst = 'figs_sample_scatter'
 
@@ -80,7 +85,7 @@ for i in range(num_rows):
 
     flame_params['a'] = strain[i]
     flame_params['phif'] = phif[i]
-    flame_params['var'] = variance[i]
+    flame_params['var'] = variance
 
     folder_params['phif'] = phif[i]
 
@@ -113,48 +118,56 @@ for j in range(num_cols):
     ax[-1,j].set_xlabel('$Z$')
     ax[0,j].set_title(models[j])
 
-ax[0,0].set_xlim(0.043,0.072)
-ax[1,0].set_xlim(0.005,0.11)
-ax[2,0].set_xlim(0.0,0.19)
-
-ax[0,0].text(0.0432,0.55,
+xlim_lb = xlim0
+xlim_ub = xlim1
+ax[0,0].set_xlim(xlim_lb,xlim_ub)
+ax[0,0].text(xlim_lb+xfac*(xlim_ub-xlim_lb),0.55,
              ''.join(['$a=$',
                       '{:g}'.format(strain[0]),
                       r'$\;\mathrm{s}^{-1}$',
                       '\n',
                       r'$\eta_Z=$',
-                      '{:g}'.format(variance[0]),
+                      '{:g}'.format(variance),
                       '\n',
                       r'$\varphi_r=$',
                       '{:g}'.format(phif[0])
                       ])
              )
 
-ax[1,0].text(0.0055,0.55,
+
+xlim_ub = 0.11
+xlim_lb = Zst-(Zst-xlim0)/(xlim1-Zst)*(xlim_ub-Zst)
+ax[1,0].set_xlim(xlim_lb,xlim_ub)
+ax[1,0].text(xlim_lb+xfac*(xlim_ub-xlim_lb),0.55,
              ''.join(['$a=$',
                       '{:g}'.format(strain[1]),
                       r'$\;\mathrm{s}^{-1}$',
                       '\n',
                       r'$\eta_Z=$',
-                      '{:g}'.format(variance[1]),
+                      '{:g}'.format(variance),
                       '\n',
                       r'$\varphi_r=$',
                       '{:g}'.format(phif[1])
                       ])
              )
 
-ax[2,0].text(0.001,0.55,
+
+xlim_ub = 0.14
+xlim_lb = Zst-(Zst-xlim0)/(xlim1-Zst)*(xlim_ub-Zst)
+ax[2,0].set_xlim(xlim_lb,xlim_ub)
+ax[2,0].text(xlim_lb+xfac*(xlim_ub-xlim_lb),0.55,
              ''.join(['$a=$',
                       '{:g}'.format(strain[2]),
                       r'$\;\mathrm{s}^{-1}$',
                       '\n',
                       r'$\eta_Z=$',
-                      '{:g}'.format(variance[2]),
+                      '{:g}'.format(variance),
                       '\n',
                       r'$\varphi_r=$',
                       '{:g}'.format(phif[2])
                       ])
              )
+ax[2,0].set_xticks([0.03, 0.06, 0.09, 0.12])
 
 
 fig.subplots_adjust(
@@ -166,22 +179,16 @@ fig.subplots_adjust(
     hspace = space_height/plot_height
     )
 
-cax = fig.add_axes([0.2/plot_width,
+cax = fig.add_axes([0.5/plot_width,
                     (plot_height-0.4)/plot_height,
-                    2.5/plot_width,
+                    2.2/plot_width,
                     0.12/plot_height])
 clb = fig.colorbar(cplt,cax=cax,orientation='horizontal')
 clb.set_ticks([0.05,0.15,0.25])
 cax.tick_params(axis='x',pad=0.1,length=2,labelsize='small')
 cax.xaxis.set_ticks_position('top')
+fig.text(0.2/plot_width,(plot_height-0.3)/plot_height,'$c$')
 
-fig.savefig('{}/FI_scatter_set.pdf'.format(dst))
-fig.savefig('{}/FI_scatter_set.eps'.format(dst))
+fig.savefig('{}/FI_scatter_var02.pdf'.format(dst))
+fig.savefig('{}/FI_scatter_var02.eps'.format(dst))
 plt.close('all')
-
-
-
-
-
-
-

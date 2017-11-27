@@ -3,6 +3,7 @@ Zhen Lu 2017/10/27
 plot counterflow flames with different strain rate
 """
 
+import os
 import numpy as np
 import glob
 import matplotlib as mpl
@@ -52,6 +53,8 @@ for case in glob.glob('*.xml'):
     data = np.genfromtxt(file_name,skip_header=3,names=True)
 
     if np.max(data['T']) < 500. :
+        os.remove('{}.dat'.format(flame))
+        os.remove('{}.xml'.format(flame))
         continue
 
     for i, var in enumerate(var_names):

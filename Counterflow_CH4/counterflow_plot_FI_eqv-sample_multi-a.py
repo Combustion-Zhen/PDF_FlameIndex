@@ -20,8 +20,8 @@ loc_legend = (0., 0.48)
 
 Zst = 0.0551863
 
-#variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
-variance = [0.05,]
+variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
+#variance = [0.05,]
 eqv_ratio = [0.8,0.9,1.0,1.1,1.2,1.3,1.4]
 
 phif   = [1.3, 1.7, 2.3, 3.2, 4.8]
@@ -145,6 +145,7 @@ for var in variance:
         ax[-1,i].set_xlabel(r'$\tilde{Z}$')
         ax[0,i].set_title(models[i])
 
+    ax[0,0].set_ylim(0.15,0.85)
     ax[0,-1].legend(loc=loc_legend,
                     ncol=2,
                     handlelength=3,
