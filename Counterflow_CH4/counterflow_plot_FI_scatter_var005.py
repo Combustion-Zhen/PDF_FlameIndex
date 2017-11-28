@@ -81,6 +81,8 @@ fig, ax = plt.subplots(num_rows,num_cols,
                        sharex='row',sharey=True,
                        figsize=cm2inch(plot_width,plot_height))
 
+axsb = [0.832, 0.54, 0.248]
+
 for i in range(num_rows):
 
     flame_params['a'] = strain[i]
@@ -104,13 +106,32 @@ for i in range(num_rows):
         # 1000 pts at largest
         ntotal = FI.shape[0]
         if ntotal > 1000:
+            # get PDF of FI for EMST
+            hist, bin_edges = np.histogram(
+                    FI[:,-1],
+                    bins=30,
+                    range=(0,1),
+                    density=True
+                    )
+
+            rect = 0.691, axsb[i], 0.09, 0.08
+            axs = fig.add_axes(rect)
+            axs.set_xlim(0,1)
+            axs.set_xticks([0,1])
+            axs.set_yticks([])
+            axs.tick_params(length=0,pad=0.2,labelsize=6)
+            axs.spines["right"].set_color('none')
+            axs.spines["top"].set_color('none')
+            axs.set_facecolor('none')
+
+            axs.plot((bin_edges[:-1]+bin_edges[1:])/2,hist,'k-',lw=1)
+
             idx = np.random.randint(0,ntotal,200)
             FI = FI[idx,:]
 
         cplt = ax[i,j].scatter(FI[:,0],FI[:,2],c=FI[:,1],
                                vmin=0,vmax=0.28,
                                marker='.',cmap='coolwarm')
-
         ax[i,j].set_ylim(0,1)
     ax[i,0].set_ylabel(r'$\mathrm{FI}$')
 
@@ -133,7 +154,6 @@ ax[0,0].text(xlim_lb+xfac*(xlim_ub-xlim_lb),0.55,
                       '{:g}'.format(phif[0])
                       ])
              )
-
 
 xlim_ub = 0.11
 xlim_lb = Zst-(Zst-xlim0)/(xlim1-Zst)*(xlim_ub-Zst)
