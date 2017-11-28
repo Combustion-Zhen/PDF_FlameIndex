@@ -46,8 +46,8 @@ mixing_models = {'IEMHYB':4,
 time_res = [1.e-2,]
 mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
 equiv_ratio_f = [4.76,]
-equiv_ratio = [1.0, 1.2, 1.4]
-Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
+equiv_ratio = [1.2,]
+Zf_variance = [0.02, 0.05, 0.1, 0.15]
 dtmix = [0.01,]
 
 dtres = 0.05
