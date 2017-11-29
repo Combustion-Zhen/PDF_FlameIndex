@@ -1,5 +1,6 @@
 &mixnml
 n=1000
 mxmode=9
+beta_transit=.true.
 defC=2
 /
