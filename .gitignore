@@ -41,10 +41,10 @@ CA.inCompress
 */test*
 */MIX-*
 */__pycache__
-PaSR_CH4/IEM
-PaSR_CH4/MC
-PaSR_CH4/EMST
-PaSR_CH4/IEMHYB
-PaSR_CH4/MCHYB
-PaSR_CH4/EMSTHYB
-PaSR_CH4/beta_*
+*/IEM
+*/MC
+*/EMST
+*/IEMHYB
+*/MCHYB
+*/EMSTHYB
+*/beta_*
