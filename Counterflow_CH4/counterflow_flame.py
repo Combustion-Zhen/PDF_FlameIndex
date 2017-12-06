@@ -85,7 +85,7 @@ def counterflow_flame(mech='gri30.xml', transport='Multi',
         comp_o[k] = v
         comp_f[k] = v*stoich_nu/phi_f
 
-    comp_o[fuel_name] = phi_o
+    comp_o[fuel_name] = phi_o/stoich_nu
 
 # fuel and oxidizer streams have the same velocity
     u = strain_rate*width/2.
