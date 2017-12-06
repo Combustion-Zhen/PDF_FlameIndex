@@ -1,5 +1,5 @@
 """
-Zhen Lu 2017/11/06
+Zhen Lu 2017/11/30
 
 plot the FI of constructed subgrid with respect to different sampling
 Double columns plot for three mixing models
@@ -16,19 +16,19 @@ def equiv2Z( Phi, Zst ):
     Z = a/(1.+a)
     return Z
 
-loc_legend = (0., 0.55)
+loc_legend = (0., 0.5)
 
 Zst = 0.0551863
 
-variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
-#variance = [0.05,]
+#variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
+variance = [0.1,]
 eqv_ratio = [0.8,0.9,1.0,1.1,1.2,1.3,1.4]
 
 phif   = [1.3, 1.7, 2.3, 3.2, 4.8]
 line_color = ['tab:blue','tab:red','tab:green','tab:purple','tab:orange']
 line_style = ['-','-.','--','-','-.']
 line_width = [2,2,2,1,1]
-strain = [100, 200, 300]
+strain = [200,]
 
 dst = 'figs_sample_line'
 
@@ -53,10 +53,10 @@ flame_params['var'] = None
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 14.4
-margin_left   = 1.1
+margin_left   = 0.9
 margin_right  = 0.1
 margin_bottom = 0.8
-margin_top    = 0.5
+margin_top    = 0.1
 space_width   = 0.
 space_height  = 0.5
 ftsize        = 7
@@ -88,15 +88,17 @@ for var in variance:
     flame_params['var'] = var
 
     # generate figure and axes
-    fig, ax = plt.subplots(num_rows,num_cols,sharex=True,sharey=True,
-                           figsize=cm2inch(plot_width,plot_height))
+    fig, ax = plt.subplots(
+            num_rows,num_cols,
+            sharex=True,sharey=True,
+            squeeze=False,
+            figsize=cm2inch(plot_width,plot_height))
 
-    fig.text(0.05,0.97,''.join([r'$\eta_Z=$','{:g}'.format(var)]))
 
     for i in range(num_rows):
         for j in range(num_cols):
             ax[i,j].plot([0,1],[0.5,0.5],'k:',linewidth=1)
-        ax[i,1].text(0.045,0.52,r'$\tilde{\mathrm{FI}}=0$')
+        #ax[i,1].text(0.045,0.52,r'$\tilde{\mathrm{FI}}=0$')
 
     for i, a in enumerate(strain):
         flame_params['a'] = a
@@ -134,18 +136,19 @@ for var in variance:
             
         ax[i,0].set_ylabel(r'$\tilde{\mathrm{FI}}$')
 
-        ax[i,0].text(0.045,0.9,
+        ax[i,0].text(0.045,0.8,
                      ''.join([r'$a=$',
                       '{:g}'.format(a),
-                      r'$\;\mathrm{s}^{-1}$']))
-
+                      r'$\;\mathrm{s}^{-1}$',
+                      '\n',
+                      r'$\eta_Z=$',
+                      '{:g}'.format(var)]))
 
     for i in range(num_cols):
         ax[-1,i].set_xlim(0.042,0.078)
         ax[-1,i].set_xlabel(r'$\tilde{Z}$')
-        ax[0,i].set_title(models[i])
-        for j in range(num_rows-1):
-            ax[j,i].tick_params('x',length=0)
+        ax[-1,i].text(0.045,0.6,models[i])
+        #ax[0,i].set_title(models[i])
 
 
     ax[0,0].set_ylim(0.35,1)
@@ -170,7 +173,7 @@ for var in variance:
         hspace = space_height/plot_height
         )
 
-    fig.savefig('{0}/FI_var{2:g}.pdf'.format(dst,a,var))
-    fig.savefig('{0}/FI_var{2:g}.eps'.format(dst,a,var))
+    fig.savefig('{0}/FI_var{2:g}_a200.pdf'.format(dst,a,var))
+    fig.savefig('{0}/FI_var{2:g}_a200.eps'.format(dst,a,var))
     # close figures to avoid warnings
     plt.close('all')

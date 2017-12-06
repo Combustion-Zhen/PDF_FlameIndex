@@ -14,9 +14,11 @@ from counterflow_file import *
 
 models = np.array([['IEM','EMST'],
                    ['IEMHYB','EMSTHYB']])
+modeln = np.array([['IEM','EMST'],
+                   ['IEM-FI','EMST-FI']])
 colors = np.array([
-        ['tab:purple','tab:orange','tab:brown'],
-        ['tab:blue','tab:green','tab:red']])
+        ['tab:orange','tab:purple'],
+        ['tab:blue','tab:red']])
 
 mft = ['o','^','s']
 mfc = ['w',None]
@@ -45,12 +47,12 @@ dat_name = 'pasrm.op'
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 6.7
-margin_left   = 1.03
+margin_left   = 1.3
 margin_right  = 0.22
 margin_bottom = 0.85
 margin_top    = 0.1
 space_width   = 0.
-space_height  = 0.
+space_height  = 0.5
 ftsize        = 7
 
 font = {'family':'serif',
@@ -63,13 +65,13 @@ plt.rc('text',usetex=True)
 plt.rc('font',**font)
 
 num_cols = 1
-num_rows = 1
+num_rows = 2
 
 subplot_width = (plot_width
                 -margin_left
                 -margin_right
                 -(num_cols-1)*space_width)/num_cols
-subplot_height = subplot_width * 0.8
+subplot_height = subplot_width * 0.4
 
 plot_height = (num_rows*subplot_height
               +margin_bottom
@@ -89,13 +91,15 @@ for tres in time_res:
                 # plot against tmix
 
                 fig, ax = plt.subplots(
+                        num_rows,num_cols,sharex=True,
                         figsize=cm2inch(plot_width,plot_height))
 
-                ax.plot([0,1],[0.5,0.5],'k--',linewidth=1)
+                ax[0].plot([0,1],[0.5,0.5],'k--',linewidth=1)
 
                 for i in range(2):
                     for j in range(2):
                         model = models[i,j]
+                        label = modeln[i,j]
                         params['MIX'] = model
 
 
@@ -118,11 +122,11 @@ for tres in time_res:
                                     print(file_name)
                                     continue
 
-                                FI_ave = np.mean(FI[-50:])
-                                FI_rms = np.std(FI[-50:])
+                                FI_ave = np.mean(FI[-70:])
+                                FI_rms = np.std(FI[-70:])
 
-                                T_ave = np.mean(T[-50:])
-                                T_rms = np.std(T[-50:])
+                                T_ave = np.mean(T[-70:])
+                                T_rms = np.std(T[-70:])
 
                                 data[k,0] = tmix_ratio
                                 data[k,1] = FI_ave
@@ -132,7 +136,7 @@ for tres in time_res:
 
                             flag = data[:,1] > 0.05
                             #ax[i,j].plot(data[flag,0],data[flag,1],label='{:g}'.format(phi))
-                            ax.errorbar(
+                            ax[0].errorbar(
                                     data[flag,0],
                                     data[flag,1],
                                     yerr=2*data[flag,2],
@@ -144,28 +148,44 @@ for tres in time_res:
                                     capsize=3,
                                     capthick=1,
                                     elinewidth=1,
-                                    label=model)
-                ax.legend(
-                        loc=(0.36,0.74),
+                                    label=label)
+
+                            ax[1].errorbar(
+                                    data[flag,0],
+                                    data[flag,3],
+                                    yerr=2*data[flag,4],
+                                    c=colors[i,j],
+                                    fmt=mft[j],
+                                    ms=4,
+                                    mfc=mfc[i],
+                                    mew=0.5,
+                                    capsize=3,
+                                    capthick=1,
+                                    elinewidth=1,
+                                    label=label)
+
+                ax[1].legend(
                         handletextpad=0.05,
                         columnspacing=0.2,
                         ncol=2,
                         frameon=False
                         )
-                ax.set_xscale('log')
-                ax.set_xlim(0.01,1)
-                #ax.set_ylim(0,1)
-                ax.set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
-                ax.set_ylabel(r'$\tilde{\mathrm{FI}}$')
+                ax[0].set_xscale('log')
+                ax[0].set_xlim(0.01,1)
+                ax[0].set_ylim(0.45,1)
+                ax[0].set_yticks([0.5,0.75,1])
+                ax[0].set_yticklabels(['0','0.5','1'])
+                ax[1].set_ylim(1000,2000)
+                ax[1].set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
+                ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$',labelpad=10)
+                ax[1].set_ylabel(r'$\langle\tilde{T}\rangle\;(\mathrm{K})$')
 
-                ax.text(
-                        0.25,0.03,
+                ax[0].text(
+                        0.23,0.8,
                         ''.join([
                             r'$\tau_{\mathrm{res}}\,=0.01\;\mathrm{s}$',
                             '\n',
                             r'$\varphi\quad\;\!=1.2$',
-                            '\n',
-                            r'$\langle\varphi_r\rangle\!=4.76$',
                             '\n',
                             r'$\eta_{Z,r}\!\!\:=\;\:\!$',
                             '{:g}'.format(var)]))

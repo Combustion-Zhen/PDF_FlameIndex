@@ -16,7 +16,7 @@ models = np.array(['IEM','IEMHYB'])
 
 time_res = [1.e-2,]
 #mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
-mix_res_ratio = [0.1,]
+mix_res_ratio = [0.2,]
 equiv_ratio_f = [4.76,]
 #equiv_ratio = [1.0, 1.2, 1.4]
 equiv_ratio = [1.2,]
@@ -65,7 +65,7 @@ subplot_width = (plot_width
                 -margin_left
                 -margin_right
                 -(num_cols-1)*space_width)/num_cols
-subplot_height = subplot_width * 0.4
+subplot_height = subplot_width *0.4
 
 plot_height = (num_rows*subplot_height
               +margin_bottom
@@ -91,7 +91,6 @@ for i in range(2):
 
     cplt = ax[i].scatter(
             FI[:,1],FI[:,2],c=FI[:,0],
-            s=3,
             vmin=0,vmax=1,
             marker='.',
             cmap='coolwarm')
@@ -119,15 +118,13 @@ fig.subplots_adjust(
         )
 
 ax[0].text(
-        0.25,0.14,
+        0.25,0.15,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=0.01\;\mathrm{s}$',
             '\n',
             r'$\tau_{\mathrm{mix}}\!=2\;\mathrm{ms}$',
             '\n',
             r'$\varphi\quad\;\!=1.2$',
-            '\n',
-            r'$\langle\varphi_r\rangle\!=4.76$',
             '\n',
             r'$\eta_{Z,r}\!\!\:=0.1$'
             ]))

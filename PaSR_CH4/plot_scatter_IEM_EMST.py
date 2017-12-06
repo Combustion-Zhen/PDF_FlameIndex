@@ -14,12 +14,17 @@ from counterflow_file import *
 
 models = np.array([['IEM','EMST'],
                    ['IEMHYB','EMSTHYB']])
+modeln = np.array([['IEM','EMST'],
+                   ['IEM-FI','EMST-FI']])
 
 time_res = [1.e-2,]
-mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
+#mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
+mix_res_ratio = [0.2,]
 equiv_ratio_f = [4.76,]
-equiv_ratio = [1.0, 1.2,]
-Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
+#equiv_ratio = [1.0, 1.2,]
+#Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
+equiv_ratio = [1.2,]
+Zf_variance = [0.05,]
 dtmix = [0.01,]
 
 params = {}
@@ -31,21 +36,21 @@ params['Zfvar'] = None
 params['dtmix'] = None
 params['phif'] = None
 
-dst = 'figs_scatter_all'
+dst = 'figs_scatter'
 dat_name = 'particle_fi.dat'
 full_name = 'fifull.op'
 
 # plot
 # figure and axes parameters
 # total width is fixed, for one column plot
-plot_width    = 19.0
-margin_left   = 1.2
+plot_width    = 14.4
+margin_left   = 1.0
 margin_right  = 0.1
-margin_bottom = 1.0
+margin_bottom = 0.8
 margin_top    = 0.8
-space_width   = 0.
-space_height  = 0.
-ftsize        = 10
+space_width   = 0.5
+space_height  = 0.5
+ftsize        = 7
 
 font = {'family':'serif',
         'weight':'normal',
@@ -123,14 +128,19 @@ for tres in time_res:
                                         marker='.',
                                         cmap='coolwarm')
 
-                                ax[i,j].text(0.3,0.25,model)
+                                ax[i,j].text(0.3,0.25,modeln[i,j])
                                 ax[i,j].set_ylim(0,0.31)
                             ax[i,0].set_ylabel('$c$')
 
-                        ax[0,0].set_xlim(0,0.48)
+                        ax[0,0].set_xlim(0,0.38)
+                        ax[0,0].set_ylim(0,0.32)
+
 
                         for j in range(num_cols):
                             ax[-1,j].set_xlabel('$Z$')
+                            ax[0,j].tick_params('x',length=0)
+                        for j in range(num_rows):
+                            ax[j,-1].tick_params('y',length=0)
 
                         fig.subplots_adjust(
                                 left = margin_left/plot_width,
@@ -145,10 +155,10 @@ for tres in time_res:
                                  ''.join([
                                      r'$\tau_{res}=$',
                                      '{:g}'.format(tres),
-                                     r'$\;\mathrm{s}^{-1}\quad$',
+                                     r'$\;\mathrm{s}\quad$',
                                      r'$\tau_{mix}=$',
                                      '{:g}'.format(tmix),
-                                     r'$\;\mathrm{s}^{-1}\quad$',
+                                     r'$\;\mathrm{s}\quad$',
                                      r'$\varphi=$',
                                      '{:g}'.format(phi),
                                      r'$\quad$',
@@ -164,8 +174,9 @@ for tres in time_res:
                                             3/plot_width,
                                             0.15/plot_height])
                         clb = fig.colorbar(cplt,cax=cax,orientation='horizontal')
-                        #clb.set_ticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
-                        cax.tick_params(axis='x',length=3,labelsize='small')
+                        clb.set_ticks([0, 0.25, 0.5, 0.75, 1.0])
+                        clb.set_ticklabels(['-1','-0.5','0','0.5','1'])
+                        cax.tick_params(axis='x',length=3)
                         cax.xaxis.set_ticks_position('top')
                         fig.text(1.4/plot_width,
                                  (plot_height-0.6)/plot_height,
@@ -178,6 +189,6 @@ for tres in time_res:
                         del plot_params['phif']
                         plot_name = params2name(plot_params)
 
-                        fig.savefig('{}/{}.pdf'.format(dst,plot_name))
+                        fig.savefig('{}/{}.eps'.format(dst,plot_name))
                         #fig.savefig('{}/{}.eps'.format(dst,plot_name))
                         plt.close('all')

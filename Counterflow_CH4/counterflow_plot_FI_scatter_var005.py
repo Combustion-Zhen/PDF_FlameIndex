@@ -114,10 +114,11 @@ for i in range(num_rows):
                     density=True
                     )
 
-            rect = 0.691, axsb[i], 0.09, 0.08
+            rect = 0.695, axsb[i], 0.09, 0.08
             axs = fig.add_axes(rect)
             axs.set_xlim(0,1)
-            axs.set_xticks([0,1])
+            axs.set_xticks([0,0.5,1])
+            axs.set_xticklabels(['-1','0','1'])
             axs.set_yticks([])
             axs.tick_params(length=0,pad=0.2,labelsize=6)
             axs.spines["right"].set_color('none')
@@ -134,6 +135,8 @@ for i in range(num_rows):
                                marker='.',cmap='coolwarm')
         ax[i,j].set_ylim(0,1)
     ax[i,0].set_ylabel(r'$\mathrm{FI}$')
+    ax[i,0].set_yticks([0,0.5,1])
+    ax[i,0].set_yticklabels(['-1','0','1'])
 
 for j in range(num_cols):
     ax[-1,j].set_xlabel('$Z$')
