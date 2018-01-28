@@ -1,11 +1,11 @@
 #!/bin/bash -l
-#SBATCH -p defaultq
-#SBATCH --ntasks=1         # Specify number of tasks, i.e. cores you need
-#SBATCH --exclusive          # To ensure exclusive access to nodes (use only when required)
-#SBATCH -t 1-24:00           # Specify Runtime in D-HH:MM, for e.g 24 hrs.
-#SBATCH -J flamelet           # Specify the job name syntax ApplicatioName-JobName
+#SBATCH -n 1                # Specify number of tasks, i.e. cores you need
+#SBATCH -t 0-24:00          # Specify Runtime in D-HH:MM, for e.g 24 hrs.
+#SBATCH -J flamelet         # Specify the job name syntax ApplicatioName-JobName
 #SBATCH -o job%J.out        # Specify File to which standard out will be written
 #SBATCH -e job%J.err        # Specify File to which standard err will be written
+#SBATCH -C intel
+##SBATCH --exclusive         # To ensure exclusive access to nodes (use only when required)
 
 echo Master node for this job is: $HOSTNAME
 echo Working directory is: $PWD
