@@ -166,7 +166,7 @@ ax[0].text(0.05,0.1,
 #           r'$\varphi_l=0$')
 
 ax[0].annotate(
-        r'$\varphi_l\!=\!0.3$',
+        r'$\varphi_l\!=\!0.6$',
         xy = (0.034, 0.05),
         xytext= (0.033, 0.01),
         arrowprops=dict(arrowstyle="-",
@@ -174,7 +174,7 @@ ax[0].annotate(
                         linewidth=0.5),
         )
 ax[0].annotate(
-        r'$\varphi_l\!=\!0.2$',
+        r'$\varphi_l\!=\!0.4$',
         xy = (0.025, 0.05),
         xytext= (0.023, 0.01),
         arrowprops=dict(arrowstyle="-",
@@ -182,7 +182,7 @@ ax[0].annotate(
                         linewidth=0.5),
         )
 ax[0].annotate(
-        r'$\varphi_l\!=\!0.1$',
+        r'$\varphi_l\!=\!0.2$',
         xy = (0.017, 0.05),
         xytext= (0.013, 0.01),
         arrowprops=dict(arrowstyle="-",
@@ -190,7 +190,7 @@ ax[0].annotate(
                         linewidth=0.5),
         )
 ax[0].annotate(
-        r'$\varphi_l\!=\!0.05$',
+        r'$\varphi_l\!=\!0.1$',
         xy = (0.013, 0.05),
         xytext= (0.001, 0.08),
         arrowprops=dict(arrowstyle="-",

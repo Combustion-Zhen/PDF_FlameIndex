@@ -146,7 +146,7 @@ ax0.xaxis.set_label_coords(0.6,-0.09)
 ## text
 #
 ax0.annotate(
-        r'$(0.3,\infty)$',
+        r'$(0.6,\infty)$',
         xy = (0.031, 0.025),
         xytext= (0.04, 0.02),
         arrowprops=dict(arrowstyle="->",
@@ -154,7 +154,7 @@ ax0.annotate(
                         linewidth=0.5),
         )
 ax0.annotate(
-        r'$(0.2,\infty)$',
+        r'$(0.4,\infty)$',
         xy = (0.023, 0.054),
         xytext= (0.04, 0.049),
         arrowprops=dict(arrowstyle="->",
@@ -162,7 +162,7 @@ ax0.annotate(
                         linewidth=0.5),
         )
 ax0.annotate(
-        r'$(0.1,\infty)$',
+        r'$(0.2,\infty)$',
         xy = (0.017, 0.05),
         xytext= (0.002, 0.14),
         arrowprops=dict(arrowstyle="->",
