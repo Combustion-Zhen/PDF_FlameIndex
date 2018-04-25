@@ -12,10 +12,16 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 from counterflow_file import *
 
+"""
 models = np.array([['IEM','EMST'],
                    ['IEMHYB','EMSTHYB']])
 modeln = np.array([['IEM','EMST'],
                    ['IEM-FI','EMST-FI']])
+"""
+models = np.array([['IEM','EMST'],
+                   ['IEM','EMST']])
+modeln = np.array([['IEM','EMST'],
+                   ['IEM','EMST']])
 colors = np.array([
         ['tab:orange','tab:purple'],
         ['tab:blue','tab:red']])
@@ -24,11 +30,11 @@ mft = ['o','^','s']
 mfc = ['w',None]
 
 time_res = [1.e-2,]
-mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
+mix_res_ratio = [0.02, 0.035, 0.06, 0.1, 0.15, 0.3, 0.5]
 equiv_ratio_f = [4.76,]
 #equiv_ratio = [1.0, 1.2, 1.4]
 equiv_ratio = [1.2,]
-Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
+Zf_variance = [0.1,]
 dtmix = [0.01,]
 
 params = {}
@@ -40,7 +46,7 @@ params['Zfvar'] = None
 params['dtmix'] = None
 params['phif'] = None
 
-dst = 'figs_FI_ave'
+dst = '.'
 dat_name = 'pasrm.op'
 
 # plot
@@ -113,7 +119,7 @@ for tres in time_res:
                                 params['tmix'] = tmix_ratio
 
                                 case = params2name(params)
-                                file_name = '/'.join([model,case,dat_name])
+                                file_name = '/'.join([case,dat_name])
 
                                 if os.path.exists(file_name):
                                     FI = np.genfromtxt(file_name,usecols=(3,))
@@ -122,11 +128,11 @@ for tres in time_res:
                                     print(file_name)
                                     continue
 
-                                FI_ave = np.mean(FI[-300:])
-                                FI_rms = np.std(FI[-300:])
+                                FI_ave = np.mean(FI[:])
+                                FI_rms = np.std(FI[:])
 
-                                T_ave = np.mean(T[-300:])
-                                T_rms = np.std(T[-300:])
+                                T_ave = np.mean(T[:])
+                                T_rms = np.std(T[:])
 
                                 data[k,0] = tmix_ratio
                                 data[k,1] = FI_ave

@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH -A k1164
+#SBATCH -A k1242
 #SBATCH -J @JOBNAME@
 #SBATCH -n 1
-#SBATCH -t 1-00:00:00
+#SBATCH -t 3-00:00:00
 #SBATCH -e job%J.err
 #SBATCH -o job%J.out
 #SBATCH -p workq

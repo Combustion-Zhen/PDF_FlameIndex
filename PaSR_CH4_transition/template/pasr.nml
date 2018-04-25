@@ -1,6 +1,6 @@
 &pasrnml
 n=1000
-anres=30
+anres=20
 tres=@TRES@
 tmix=@TMIX@
 flstrmd=0.0, 1.0, @AIRRATE@
@@ -8,11 +8,12 @@ cdtrp=@CDTRP@
 cdtmix=@CDTMIX@
 part_in=@RESTART@
 part_out=.true.
-full_op=.false.
+full_op=@FULLOP@
+full_fi=@FULLFI@
 iblock=10000
 isave=@SAVESTEP@
-etola=1.e-5
-stomby=800.
+etola=1.e-4
+stomby=400.
 mxmode=@MIXMODEL@
 defC=2
 beta_transit=.true.

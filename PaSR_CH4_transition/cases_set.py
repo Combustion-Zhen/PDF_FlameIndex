@@ -8,7 +8,7 @@ import numpy as np
 import re
 import os
 import shutil
-from subprocess import run
+import subprocess
 from counterflow_file import params2name
 
 global Zst
@@ -24,37 +24,23 @@ def air_flow_rate( Zf, Z ):
 # constants
 Zst = 0.05518
 
-#mixing_models = {'IEM':7,'MC':8,'EMST':9}
-#time_res = [4.e-3, 1.e-2]
-#mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
-#equiv_ratio_f = [4.76,]
-#equiv_ratio = [1.0, 1.2, 1.4]
-#Zf_variance = [0.01, 0.02, 0.05, 0.1]
-#dtmix = [0.01,]
-
-#mixing_models = {'IEM':7,'MC':8,'EMST':9}
-#time_res = [1.e-2,]
-#mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
-#equiv_ratio_f = [2.,]
-#equiv_ratio = [1.0, 1.2, 1.4,]
-#Zf_variance = [0.02, 0.04]
-#dtmix = [0.01,]
-
 mixing_models = {'IEMHYB':4,
                  'EMSTHYB':6,
                  'IEM':7,
-                 'MC':8,
                  'EMST':9}
+
 time_res = [1.e-2,]
-mix_res_ratio = [0.02, 0.05, 0.1, 0.2, 0.5]
+mix_res_ratio = [0.02, 0.035, 0.06, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
 equiv_ratio_f = [4.76,]
-equiv_ratio = [1.0, 1.2]
-Zf_variance = [0.01, 0.02, 0.05, 0.1, 0.15]
+equiv_ratio = [1.0,]
+Zf_variance = [0.1,]
 dtmix = [0.01,]
 
-dtres = 0.05
-isave = 50
+dtres = 0.01
+isave = 100
 restart = '.false.'
+full_op = '.false.'
+full_fi = '.false.'
 
 with open('template/pasr.nml','r') as template:
     lines_nml = template.readlines();
@@ -122,6 +108,12 @@ for mix_k, mix_v in mixing_models.items():
                                     line = re.sub('@RESTART@',
                                             restart,
                                             line)
+                                    line = re.sub('@FULLOP@',
+                                            full_op,
+                                            line)
+                                    line = re.sub('@FULLFI@',
+                                            full_fi,
+                                            line)
                                     nml.write(line)
                             # job script
                             with open('run_shaheen.sh','w') as job:
@@ -131,6 +123,7 @@ for mix_k, mix_v in mixing_models.items():
                                             line)
                                     job.write(line)
 
-                            run(['sbatch','run_shaheen.sh'])
+                            #subprocess.run(['sbatch','run_shaheen.sh'])
+                            subprocess.Popen('PaSR_PPF_MIX &> pasr.op',shell=True)
 
                             os.chdir('..')

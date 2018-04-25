@@ -118,11 +118,11 @@ for tres in time_res:
                                     print(file_name)
                                     continue
 
-                                FI_ave = np.mean(FI[-50:])
-                                FI_rms = np.std(FI[-50:])
+                                FI_ave = np.mean(FI[-200:])
+                                FI_rms = np.std(FI[-200:])
 
-                                T_ave = np.mean(T[-50:])
-                                T_rms = np.std(T[-50:])
+                                T_ave = np.mean(T[-200:])
+                                T_rms = np.std(T[-200:])
 
                                 data[k,0] = tmix_ratio
                                 data[k,1] = FI_ave
