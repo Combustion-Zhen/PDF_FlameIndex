@@ -30,18 +30,13 @@ def weighted_avg_and_var(values, weights):
 
 models = np.array(['IEM','EMST','IEMHYB','EMSTHYB'])
 
-time_res = [1.e-2,]
 mix_res_ratio = [0.02, 0.035, 0.06, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
-equiv_ratio_f = [4.76,]
-equiv_ratio = [1.2,]
-Zf_variance = [0.1,]
-dtmix = [0.01,]
 
 params = {}
 params['MIX'] = None
 params['tres'] = 1.e-2
 params['tmix'] = None
-params['eqv'] = 1.2
+params['eqv'] = 1.0
 params['Zfvar'] = 0.1
 params['dtmix'] = 0.01
 params['phif'] = 4.76
@@ -50,8 +45,10 @@ params['phif'] = 4.76
 
 Z_f = np.genfromtxt('template/flame_Z.dat',skip_header=1,usecols=(0,))
 Z_lb = np.arange(0,Z_f.min(),0.004)
-Z_ub = np.arange(Z_f.max(),1,0.005)
-Z_bins = np.concatenate((Z_lb,Z_f,Z_ub,[1,]))
+Z_ub = np.arange(Z_f.max(),0.2,0.005)
+Z_ub = np.delete(Z_ub,0)
+Z_r = np.arange(0.22,1,0.02)
+Z_bins = np.concatenate((Z_lb,Z_f,Z_ub,Z_r,[1,]))
 
 Z_mid = (Z_bins[1:]+Z_bins[:-1])/2
 num_bins = len(Z_mid)
@@ -111,5 +108,5 @@ for i, tmix_ratio in enumerate(mix_res_ratio):
 
 
 df.index.name = 'B'
-df.to_csv('cond_FIC.csv')
+df.to_csv('cond-FC_eqv-{:g}.csv'.format(params['eqv']))
 

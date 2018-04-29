@@ -12,13 +12,12 @@ from counterflow_file import params2name
 mixing_models = {'IEMHYB':4,
                  'EMSTHYB':6,
                  'IEM':7,
-                 'MC':8,
                  'EMST':9}
 
 time_res = [1.e-2,]
 mix_res_ratio = [0.02, 0.035, 0.06, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
 equiv_ratio_f = [4.76,]
-equiv_ratio = [1.2,]
+equiv_ratio = [1.0,]
 Zf_variance = [0.1,]
 dtmix = [0.01,]
 
