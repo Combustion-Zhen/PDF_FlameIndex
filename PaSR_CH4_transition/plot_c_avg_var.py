@@ -175,7 +175,7 @@ for i, model in enumerate(models):
     y = data[params2name(params)].values
     ax[0].plot(
         data['Z'], y,
-        c = colors[i], ls = lines[i], lw = 2.,
+        c = colors[i], ls = lines[i], lw = 1.,
         label=modeln[i])
     
     params['statics'] = 'var'
@@ -183,13 +183,11 @@ for i, model in enumerate(models):
     yhat = savitzky_golay(y, 7,3)
     ax[1].plot(
         data['Z'], yhat,
-        c = colors[i], ls = lines[i], lw = 2.,
+        c = colors[i], ls = lines[i], lw = 1.,
         label=modeln[i])
 
 # legend
-ax[0].legend(
-    handlelength = 4,
-    frameon=False)
+ax[0].legend(frameon=False)
 
 # limits
 ax[0].set_xlim([0, 0.5])

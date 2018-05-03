@@ -100,18 +100,22 @@ for j, model in enumerate(modeln):
                 marker=mft[j%2],ms=4,mew=0.5,
                 label=model)
 
+ax[0].plot(
+        [0.01, 1],[0, 0],
+        'k--',lw=1.0)
+
+ax[1].plot(
+        [0.01, 1],[1, 1],
+        'k--',lw=1.0)
+
 # axis limits and ticks
 ax[0].set_xscale('log')
-#ax[0].set_xlim([0.015,0.6])
-#ax[0].set_xticks([2e-2,1e-1,5e-1])
-ax[0].set_xlim([0.025,0.6])
-ax[0].set_xticks([2.5e-2,1e-1,4e-1])
+ax[0].set_xlim([0.015,0.6])
+ax[0].set_xticks([2e-2,1e-1,5e-1])
 ax[0].get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
 ax[0].set_ylim([-1,1])
 ax[0].set_yticks([-1,-0.5,0,0.5,1])
-#ax[1].set_ylim([1,1.2])
-#ax[1].set_yticks(np.arange(1,1.15,0.02))
 
 # legend
 ax[0].legend(frameon=False)
@@ -120,11 +124,11 @@ ax[0].legend(frameon=False)
 ax[0].set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
 ax[1].set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
 ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$')
-ax[1].set_ylabel(r'$\langle\tilde{\omega}\rangle\cdot\tau_{\mathrm{mix}}$')
+ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\phi}\rangle\cdot\tau_{\mathrm{mix}}$')
 
 # notes
 ax[1].text(
-        0.03,1.55,
+        0.02,1.9,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             '{:g}'.format(params['tres']),
