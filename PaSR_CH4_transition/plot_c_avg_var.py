@@ -96,7 +96,7 @@ mix_res_ratio = [0.02, 0.035, 0.06, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
 
 time_res = 1.e-2
 equiv_ratio_f = 4.76
-equiv_ratio = 1.2
+equiv_ratio = 1.0
 Zf_variance = 0.1
 dtmix = 0.01
 
@@ -192,11 +192,13 @@ ax[0].legend(frameon=False)
 # limits
 ax[0].set_xlim([0, 0.5])
 ax[0].set_ylim([0, 0.3])
-ax[1].set_ylim([0, 0.006])
+ax[1].set_ylim([0, 0.008])
+ax[1].set_yticks(np.arange(0, 0.009, 0.001))
+ax[1].set_yticklabels(np.arange(0, 9))
 
 # notes
-ax[1].text(
-        0.35,0.004,
+ax[0].text(
+        0.32,0.1,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             '{:g}'.format(time_res),
@@ -215,8 +217,8 @@ ax[1].text(
 # labels
 ax[0].set_xlabel(r'$Z$')
 ax[1].set_xlabel(r'$Z$')
-ax[0].set_ylabel(r'$\langle\widetilde{c\vert Z}\rangle$')
-ax[1].set_ylabel(r'$\langle \widetilde{c^{\prime\prime 2}\vert Z} \rangle$')
+ax[0].set_ylabel(r'$\langle c\vert Z \rangle$')
+ax[1].set_ylabel(r'$\langle c^{\prime\prime 2}\vert Z \rangle\times 10^{3}$')
 
 # figure layout
 fig.subplots_adjust(left = margin_left/plot_width,

@@ -30,7 +30,7 @@ def weighted_avg_and_var(values, weights):
 
 models = np.array(['IEM','EMST','IEMHYB','EMSTHYB'])
 
-mix_res_ratio = [0.02, 0.035, 0.06, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
+mix_res_ratio = [0.035, 0.06, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
 
 params = {}
 params['MIX'] = None
