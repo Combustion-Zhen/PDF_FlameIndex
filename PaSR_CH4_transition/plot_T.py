@@ -140,4 +140,5 @@ del plot_params['Zfvar']
 plot_name = params2name(plot_params)
 
 fig.savefig('{}/fig_T_{}.pdf'.format(dst,plot_name))
+fig.savefig('{}/fig_T_{}.eps'.format(dst,plot_name))
 

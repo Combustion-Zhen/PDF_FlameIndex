@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from counterflow_file import *
 
 phif = [1.3, 1.7, 2.3, 3.2, 4.8, float('inf')]
-phio = [0, 0.1, 0.2, 0.3]
+phio = [0, 0.2, 0.4, 0.6]
 
 #strain = [100, 150, 200, 250, 300]
 a = 200

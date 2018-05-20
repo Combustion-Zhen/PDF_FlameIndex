@@ -168,6 +168,11 @@ plot_height = (num_rows*subplot_height
 fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
+ax[0].plot([0.055, 0.055],[0, 0.3],'k--',lw=1)
+ax[1].plot([0.055, 0.055],[0, 0.3],'k--',lw=1)
+ax[0].text(0.045, -0.0225,r'$Z_{st}$')
+ax[1].text(0.045, -0.0006,r'$Z_{st}$')
+
 for i, model in enumerate(models):
     params['MIX'] = model
     
@@ -234,4 +239,5 @@ fig.subplots_adjust(left = margin_left/plot_width,
 
 
 fig.savefig('{0}/fig_C_tmix-{1:g}_eqv-{2:g}.pdf'.format(dst,params['tmix'],equiv_ratio))
+fig.savefig('{0}/fig_C_tmix-{1:g}_eqv-{2:g}.eps'.format(dst,params['tmix'],equiv_ratio))
 

@@ -46,8 +46,8 @@ for i, tmix_ratio in enumerate(mix_res_ratio):
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 14.4
-margin_left   = 1.3
-margin_right  = 0.2
+margin_left   = 1.4
+margin_right  = 0.1
 margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
@@ -60,6 +60,7 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
+plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
@@ -88,18 +89,6 @@ plot_height = (num_rows*subplot_height
 fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
-for j, model in enumerate(modeln):
-    ax[0].plot(
-            mix_res_ratio,2*fi[:,j]-1,
-            c=colors[j],ls='',
-            marker=mft[j//2],ms=4,mew=0.5,
-            label=model)
-    if j%2 == 1:
-        ax[1].plot(mix_res_ratio,omega[:,j]*np.array(mix_res_ratio)/100.,
-                c=colors[j],ls='',
-                marker=mft[j%2],ms=4,mew=0.5,
-                label=model)
-
 ax[0].plot(
         [0.01, 1],[0, 0],
         'k--',lw=1.0)
@@ -107,6 +96,20 @@ ax[0].plot(
 ax[1].plot(
         [0.01, 1],[1, 1],
         'k--',lw=1.0)
+
+for j, model in enumerate(modeln):
+    ax[0].plot(
+            mix_res_ratio,2*fi[:,j]-1,
+            c=colors[j],ls='',
+            marker=mft[j//2],ms=4,mew=0.5,
+            label=model)
+    print(model)
+    print(2*fi[:,j]-1)
+    if j%2 == 1:
+        ax[1].plot(mix_res_ratio,omega[:,j]*np.array(mix_res_ratio)/100.,
+                c=colors[j],ls='',
+                marker=mft[j//2],ms=4,mew=0.5,
+                label=model)
 
 # axis limits and ticks
 ax[0].set_xscale('log')
@@ -124,7 +127,7 @@ ax[0].legend(frameon=False)
 ax[0].set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
 ax[1].set_xlabel(r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}$')
 ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$')
-ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\phi}\rangle\cdot\tau_{\mathrm{mix}}$')
+ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
 
 # notes
 ax[1].text(
@@ -158,4 +161,5 @@ del plot_params['Zfvar']
 plot_name = params2name(plot_params)
 
 fig.savefig('{}/fig_FIOMEGA_{}.pdf'.format(dst,plot_name))
+fig.savefig('{}/fig_FIOMEGA_{}.eps'.format(dst,plot_name))
 

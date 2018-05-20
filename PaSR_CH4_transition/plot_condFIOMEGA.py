@@ -38,8 +38,8 @@ Z_mid = (Z_f[1:]+Z_f[:-1])/2
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 14.4
-margin_left   = 1.3
-margin_right  = 0.2
+margin_left   = 1.4
+margin_right  = 0.1
 margin_bottom = 0.8
 margin_top    = 0.1
 space_width   = 3.5
@@ -52,6 +52,7 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
+plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
@@ -81,6 +82,11 @@ plot_height = (num_rows*subplot_height
 fig, ax = plt.subplots(num_rows,num_cols,
                        figsize=cm2inch(plot_width,plot_height))
 
+ax[0].plot([0.055, 0.055],[-1, 1],'k--',lw=1)
+ax[1].plot([0.055, 0.055],[0, 6],'k--',lw=1)
+ax[0].text(0.045, -1.15,r'$Z_{st}$')
+ax[1].text(0.054, 0.41,r'$Z_{st}$')
+
 for i, model in enumerate(models):
     params['MIX'] = model
     data_params['MIX'] = model
@@ -109,11 +115,13 @@ ax[0].legend(frameon=False)
 ax[0].set_xlim([0, 0.5])
 ax[0].set_ylim([-1, 1])
 ax[0].set_yticks([-1, -0.5, 0, 0.5, 1])
-ax[1].set_xlim([0.03, 0.121])
+ax[1].set_xlim([0.03, 0.12])
+ax[1].set_xticks([0.03, 0.05, 0.07, 0.09, 0.11])
+ax[1].set_ylim([0.8, 6])
 
 # notes
-ax[1].text(
-        0.035,4.5,
+ax[0].text(
+        0.35,0.42,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             '{:g}'.format(params['tres']),
@@ -132,8 +140,8 @@ ax[1].text(
 # labels
 ax[0].set_xlabel(r'$Z$')
 ax[1].set_xlabel(r'$Z$')
-ax[0].set_ylabel(r'$\langle\mathrm{FI}\vert Z\rangle$')
-ax[1].set_ylabel(r'$\langle\widetilde{\omega_{\phi}\vert Z}\rangle\cdot\tau_{\mathrm{mix}}$')
+ax[0].set_ylabel(r'$\langle\widetilde{\mathrm{FI}\vert Z}\rangle$')
+ax[1].set_ylabel(r'$\langle\widetilde{\omega_{\bm\phi}\vert Z}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
 
 # figure layout
 fig.subplots_adjust(left = margin_left/plot_width,
@@ -145,4 +153,5 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     )
 
 fig.savefig('{0}/fig_condFIOMEGA_tmix-{1:g}_eqv-{2:g}.pdf'.format(dst,params['tmix'],params['eqv']))
+fig.savefig('{0}/fig_condFIOMEGA_tmix-{1:g}_eqv-{2:g}.eps'.format(dst,params['tmix'],params['eqv']))
 
