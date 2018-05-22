@@ -125,9 +125,8 @@ for mix_k, mix_v in mixing_models.items():
 
                 #subprocess.run(['sbatch','run_shaheen.sh'])
                 shutil.copy('streams_init.in','streams.in')
-                subprocess.run(['PaSR_particles_init'])
+                subprocess.run('PaSR_particles_init')
                 shutil.copy('streams_SF.in','streams.in')
-                subprocess.run(['PaSR_PPF_MIX'])
-                subprocess.run(['particles_post'])
+                subprocess.Popen('PaSR_PPF_MIX')
 
                 os.chdir('..')
