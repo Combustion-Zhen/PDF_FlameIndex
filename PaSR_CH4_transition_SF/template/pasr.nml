@@ -1,0 +1,25 @@
+&pasrnml
+n=1000
+anres=20
+tres=@TRES@
+tmix=@TMIX@
+flstrmd=1.0, 4.88, @AIRRATE@
+cdtrp=@CDTRP@
+cdtmix=@CDTMIX@
+part_in=@RESTART@
+part_out=.true.
+full_op=@FULLOP@
+full_fi=@FULLFI@
+iblock=10000
+isave=@SAVESTEP@
+etola=1.e-4
+stomby=400.
+mxmode=@MIXMODEL@
+defC=2
+beta_transit=.true.
+Zdist=0
+Zmean=@ZFMEAN@
+mech='CH4'
+prmax = 0.993
+prmin = 0.993
+/
