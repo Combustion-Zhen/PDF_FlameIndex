@@ -25,7 +25,8 @@ params['eqv'] = 1.0
 # obtain data
 dat_name = 'pasrm.op'
 
-T = np.zeros([len(tau_log),len(models)])
+fi = np.zeros([len(tau_log),len(models)])
+omega = np.zeros([len(tau_log),len(models)])
 
 for i, t in enumerate(tau_log):
     params['tres'] = t
@@ -35,15 +36,16 @@ for i, t in enumerate(tau_log):
         case = params2name(params)
         file_name = '/'.join([case,dat_name])
 
-        data = np.genfromtxt(file_name,usecols=(-4,))
+        data = np.genfromtxt(file_name,usecols=(3,4))
 
-        T[i,j] = np.mean(data)
+        fi[i,j] = np.mean(data[:,0])
+        omega[i,j] = np.mean(data[:-1750,1])
 
 # figure and axes parameters
 # total width is fixed, for one column plot
-plot_width    = 6.7
-margin_left   = 1.3
-margin_right  = 0.2
+plot_width    = 14.4
+margin_left   = 1.4
+margin_right  = 0.1
 margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
@@ -56,10 +58,11 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
+plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
-num_cols = 1
+num_cols = 2
 num_rows = 1
 
 colors = ['tab:orange','tab:blue','tab:green','tab:red']
@@ -73,7 +76,7 @@ subplot_width = (plot_width
                 -margin_left
                 -margin_right
                 -(num_cols-1)*space_width)/num_cols
-subplot_height = subplot_width * 0.8
+subplot_height = subplot_width * 0.9
 
 plot_height = (num_rows*subplot_height
               +margin_bottom
@@ -84,31 +87,50 @@ plot_height = (num_rows*subplot_height
 fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
+ax[0].plot(
+        [0.0001, 0.01],[0, 0],
+        'k--',lw=1.0)
+
+ax[1].plot(
+        [0.0001, 0.01],[1, 1],
+        'k--',lw=1.0)
+
+tres = np.power(10, tau_log)
 for j, model in enumerate(modeln):
-    ax.plot(
-            np.power(10,tau_log),T[:,j],
+    ax[0].plot(
+            tres,2*fi[:,j]-1,
             c=colors[j],ls='',
             marker=mft[j//2],ms=4,mew=0.5,
             label=model)
+    print(model)
+    print(2*fi[:,j]-1)
+    if j%2 == 1:
+        ax[1].plot(tres,omega[:,j]*tres*params['tmix'],
+                c=colors[j],ls='',
+                marker=mft[j//2],ms=4,mew=0.5,
+                label=model)
 
 # axis limits and ticks
-ax.set_xscale('log')
-#ax.set_xticks([2.e-2,1e-1,5e-1])
-#ax.get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
+ax[0].set_xscale('log')
+#ax[0].set_xlim([0.015,0.6])
+#ax[0].set_xticks([2e-2,1e-1,5e-1])
+#ax[0].get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
-#ax.set_ylim([300, 2100])
-
+ax[0].set_ylim([-1,1])
+ax[0].set_yticks([-1,-0.5,0,0.5,1])
 
 # legend
-ax.legend(frameon=False)
+ax[0].legend(frameon=False)
 
 # labels
-ax.set_xlabel(r'$\tau_{\mathrm{res}}$')
-ax.set_ylabel(r'$\langle T \rangle\;(\mathrm{K})$')
+ax[0].set_xlabel(r'$\tau_{\mathrm{res}}$')
+ax[1].set_xlabel(r'$\tau_{\mathrm{res}}$')
+ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$')
+ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
 
 ## notes
-#ax.text(
-#        0.022,1200,
+#ax[1].text(
+#        0.02,1.9,
 #        ''.join([
 #            r'$\tau_{\mathrm{res}}\,=\,$',
 #            '{:g}'.format(params['tres']),
@@ -128,6 +150,6 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     hspace = space_height/plot_height
                     )
 
-fig.savefig('{}/fig_T.pdf'.format(dst))
-#fig.savefig('{}/fig_T_{}.eps'.format(dst,plot_name))
+fig.savefig('{}/fig_FIOMEGA.pdf'.format(dst))
+#fig.savefig('{}/fig_FIOMEGA_{}.eps'.format(dst,plot_name))
 

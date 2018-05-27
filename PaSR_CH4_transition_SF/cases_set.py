@@ -34,8 +34,9 @@ mixing_models = {'IEMHYB':4,
                  'IEM':7,
                  'EMST':9}
 
-tau_log = np.linspace(-4,-2,11)
-mix_res_ratio = [0.3,]
+#tau_log = np.linspace(-3.9,-2.1,10)
+tau_log = np.array([-3.65,])
+mix_res_ratio = [0.2,]
 equiv_ratio = [1.0,]
 
 dtmix = 0.01
@@ -44,6 +45,7 @@ isave = 100
 restart = '.false.'
 full_op = '.false.'
 full_fi = '.false.'
+bin_op = '.false.'
 
 with open('template/pasr.nml','r') as template:
     lines_nml = template.readlines();
@@ -114,6 +116,9 @@ for mix_k, mix_v in mixing_models.items():
                         line = re.sub('@FULLFI@',
                                 full_fi,
                                 line)
+                        line = re.sub('@BINOP@',
+                                bin_op,
+                                line)
                         nml.write(line)
                 # job script
                 with open('run_shaheen.sh','w') as job:
@@ -124,6 +129,9 @@ for mix_k, mix_v in mixing_models.items():
                         job.write(line)
 
                 #subprocess.run(['sbatch','run_shaheen.sh'])
-                subprocess.Popen('PaSR_PPF_MIX &> pasr.op',shell=True)
+                shutil.copy('streams_init.in','streams.in')
+                subprocess.run('PaSR_particles_init')
+                shutil.copy('streams_SF.in','streams.in')
+                subprocess.Popen('PaSR_PPF_MIX')
 
                 os.chdir('..')

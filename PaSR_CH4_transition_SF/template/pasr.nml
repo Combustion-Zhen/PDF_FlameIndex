@@ -22,4 +22,7 @@ Zmean=@ZFMEAN@
 mech='CH4'
 prmax = 0.993
 prmin = 0.993
+screen = .false.
+bin_op = @BINOP@
+op_ext = @OPEXT@
 /
