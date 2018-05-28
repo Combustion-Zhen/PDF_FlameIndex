@@ -86,6 +86,26 @@ ax[1].set_xlabel(r'$Z$')
 ax[0].set_ylabel(r'$c$')
 
 # notes
+ax[0].text(
+        0.1,0.15,
+        ''.join([
+            r'$\tau_{\mathrm{res}}\,=\,$',
+            '{:.3g}'.format(np.power(10.,params['tres'])*1000),
+            '$\;\mathrm{ms}$',
+            '\n',
+            r'$\tau_{\mathrm{mix}}\!=\,$',
+            '{:.3g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
+            '$\;\mathrm{ms}$']))
+ax[1].text(
+        0.1,0.15,
+        ''.join([
+            r'$\tau_{\mathrm{res}}\,=\,$',
+            '{:.3g}'.format(np.power(10.,params['tres'])*1000),
+            '$\;\mathrm{ms}$',
+            '\n',
+            r'$\tau_{\mathrm{mix}}\!=\,$',
+            '{:.3g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
+            '$\;\mathrm{ms}$']))
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
@@ -96,3 +116,4 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     )
 
 fig.savefig('fig_scatter_IEM.pdf')
+fig.savefig('fig_scatter_IEM.eps')

@@ -7,6 +7,7 @@ import copy
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from counterflow_file import *
 
@@ -56,6 +57,7 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
+plt.rc('text.latex',preamble=[r'\usepackage{amsmath}'])
 # use serif font
 plt.rc('font',**font)
 
@@ -81,7 +83,7 @@ plot_height = (num_rows*subplot_height
               +(num_rows-1)*space_height)
 
 # plot against tmix
-fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
+fig, ax = plt.subplots(num_rows,num_cols,
                        figsize=cm2inch(plot_width,plot_height))
 
 for j, model in enumerate(modeln):
@@ -93,32 +95,22 @@ for j, model in enumerate(modeln):
 
 # axis limits and ticks
 ax.set_xscale('log')
-#ax.set_xticks([2.e-2,1e-1,5e-1])
-#ax.get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
-#ax.set_ylim([300, 2100])
-
+ax.set_xlim([0.00008, 0.0125])
+ax.set_ylim([300, 2100])
 
 # legend
 ax.legend(frameon=False)
 
 # labels
-ax.set_xlabel(r'$\tau_{\mathrm{res}}$')
+ax.set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
 ax.set_ylabel(r'$\langle T \rangle\;(\mathrm{K})$')
 
-## notes
-#ax.text(
-#        0.022,1200,
-#        ''.join([
-#            r'$\tau_{\mathrm{res}}\,=\,$',
-#            '{:g}'.format(params['tres']),
-#            '$\mathrm{s}$',
-#            '\n',
-#            r'$\varphi\quad\;\!=\,$',
-#            '{:g}'.format(params['eqv']),
-#            '\n',
-#            r'$\eta_{Z,r}\!\!\:=\,$',
-#            '{:g}'.format(params['Zfvar'])]))
+# notes
+ax.text(
+        0.0001,1750,
+        r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}} = 0.2$',
+       )
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
@@ -129,5 +121,5 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     )
 
 fig.savefig('{}/fig_T.pdf'.format(dst))
-#fig.savefig('{}/fig_T_{}.eps'.format(dst,plot_name))
+fig.savefig('{}/fig_T.eps'.format(dst))
 

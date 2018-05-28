@@ -117,11 +117,15 @@ ax[0].set_xlim([0.00008,0.0125])
 #ax[0].get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
 ax[0].set_ylim([-0.7,0.7])
+ax[1].set_ylim([0.95,1.75])
 #ax[0].set_yticks([-1,-0.5,0,0.5,1])
 
 # legend
 ax[0].legend(frameon=False,
              loc=4
+            )
+ax[1].legend(frameon=False,
+             loc=6,
             )
 
 # labels
@@ -131,9 +135,15 @@ ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$')
 ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
 
 # notes
-ax[0].text(
-        0.0001,0.55,
-        r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}=0.2$')
+ax[0].text(0.0001,0.55,'(a)')
+ax[1].text(0.0001,1.25/1.4*0.8+0.95,'(b)')
+
+ax[0].text(0.0006,(1.6-0.95)/0.8*1.4-0.7,
+           r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}} = 0.2$',
+          )
+ax[1].text(0.0006,1.6,
+           r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}} = 0.2$',
+          )
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
@@ -144,5 +154,5 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     )
 
 fig.savefig('{}/fig_FIOMEGA.pdf'.format(dst))
-#fig.savefig('{}/fig_FIOMEGA_{}.eps'.format(dst,plot_name))
+fig.savefig('{}/fig_FIOMEGA.eps'.format(dst))
 
