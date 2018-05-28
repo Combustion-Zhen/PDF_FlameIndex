@@ -88,11 +88,11 @@ fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
 ax[0].plot(
-        [0.0001, 0.01],[0, 0],
+        [0.00001, 0.1],[0, 0],
         'k--',lw=1.0)
 
 ax[1].plot(
-        [0.0001, 0.01],[1, 1],
+        [0.00001, 0.1],[1, 1],
         'k--',lw=1.0)
 
 tres = np.power(10, tau_log)
@@ -112,35 +112,28 @@ for j, model in enumerate(modeln):
 
 # axis limits and ticks
 ax[0].set_xscale('log')
-#ax[0].set_xlim([0.015,0.6])
+ax[0].set_xlim([0.00008,0.0125])
 #ax[0].set_xticks([2e-2,1e-1,5e-1])
 #ax[0].get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
-ax[0].set_ylim([-1,1])
-ax[0].set_yticks([-1,-0.5,0,0.5,1])
+ax[0].set_ylim([-0.7,0.7])
+#ax[0].set_yticks([-1,-0.5,0,0.5,1])
 
 # legend
-ax[0].legend(frameon=False)
+ax[0].legend(frameon=False,
+             loc=4
+            )
 
 # labels
-ax[0].set_xlabel(r'$\tau_{\mathrm{res}}$')
-ax[1].set_xlabel(r'$\tau_{\mathrm{res}}$')
+ax[0].set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
+ax[1].set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
 ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$')
 ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
 
-## notes
-#ax[1].text(
-#        0.02,1.9,
-#        ''.join([
-#            r'$\tau_{\mathrm{res}}\,=\,$',
-#            '{:g}'.format(params['tres']),
-#            '$\mathrm{s}$',
-#            '\n',
-#            r'$\varphi\quad\;\!=\,$',
-#            '{:g}'.format(params['eqv']),
-#            '\n',
-#            r'$\eta_{Z,r}\!\!\:=\,$',
-#            '{:g}'.format(params['Zfvar'])]))
+# notes
+ax[0].text(
+        0.0001,0.55,
+        r'$\tau_{\mathrm{mix}}/\tau_{\mathrm{res}}=0.2$')
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
