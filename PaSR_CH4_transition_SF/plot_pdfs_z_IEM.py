@@ -68,13 +68,13 @@ for i, model in enumerate(models):
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 14.4
-margin_left   = 1.3
-margin_right  = 0.2
+margin_left   = 1.4
+margin_right  = 0.1
 margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
 space_height  = 0.5
-ftsize        = 7
+ftsize        = 9
 
 font = {'family':'serif',
         'weight':'normal',

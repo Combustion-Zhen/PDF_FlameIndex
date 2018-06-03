@@ -7,12 +7,11 @@ import copy
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
-mpl.use('Agg')
 import matplotlib.pyplot as plt
 from counterflow_file import *
 
-models = ['IEM','IEMHYB','EMST','EMSTHYB']
-modeln = ['IEM','IEM-FI','EMST','EMST-FI']
+models = ['IEMHYB','EMSTHYB']
+modeln = ['IEM-FI','EMST-FI']
 
 tau_log = np.linspace(-4,-2,21)
 tau_log = np.insert( tau_log, 4, -3.65)
@@ -26,7 +25,8 @@ params['eqv'] = 1.0
 # obtain data
 dat_name = 'pasrm.op'
 
-T = np.zeros([len(tau_log),len(models)])
+fi = np.zeros([len(tau_log),len(models)])
+omega = np.zeros([len(tau_log),len(models)])
 
 for i, t in enumerate(tau_log):
     params['tres'] = t
@@ -36,9 +36,10 @@ for i, t in enumerate(tau_log):
         case = params2name(params)
         file_name = '/'.join([case,dat_name])
 
-        data = np.genfromtxt(file_name,usecols=(-4,))
+        data = np.genfromtxt(file_name,usecols=(3,4))
 
-        T[i,j] = np.mean(data)
+        fi[i,j] = np.mean(data[:,0])
+        omega[i,j] = np.mean(data[:-1750,1])
 
 # figure and axes parameters
 # total width is fixed, for one column plot
@@ -57,14 +58,14 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
-plt.rc('text.latex',preamble=[r'\usepackage{amsmath}'])
+plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
 num_cols = 1
 num_rows = 1
 
-colors = ['tab:orange','tab:blue','tab:green','tab:red']
+colors = ['tab:blue','tab:red']
 
 mft = ['o','s']
 mfc = ['w',None]
@@ -86,29 +87,36 @@ plot_height = (num_rows*subplot_height
 fig, ax = plt.subplots(num_rows,num_cols,
                        figsize=cm2inch(plot_width,plot_height))
 
+ax.plot([0.00001, 0.1],[1, 1],
+        'k--',lw=1.0
+       )
+
+tres = np.power(10, tau_log)
 for j, model in enumerate(modeln):
-    ax.plot(
-            np.power(10,tau_log),T[:,j],
+    ax.plot(tres,omega[:,j]*tres*params['tmix'],
             c=colors[j],ls='',
-            marker=mft[j//2],ms=4,mew=0.5,
-            label=model)
+            marker=mft[j],ms=4,mew=0.5,
+            label=model
+           )
 
 # axis limits and ticks
 ax.set_xscale('log')
+ax.set_xlim([0.00008,0.0125])
 
-ax.set_xlim([0.00008, 0.0125])
-ax.set_ylim([300, 2100])
+ax.set_ylim([0.95, 1.75])
+ax.set_yticks(np.linspace(1.0,1.7,8))
 
 # legend
-ax.legend(frameon=False)
-
+ax.legend(frameon=False,
+          loc=6
+         )
 # labels
 ax.set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
-ax.set_ylabel(r'$\langle T \rangle\;(\mathrm{K})$')
+ax.set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
+ax.yaxis.set_label_coords(-0.16,0.5)
 
 # notes
-ax.text(
-        0.0001,1750,
+ax.text(0.0001,1.6,
         r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}} = 0.2$',
        )
 
@@ -120,6 +128,6 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     hspace = space_height/plot_height
                     )
 
-fig.savefig('{}/fig_T.pdf'.format(dst))
-fig.savefig('{}/fig_T.eps'.format(dst))
+fig.savefig('{}/fig_OMEGA.pdf'.format(dst))
+fig.savefig('{}/fig_OMEGA.eps'.format(dst))
 

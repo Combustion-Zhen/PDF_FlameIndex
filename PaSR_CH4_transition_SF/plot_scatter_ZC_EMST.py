@@ -22,9 +22,9 @@ margin_left   = 1.4
 margin_right  = 0.1
 margin_bottom = 1.0
 margin_top    = 0.1
-space_width   = 1.5
+space_width   = 3.5
 space_height  = 0.5
-ftsize        = 7
+ftsize        = 9
 
 font = {'family':'serif',
         'weight':'normal',
@@ -74,10 +74,11 @@ for i, model in enumerate(models):
     ax[i].scatter( data[:,0], data[:,1], s=4, marker='.' )
 
     ax[i].text(0.01,0.24,'({})'.format(chr(ord('a')+i)))
-    ax[i].text(0.12,0.24,modeln[i])
+    ax[i].text(0.1,0.24,modeln[i])
 
 ax[0].set_xlim([0, 0.156])
 ax[0].set_ylim([0, 0.27])
+ax[0].set_yticks(np.linspace(0, 0.25, 6))
 ax[0].set_xticks(np.linspace(0,0.15,6))
 
 # labels
@@ -87,7 +88,7 @@ ax[0].set_ylabel(r'$c$')
 
 # notes
 ax[0].text(
-        0.1,0.15,
+        0.09,0.15,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             '{:.3g}'.format(np.power(10.,params['tres'])*1000),
@@ -97,7 +98,7 @@ ax[0].text(
             '{:.3g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
             '$\;\mathrm{ms}$']))
 ax[1].text(
-        0.1,0.15,
+        0.09,0.15,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             '{:.3g}'.format(np.power(10.,params['tres'])*1000),

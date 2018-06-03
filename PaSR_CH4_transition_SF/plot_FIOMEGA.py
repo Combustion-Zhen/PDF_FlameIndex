@@ -50,7 +50,7 @@ margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
 space_height  = 0.5
-ftsize        = 7
+ftsize        = 9
 
 font = {'family':'serif',
         'weight':'normal',
@@ -117,6 +117,7 @@ ax[0].set_xlim([0.00008,0.0125])
 #ax[0].get_xaxis().set_major_formatter(mpl.ticker.ScalarFormatter())
 
 ax[0].set_ylim([-0.7,0.7])
+ax[0].set_yticks(np.linspace(-0.6,0.6,7))
 ax[1].set_ylim([0.95,1.75])
 #ax[0].set_yticks([-1,-0.5,0,0.5,1])
 
@@ -132,6 +133,7 @@ ax[1].legend(frameon=False,
 ax[0].set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
 ax[1].set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
 ax[0].set_ylabel(r'$\langle\tilde{\mathrm{FI}}\rangle$')
+ax[0].yaxis.set_label_coords(-0.16,0.5)
 ax[1].set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}^\mathrm{N}$')
 
 # notes

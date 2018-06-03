@@ -16,8 +16,6 @@ def equiv2Z( Phi, Zst ):
     Z = a/(1.+a)
     return Z
 
-loc_legend = (0., 0.5)
-
 Zst = 0.0551863
 
 #variance = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5]
@@ -53,13 +51,13 @@ flame_params['var'] = None
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 14.4
-margin_left   = 0.9
+margin_left   = 1.0
 margin_right  = 0.1
-margin_bottom = 0.8
+margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 0.
 space_height  = 0.5
-ftsize        = 7
+ftsize        = 9
 
 font = {'family':'serif',
         'weight':'normal',
@@ -77,7 +75,7 @@ subplot_width = (plot_width
                 -margin_left
                 -margin_right
                 -(num_cols-1)*space_width)/num_cols
-subplot_height = subplot_width * 0.5
+subplot_height = subplot_width * 0.8
 
 plot_height = (num_rows*subplot_height
               +margin_bottom
@@ -156,13 +154,13 @@ for var in variance:
         ax[i,0].set_yticks([0.5,1])
         ax[i,0].set_yticklabels(['0','1'])
 
-    ax[0,-1].legend(loc=loc_legend,
-                    ncol=2,
-                    handlelength=3,
-                    handletextpad=0.3,
-                    columnspacing=1,
-                    frameon=False
-                    )
+    ax[0,1].legend(loc=9,
+                   ncol=2,
+                   handlelength=2.5,
+                   handletextpad=0.2,
+                   columnspacing=1,
+                   frameon=False
+                  )
 
     fig.subplots_adjust(
         left = margin_left/plot_width,
