@@ -25,6 +25,7 @@ params['tmix'] = 0.2
 params['eqv'] = 1.0
 
 csv_name = 'ZCTR.csv'
+dat_name = 'pasrm.op'
 
 npts = 100
 z_lb = 0
@@ -61,6 +62,15 @@ for i, model in enumerate(models):
     
     pdfs_u[:,i] = hist
 
+    data = np.genfromtxt('/'.join([case_name,dat_name]),
+                         usecols=(4,)
+                        )
+
+    if model.endswith('HYB') :
+        omega = np.mean( data )
+
+omega *= np.power(10.,params['tres'])*params['tmix']
+
 
 # In[5]:
 
@@ -82,6 +92,7 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
+plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
@@ -140,27 +151,43 @@ ax[1].set_ylabel(r'$\langle f_Z \rangle$')
 ax[0].text(0.01,61.6,'(a)')
 ax[1].text(0.01,88,'(b)')
 
+# hardcodes notes
 ax[0].text(
-        0.1,35,
+        0.08,21,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
-            '{:g}'.format(np.power(10.,params['tres'])*1000),
-            '$\;\mathrm{ms}$',
+            #'{:g}'.format(np.power(10.,params['tres'])*1000),
+            #'$\;\mathrm{ms}$',
+            r'$1\times 10^{-3}$',
+            '$\;\mathrm{s}$',
             '\n',
             r'$\tau_{\mathrm{mix}}\!=\,$',
-            '{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
-            '$\;\mathrm{ms}$']))
+            #'{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
+            #'$\;\mathrm{ms}$'
+            r'$2\times 10^{-4}$',
+            '$\;\mathrm{s}$',
+            '\n',
+            r'$\dfrac{\langle\tilde{\omega}_{\bm\phi}\rangle}{\tilde{\omega}_{\bm\phi}^{\mathrm{N}}}$',
+            '={:.2f}'.format(omega)
+            ]))
 ax[1].text(
-        0.1,50,
+        0.08,30,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
-            '{:g}'.format(np.power(10.,params['tres'])*1000),
-            '$\;\mathrm{ms}$',
+            #'{:g}'.format(np.power(10.,params['tres'])*1000),
+            #'$\;\mathrm{ms}$',
+            r'$1\times 10^{-3}$',
+            '$\;\mathrm{s}$',
             '\n',
             r'$\tau_{\mathrm{mix}}\!=\,$',
-            '{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
-            '$\;\mathrm{ms}$']))
-
+            #'{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
+            #'$\;\mathrm{ms}$'
+            r'$2\times 10^{-4}$',
+            '$\;\mathrm{s}$',
+            '\n',
+            r'$\dfrac{\langle\tilde{\omega}_{\bm\phi}\rangle}{\tilde{\omega}_{\bm\phi}^{\mathrm{N}}}$',
+            '={:.2f}'.format(omega)
+            ]))
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
                     right = 1.0-margin_right/plot_width,

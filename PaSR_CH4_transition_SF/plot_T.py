@@ -104,7 +104,7 @@ ax.legend(frameon=False)
 
 # labels
 ax.set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
-ax.set_ylabel(r'$\langle T \rangle\;(\mathrm{K})$')
+ax.set_ylabel(r'$\langle\tilde{T}\rangle\;(\mathrm{K})$')
 
 # notes
 ax.text(

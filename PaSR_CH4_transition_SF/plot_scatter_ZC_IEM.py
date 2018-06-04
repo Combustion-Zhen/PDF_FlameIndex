@@ -76,6 +76,22 @@ for i, model in enumerate(models):
     ax[i].text(0.01,0.24,'({})'.format(chr(ord('a')+i)))
     ax[i].text(0.1,0.24,modeln[i])
 
+    ax[i].scatter( np.mean(data[:,0]),np.mean(data[:,1]), s=4, c='r', marker='.' )
+    
+    ax[i].text(
+            0.09,0.13,
+            ''.join([
+                r'$\tau_{\mathrm{res}}\,=\,$',
+                r'$1\times 10^{-3}$',
+                '$\;\mathrm{s}$',
+                '\n',
+                r'$\tau_{\mathrm{mix}}\!=\,$',
+                r'$2\times 10^{-4}$',
+                '$\;\mathrm{s}$'
+                ]))
+
+
+
 ax[0].set_xlim([0, 0.156])
 ax[0].set_ylim([0, 0.27])
 ax[0].set_yticks(np.linspace(0, 0.25, 6))
@@ -85,28 +101,6 @@ ax[0].set_xticks(np.linspace(0,0.15,6))
 ax[0].set_xlabel(r'$Z$')
 ax[1].set_xlabel(r'$Z$')
 ax[0].set_ylabel(r'$c$')
-
-# notes
-ax[0].text(
-        0.09,0.15,
-        ''.join([
-            r'$\tau_{\mathrm{res}}\,=\,$',
-            '{:.3g}'.format(np.power(10.,params['tres'])*1000),
-            '$\;\mathrm{ms}$',
-            '\n',
-            r'$\tau_{\mathrm{mix}}\!=\,$',
-            '{:.3g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
-            '$\;\mathrm{ms}$']))
-ax[1].text(
-        0.09,0.15,
-        ''.join([
-            r'$\tau_{\mathrm{res}}\,=\,$',
-            '{:.3g}'.format(np.power(10.,params['tres'])*1000),
-            '$\;\mathrm{ms}$',
-            '\n',
-            r'$\tau_{\mathrm{mix}}\!=\,$',
-            '{:.3g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
-            '$\;\mathrm{ms}$']))
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
