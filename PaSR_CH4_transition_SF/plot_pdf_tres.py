@@ -1,43 +1,51 @@
 
 # coding: utf-8
 
-# # plot pdf of Z, obtained with np.hist
+# # plot pdf of z with different $\tau_{res}$ and fixed $\tau_{mix}/\tau_{res}$
 
 # In[1]:
 
 
-import copy
+import os
+import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
 from counterflow_file import *
 
 
-# In[3]:
+# In[2]:
 
 
 # parameters
-models = ['EMST','EMSTHYB']
-modeln = ['EMST','EMST-FI']
 params = {}
-params['MIX'] = None
-params['tres'] = -3.65
+params['MIX'] = 'EMSTHYB'
+params['tres'] = None
 params['tmix'] = 0.2
 params['eqv'] = 1.0
+
+
+# In[3]:
+
+
+tau_log = np.linspace(-2.5,-3.5,3)
+
+
+# In[4]:
+
 
 csv_name = 'ZCTR.csv'
 
 npts = 100
 z_lb = 0
 z_ub = 0.156
-dat_name = 'pasrm.op'
 
 
-# In[4]:
+# In[5]:
 
 
-pdfs = np.empty([npts, len(models)])
-for i, model in enumerate(models):
-    params['MIX'] = model
+pdfs = np.empty([npts, len(tau_log)])
+for i, t in enumerate(tau_log):
+    params['tres'] = t
     case_name = params2name(params)
     
     data = np.genfromtxt('/'.join([case_name,csv_name]),
@@ -49,20 +57,11 @@ for i, model in enumerate(models):
                               range=(z_lb, z_ub), 
                               density=True
                              )
-    
+
     pdfs[:,i] = hist
 
-    data = np.genfromtxt('/'.join([case_name,dat_name]),
-                         usecols=(4,)
-                        )
 
-    if model.endswith('HYB') :
-        omega = np.mean( data )
-
-omega *= np.power(10.,params['tres'])*params['tmix']
-
-
-# In[5]:
+# In[6]:
 
 
 # figure and axes parameters
@@ -74,7 +73,7 @@ margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
 space_height  = 0.5
-ftsize        = 7
+ftsize        = 9
 
 font = {'family':'serif',
         'weight':'normal',
@@ -89,8 +88,8 @@ plt.rc('font',**font)
 num_cols = 1
 num_rows = 1
 
-colors = ['tab:blue','tab:red']
-lines = ['--','-']
+colors = ['tab:blue','tab:green','tab:red']
+lines = ['--','-','-.']
 
 subplot_width = (plot_width
                 -margin_left
@@ -104,7 +103,7 @@ plot_height = (num_rows*subplot_height
               +(num_rows-1)*space_height)
 
 
-# In[6]:
+# In[10]:
 
 
 z = (bins[1:]+bins[:-1])/2
@@ -113,43 +112,32 @@ z = (bins[1:]+bins[:-1])/2
 fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
-for i, model in enumerate(models):
+for i, t in enumerate(tau_log):
     ax.plot(z, pdfs[:,i],
             c = colors[i], ls = lines[i], lw = 1.,
-            label=modeln[i])
+            label=''.join([
+                r'$\tau_{\mathrm{res}}=$',
+                '{:.3g}'.format(np.power(10.,t)*1000),
+                r'$\;\mathrm{ms}$'])
+           )
     
 # legend
 ax.legend(frameon=False)
 
 # limits
 ax.set_xlim([z_lb, z_ub])
+ax.set_ylim([0, 400])
 ax.set_xticks(np.linspace(0,0.15,6))
-ax.set_ylim([0, 220])
 
 # labels
 ax.set_xlabel(r'$Z$')
 ax.set_ylabel(r'$\langle\tilde{f}_Z\rangle$')
 
-# notes
-ax.text(
-        0.075,66,
+ax.text(0.005,200,
         ''.join([
-            r'$\tau_{\mathrm{res}}\,=\,$',
-            #'{:g}'.format(np.power(10.,params['tres'])*1000),
-            #'$\;\mathrm{ms}$',
-            r'$2.24\times 10^{-4}$',
-            '$\;\mathrm{s}$',
-            '\n',
-            r'$\tau_{\mathrm{mix}}\!=\,$',
-            #'{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
-            #'$\;\mathrm{ms}$'
-            r'$4.48\times 10^{-5}$',
-            '$\;\mathrm{s}$',
-            '\n',
-            r'$\dfrac{\langle\tilde{\omega}_{\bm\phi}\rangle}{\tilde{\omega}_{\bm\phi}^{\mathrm{N}}}$',
-            '={:.2f}'.format(omega)
-            ]))
-
+            'EMST-FI\n',
+            r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}}=0.2$'])
+       )
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
@@ -159,9 +147,18 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     hspace = space_height/plot_height
                     )
 
-# In[7]:
+axs = fig.add_axes([0.6, 0.32, 0.35, 0.35])
+for i, t in enumerate(tau_log):
+    axs.plot(z, pdfs[:,i],
+            c = colors[i], ls = lines[i], lw = 1.)
+
+axs.set_xlim([0.049,0.058])
+axs.set_ylim([0, 400])
 
 
-fig.savefig('fig_pdf_z_EMST.eps')
-fig.savefig('fig_pdf_z_EMST.pdf')
+# In[11]:
+
+
+fig.savefig('fig_pdf_z_EMSTHYB_tres.pdf')
+fig.savefig('fig_pdf_z_EMSTHYB_tres.eps')
 

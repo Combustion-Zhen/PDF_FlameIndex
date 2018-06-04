@@ -98,6 +98,7 @@ ax.set_xscale('log')
 
 ax.set_xlim([0.00008, 0.0125])
 ax.set_ylim([300, 2100])
+ax.set_yticks(np.linspace(300,2100,7))
 
 # legend
 ax.legend(frameon=False)
@@ -105,6 +106,7 @@ ax.legend(frameon=False)
 # labels
 ax.set_xlabel(r'$\tau_{\mathrm{res}}\;(\mathrm{s})$')
 ax.set_ylabel(r'$\langle\tilde{T}\rangle\;(\mathrm{K})$')
+ax.yaxis.set_label_coords(-0.18,0.5)
 
 # notes
 ax.text(

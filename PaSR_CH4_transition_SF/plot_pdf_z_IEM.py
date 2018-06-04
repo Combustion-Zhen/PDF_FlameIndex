@@ -25,6 +25,7 @@ params['tmix'] = 0.2
 params['eqv'] = 1.0
 
 csv_name = 'ZCTR.csv'
+dat_name = 'pasrm.op'
 
 npts = 100
 z_lb = 0
@@ -46,11 +47,19 @@ for i, model in enumerate(models):
     hist, bins = np.histogram(data['Z'], 
                               bins=npts, 
                               range=(z_lb, z_ub), 
-                              weights=data['R'], 
                               density=True
                              )
     
     pdfs[:,i] = hist
+
+    data = np.genfromtxt('/'.join([case_name,dat_name]),
+                         usecols=(4,)
+                        )
+
+    if model.endswith('HYB') :
+        omega = np.mean( data )
+
+omega *= np.power(10.,params['tres'])*params['tmix']
 
 
 # In[5]:
@@ -59,13 +68,13 @@ for i, model in enumerate(models):
 # figure and axes parameters
 # total width is fixed, for one column plot
 plot_width    = 6.7
-margin_left   = 1.3
-margin_right  = 0.2
+margin_left   = 1.4
+margin_right  = 0.1
 margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
 space_height  = 0.5
-ftsize        = 7
+ftsize        = 9
 
 font = {'family':'serif',
         'weight':'normal',
@@ -73,6 +82,7 @@ font = {'family':'serif',
 
 # use TEX for interpreter
 plt.rc('text',usetex=True)
+plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
@@ -113,7 +123,8 @@ ax.legend(frameon=False)
 
 # limits
 ax.set_xlim([z_lb, z_ub])
-ax.set_ylim([0, 68])
+ax.set_xticks(np.linspace(0,0.15,6))
+ax.set_ylim([0, 100])
 
 # labels
 ax.set_xlabel(r'$Z$')
@@ -121,15 +132,23 @@ ax.set_ylabel(r'$\langle\tilde{f}_Z\rangle$')
 
 # notes
 ax.text(
-        0.1,30,
+        0.075,30,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
-            '{:g}'.format(np.power(10.,params['tres'])*1000),
-            '$\;\mathrm{ms}$',
+            #'{:g}'.format(np.power(10.,params['tres'])*1000),
+            #'$\;\mathrm{ms}$',
+            r'$1\times 10^{-3}$',
+            '$\;\mathrm{s}$',
             '\n',
             r'$\tau_{\mathrm{mix}}\!=\,$',
-            '{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
-            '$\;\mathrm{ms}$']))
+            #'{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
+            #'$\;\mathrm{ms}$'
+            r'$2\times 10^{-4}$',
+            '$\;\mathrm{s}$',
+            '\n',
+            r'$\dfrac{\langle\tilde{\omega}_{\bm\phi}\rangle}{\tilde{\omega}_{\bm\phi}^{\mathrm{N}}}$',
+            '={:.2f}'.format(omega)
+            ]))
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
@@ -142,5 +161,6 @@ fig.subplots_adjust(left = margin_left/plot_width,
 # In[7]:
 
 
+fig.savefig('fig_pdf_z_IEM.eps')
 fig.savefig('fig_pdf_z_IEM.pdf')
 
