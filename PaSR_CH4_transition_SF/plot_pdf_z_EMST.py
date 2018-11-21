@@ -124,7 +124,7 @@ ax.legend(frameon=False)
 # limits
 ax.set_xlim([z_lb, z_ub])
 ax.set_xticks(np.linspace(0,0.15,6))
-ax.set_ylim([0, 220])
+ax.set_ylim([0, 250])
 
 # labels
 ax.set_xlabel(r'$Z$')
@@ -132,7 +132,7 @@ ax.set_ylabel(r'$\langle\tilde{f}_Z\rangle$')
 
 # notes
 ax.text(
-        0.075,66,
+        0.075,75,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             #'{:g}'.format(np.power(10.,params['tres'])*1000),

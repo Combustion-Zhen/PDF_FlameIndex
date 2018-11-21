@@ -1,6 +1,6 @@
 &pasrnml
 n=1000
-anres=20
+anres=@ANRES@
 tres=@TRES@
 tmix=@TMIX@
 flstrmd=1.0, 4.88, @AIRRATE@

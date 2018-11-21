@@ -58,7 +58,7 @@ plot_height = (num_rows*subplot_height
               +(num_rows-1)*space_height)
 
 # plot against tmix
-fig, ax = plt.subplots(num_rows,num_cols,sharex=True,sharey=True,
+fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
 for i, model in enumerate(models):
@@ -77,14 +77,17 @@ for i, model in enumerate(models):
     ax[i].text(0.1,0.24,modeln[i])
 
 ax[0].set_xlim([0, 0.156])
+ax[0].set_xticks(np.linspace(0,0.15,6))
 ax[0].set_ylim([0, 0.27])
 ax[0].set_yticks(np.linspace(0, 0.25, 6))
-ax[0].set_xticks(np.linspace(0,0.15,6))
+ax[1].set_ylim([0, 0.27])
+ax[1].set_yticks(np.linspace(0, 0.25, 6))
 
 # labels
 ax[0].set_xlabel(r'$Z$')
 ax[1].set_xlabel(r'$Z$')
 ax[0].set_ylabel(r'$c$')
+ax[1].set_ylabel(r'$c$')
 
 # notes
 ax[0].text(

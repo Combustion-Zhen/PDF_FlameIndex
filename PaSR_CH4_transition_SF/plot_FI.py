@@ -39,7 +39,6 @@ for i, t in enumerate(tau_log):
         data = np.genfromtxt(file_name,usecols=(3,4))
 
         fi[i,j] = np.mean(data[:,0])
-        omega[i,j] = np.mean(data[:-1750,1])
 
 # figure and axes parameters
 # total width is fixed, for one column plot

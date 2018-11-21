@@ -7,6 +7,7 @@
 
 
 import os
+import math
 import subprocess
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,54 +18,15 @@ from counterflow_file import *
 
 
 # parameters
-models = ['EMST','EMSTHYB']
-modeln = ['EMST','EMST-FI']
-
-params = {}
-params['MIX'] = None
-params['tres'] = None
-params['tmix'] = 0.2
-params['eqv'] = 1.0
-
+models = ['IEM','IEMHYB']
+modeln = ['IEM','IEM-FI']
 
 # In[3]:
 
+tau_log = [-2.5,-3,-3.5]
 
-tau_log = np.linspace(-2.5,-3.5,3)
-
-
-# In[4]:
-
-
-csv_name = 'ZCTR.csv'
-
-npts = 120
 z_lb = 0
 z_ub = 0.156
-
-
-# In[5]:
-
-
-pdfs = np.empty([npts, len(tau_log), len(models)])
-for i, t in enumerate(tau_log):
-    params['tres'] = t
-    for j, m in enumerate(models):
-        params['MIX'] = m
-
-        case_name = params2name(params)
-        
-        data = np.genfromtxt('/'.join([case_name,csv_name]),
-                             delimiter=',',
-                             names=True)
-        
-        hist, bins = np.histogram(data['Z'], 
-                                  bins=npts, 
-                                  range=(z_lb, z_ub), 
-                                  density=True
-                                 )
-
-        pdfs[:,i,j] = hist
 
 
 # In[6]:
@@ -112,37 +74,49 @@ plot_height = (num_rows*subplot_height
 # In[10]:
 
 
-z = (bins[1:]+bins[:-1])/2
-
 # plot against tmix
 fig, ax = plt.subplots(num_rows,num_cols,
                        figsize=cm2inch(plot_width,plot_height))
 
-for j, m in enumerate(models):
-    for i, t in enumerate(tau_log):
-        ax[j].plot(z, pdfs[:,i,j],
+for i, t in enumerate(tau_log):
+    for j, m in enumerate(models):
+
+        file_name = 'pdfs_z_tres-{}.csv'.format(t)
+
+        data = np.genfromtxt(file_name, names=True, delimiter=',')
+
+        t_exp_index = math.ceil(-t)
+
+        ax[j].plot(data['x'], data[m],
                    c = colors[i], ls = lines[i], lw = 1.,
                    label=''.join([
                        r'$\tau_{\mathrm{res}}=$',
-                       '{:.3g}'.format(np.power(10.,t)*1000),
-                       r'$\;\mathrm{ms}$'])
+                       '{:.1f}'.format(np.power(10.,t)*np.power(10.,t_exp_index)),
+                       r'$\times 10^{',
+                       '{:g}'.format(-t_exp_index),
+                       r'}$',
+                       r'$\;\mathrm{s}$'])
                   )
+
         
+for j, m in enumerate(modeln):
+    ax[j].text(0.01,8/9*80,'({})'.format(chr(ord('a')+j)))
     # legend
-    ax[j].legend(frameon=False,loc='lower right')
+    ax[j].legend(frameon=False,loc='upper right')
 
     # limits
     ax[j].set_xlim([z_lb, z_ub])
     ax[j].set_xticks(np.linspace(0,0.15,6))
-    ax[j].set_ylim([0, 400])
+    ax[j].set_ylim([0, 80])
+    ax[j].set_yticks(np.linspace(0,80,9))
 
     # labels
     ax[j].set_xlabel(r'$Z$')
     ax[j].set_ylabel(r'$\langle\tilde{f}_Z\rangle$')
 
-    ax[j].text(0.005,300,
+    ax[j].text(0.005,45,
                ''.join([
-                   modeln[j],
+                   m,
                    '\n',
                    r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}}=0.2$'])
               )
@@ -155,18 +129,28 @@ fig.subplots_adjust(left = margin_left/plot_width,
                     hspace = space_height/plot_height
                     )
 
-#axs = fig.add_axes([0.6, 0.32, 0.35, 0.35])
-#for i, t in enumerate(tau_log):
-#    axs.plot(z, pdfs[:,i],
-#            c = colors[i], ls = lines[i], lw = 1.)
-#
-#axs.set_xlim([0.049,0.058])
-#axs.set_ylim([0, 400])
-#
+for j, m in enumerate(models):
+    sub_ax_left = (
+            j*(space_width/subplot_width*0.7+1)
+            +0.62
+            )*subplot_width+margin_left
+    sub_ax_bottom = 0.15*subplot_height+margin_bottom
 
-# In[11]:
+    axs = fig.add_axes([sub_ax_left/plot_width,
+                        sub_ax_bottom/plot_height,
+                        0.57*subplot_width/plot_width,
+                        0.42*subplot_height/plot_height])
+    for i, t in enumerate(tau_log):
+        file_name = 'pdfs_z_tres-{}.csv'.format(t)
 
+        data = np.genfromtxt(file_name, names=True, delimiter=',')
 
-fig.savefig('fig_pdf_z_EMSTHYB_tres.pdf')
-fig.savefig('fig_pdf_z_EMSTHYB_tres.eps')
+        axs.plot(data['x'],data[m],
+                 c = colors[i], ls = lines[i], lw = 1.)
+
+        axs.set_xlim([0.049,0.058])
+        axs.set_ylim([0, 80])
+        axs.set_yticks([0,40,80])
+
+fig.savefig('fig_pdf_z_IEMHYB_tres.pdf')
 

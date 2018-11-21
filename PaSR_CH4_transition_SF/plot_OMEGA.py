@@ -25,7 +25,6 @@ params['eqv'] = 1.0
 # obtain data
 dat_name = 'pasrm.op'
 
-fi = np.zeros([len(tau_log),len(models)])
 omega = np.zeros([len(tau_log),len(models)])
 
 for i, t in enumerate(tau_log):
@@ -38,8 +37,7 @@ for i, t in enumerate(tau_log):
 
         data = np.genfromtxt(file_name,usecols=(3,4))
 
-        fi[i,j] = np.mean(data[:,0])
-        omega[i,j] = np.mean(data[:-1750,1])
+        omega[i,j] = np.mean(data[:,1])
 
 # figure and axes parameters
 # total width is fixed, for one column plot
@@ -103,8 +101,8 @@ for j, model in enumerate(modeln):
 ax.set_xscale('log')
 ax.set_xlim([0.00008,0.0125])
 
-ax.set_ylim([0.95, 1.75])
-ax.set_yticks(np.linspace(1.0,1.7,8))
+ax.set_ylim([0.95, 2.45])
+ax.set_yticks(np.linspace(1.0,2.4,8))
 
 # legend
 ax.legend(frameon=False,
@@ -116,7 +114,7 @@ ax.set_ylabel(r'$\langle\tilde{\omega}_{\bm\phi}\rangle/\tilde{\omega}_{\bm\phi}
 ax.yaxis.set_label_coords(-0.16,0.5)
 
 # notes
-ax.text(0.0001,1.6,
+ax.text(0.0001,2.16875,
         r'$\dfrac{\tau_{\mathrm{mix}}}{\tau_{\mathrm{res}}} = 0.2$',
        )
 

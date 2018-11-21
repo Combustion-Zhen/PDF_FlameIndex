@@ -29,23 +29,28 @@ def equiv2Z( phi ):
 def air_flow_rate( Zf, Z ):
     return (Zf - Z)/Z
 
+#mixing_models = {'IEMHYB':4,
+#                 'EMSTHYB':6,
+#                 'IEM':7,
+#                 'EMST':9}
 mixing_models = {'IEMHYB':4,
-                 'EMSTHYB':6,
-                 'IEM':7,
-                 'EMST':9}
+                 'EMSTHYB':6
+                 }
 
-#tau_log = np.linspace(-3.9,-2.1,10)
-tau_log = np.array([-3.65,])
+tau_log = np.linspace(-4,-2,21)
+tau_log = np.insert( tau_log, 4, -3.65)
 mix_res_ratio = [0.2,]
 equiv_ratio = [1.0,]
 
+anres = 10
 dtmix = 0.01
 dtres = 0.01
 isave = 100
-restart = '.false.'
+restart = '.true.'
 full_op = '.false.'
 full_fi = '.false.'
 bin_op = '.false.'
+op_ext = '.false.'
 
 with open('template/pasr.nml','r') as template:
     lines_nml = template.readlines();
@@ -83,6 +88,9 @@ for mix_k, mix_v in mixing_models.items():
                 # pasr namelist
                 with open('pasr.nml','w') as nml:
                     for line in lines_nml:
+                        line = re.sub('@ANRES@',
+                                '{:g}'.format(anres),
+                                line)
                         line = re.sub('@MIXMODEL@',
                                 '{:g}'.format(mix_v),
                                 line)
@@ -118,6 +126,9 @@ for mix_k, mix_v in mixing_models.items():
                                 line)
                         line = re.sub('@BINOP@',
                                 bin_op,
+                                line)
+                        line = re.sub('@OPEXT@',
+                                op_ext,
                                 line)
                         nml.write(line)
                 # job script

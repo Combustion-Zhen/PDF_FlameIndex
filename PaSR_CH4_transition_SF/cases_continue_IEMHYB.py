@@ -28,22 +28,22 @@ def air_flow_rate( Zf, Z ):
     return (Zf - Z)/Z
 
 
-mixing_models = {'IEMHYB':4,
-                 'EMSTHYB':6}
+mixing_models = {'IEMHYB':4,}
 
-tau_log = np.linspace(-4,-2,21)
-tau_log = np.insert( tau_log, 4, -3.65)
+#tau_log = np.linspace(-4,-3.1,10)
+#tau_log = np.insert( tau_log, 4, -3.65)
+tau_log = np.linspace(-4,-3.3,8)
 mix_res_ratio = [0.2,]
 equiv_ratio = [1.0,]
 
-anres = 50
+anres = 10
 dtmix = 0.01
 dtres = 0.01
 isave = 100
 restart = '.true.'
-full_op = '.true.'
+full_op = '.false.'
 full_fi = '.false.'
-bin_op = '.true.'
+bin_op = '.false.'
 op_ext = '.false.'
 
 with open('template/pasr.nml','r') as template:

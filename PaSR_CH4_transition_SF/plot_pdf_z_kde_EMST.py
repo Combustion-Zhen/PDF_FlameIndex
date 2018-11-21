@@ -16,50 +16,34 @@ from counterflow_file import *
 
 
 # parameters
-models = ['IEM','IEMHYB']
-modeln = ['IEM','IEM-FI']
+models = ['EMST','EMSTHYB']
+modeln = ['EMST','EMST-FI']
 params = {}
 params['MIX'] = None
-params['tres'] = -3
+params['tres'] = -3.65
 params['tmix'] = 0.2
 params['eqv'] = 1.0
 
-csv_name = 'ZCTR.csv'
-dat_name = 'pasrm.op'
-
-npts = 100
 z_lb = 0
 z_ub = 0.156
+dat_name = 'pasrm.op'
 
 
 # In[4]:
 
 
-pdfs = np.empty([npts, len(models)])
-for i, model in enumerate(models):
-    params['MIX'] = model
-    case_name = params2name(params)
-    
-    data = np.genfromtxt('/'.join([case_name,csv_name]),
-                         delimiter=',',
-                         names=True)
-    
-    hist, bins = np.histogram(data['Z'], 
-                              bins=npts, 
-                              range=(z_lb, z_ub), 
-                              density=True
-                             )
-    
-    pdfs[:,i] = hist
+params['MIX'] = models[1]
+case_name = params2name( params )
+data = np.genfromtxt('/'.join([case_name,dat_name]),
+                     usecols=(4,)
+                    )
 
-    data = np.genfromtxt('/'.join([case_name,dat_name]),
-                         usecols=(4,)
-                        )
-
-    if model.endswith('HYB') :
-        omega = np.mean( data )
-
+omega = np.mean( data )
 omega *= np.power(10.,params['tres'])*params['tmix']
+
+file_name = 'pdfs_z_tres-{}.csv'.format(params['tres'])
+
+data = np.genfromtxt(file_name, names=True, delimiter=',')
 
 
 # In[5]:
@@ -74,7 +58,7 @@ margin_bottom = 1.0
 margin_top    = 0.1
 space_width   = 3.5
 space_height  = 0.5
-ftsize        = 9
+ftsize        = 7
 
 font = {'family':'serif',
         'weight':'normal',
@@ -107,25 +91,22 @@ plot_height = (num_rows*subplot_height
 # In[6]:
 
 
-z = (bins[1:]+bins[:-1])/2
-
 # plot against tmix
 fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
 for i, model in enumerate(models):
-    ax.plot(z, pdfs[:,i],
+    ax.plot(data['x'], data[model],
             c = colors[i], ls = lines[i], lw = 1.,
             label=modeln[i])
     
 # legend
-ax.legend(frameon=False)
+ax.legend(frameon=False,loc='upper right')
 
 # limits
 ax.set_xlim([z_lb, z_ub])
 ax.set_xticks(np.linspace(0,0.15,6))
-ax.set_ylim([0, 120])
-ax.set_yticks(np.linspace(0,120,7))
+ax.set_ylim([0, 160])
 
 # labels
 ax.set_xlabel(r'$Z$')
@@ -133,23 +114,24 @@ ax.set_ylabel(r'$\langle\tilde{f}_Z\rangle$')
 
 # notes
 ax.text(
-        0.075,36,
+        0.075,48,
         ''.join([
             r'$\tau_{\mathrm{res}}\,=\,$',
             #'{:g}'.format(np.power(10.,params['tres'])*1000),
             #'$\;\mathrm{ms}$',
-            r'$1\times 10^{-3}$',
+            r'$2.24\times 10^{-4}$',
             '$\;\mathrm{s}$',
             '\n',
             r'$\tau_{\mathrm{mix}}\!=\,$',
             #'{:g}'.format(np.power(10.,params['tres'])*params['tmix']*1000),
             #'$\;\mathrm{ms}$'
-            r'$2\times 10^{-4}$',
+            r'$4.48\times 10^{-5}$',
             '$\;\mathrm{s}$',
             '\n',
             r'$\dfrac{\langle\tilde{\omega}_{\bm\phi}\rangle}{\tilde{\omega}_{\bm\phi}^{\mathrm{N}}}$',
             '={:.2f}'.format(omega)
             ]))
+
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
@@ -162,6 +144,6 @@ fig.subplots_adjust(left = margin_left/plot_width,
 # In[7]:
 
 
-fig.savefig('fig_pdf_z_IEM.eps')
-fig.savefig('fig_pdf_z_IEM.pdf')
+fig.savefig('fig_pdf_z_EMST.eps')
+fig.savefig('fig_pdf_z_EMST.pdf')
 

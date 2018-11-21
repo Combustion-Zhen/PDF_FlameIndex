@@ -58,9 +58,11 @@ plot_height = (num_rows*subplot_height
               +(num_rows-1)*space_height)
 
 # plot against tmix
-fig, ax = plt.subplots(num_rows,num_cols,sharex=True,sharey=True,
+fig, ax = plt.subplots(num_rows,num_cols,sharex=True,
                        figsize=cm2inch(plot_width,plot_height))
 
+cm = np.empty(len(models))
+zm = np.empty(len(models))
 for i, model in enumerate(models):
     params['MIX'] = model
     case_name = params2name( params )
@@ -76,7 +78,14 @@ for i, model in enumerate(models):
     ax[i].text(0.01,0.24,'({})'.format(chr(ord('a')+i)))
     ax[i].text(0.1,0.24,modeln[i])
 
-    ax[i].scatter( np.mean(data[:,0]),np.mean(data[:,1]), s=4, c='r', marker='.' )
+    zmean = np.mean(data[:,0] )
+    cmean = np.mean(data[:,1] )
+    ax[i].scatter( zmean,
+                   cmean,
+                   s=16, c='r', marker='.' 
+                 )
+    cm[i] = cmean
+    zm[i] = zmean
     
     ax[i].text(
             0.09,0.13,
@@ -91,16 +100,49 @@ for i, model in enumerate(models):
                 ]))
 
 
+ax[0].annotate( ''.join([r'$\tilde{c}\,\,=$',
+                         '{:.2f}'.format(cm[0]),
+                         '\n',
+                         r'$\tilde{Z}=$',
+                         '0.055'
+                     ]
+                    ),
+                xy = (zm[0], cm[0]),
+                xytext= (zm[0]-0.02, cm[0]+0.05),
+                arrowprops=dict(arrowstyle="->",
+                                connectionstyle="arc3",
+                                linewidth=0.5
+                               ),
+              )
+
+ax[1].annotate( ''.join([r'$\tilde{c}\,\,=$',
+                         '{:.2f}'.format(cm[1]),
+                         '\n',
+                         r'$\tilde{Z}=$',
+                         '0.055'
+                     ]
+                    ),
+                xy = (zm[1], cm[1]),
+                xytext= (zm[1]-0.013, cm[1]-0.08)
+                    )
+                arrowprops=dict(arrowstyle="->",
+                                connectionstyle="arc3",
+                                linewidth=0.5
+                               ),
+              )
 
 ax[0].set_xlim([0, 0.156])
+ax[0].set_xticks(np.linspace(0,0.15,6))
 ax[0].set_ylim([0, 0.27])
 ax[0].set_yticks(np.linspace(0, 0.25, 6))
-ax[0].set_xticks(np.linspace(0,0.15,6))
+ax[1].set_ylim([0, 0.27])
+ax[1].set_yticks(np.linspace(0, 0.25, 6))
 
 # labels
 ax[0].set_xlabel(r'$Z$')
 ax[1].set_xlabel(r'$Z$')
 ax[0].set_ylabel(r'$c$')
+ax[1].set_ylabel(r'$c$')
 
 fig.subplots_adjust(left = margin_left/plot_width,
                     bottom = margin_bottom/plot_height,
