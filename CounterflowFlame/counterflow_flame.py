@@ -1,6 +1,7 @@
 import cantera as ct
 import numpy as np
 import sys
+import argparse
 from filename import params2name
 
 def counterflowPartiallyPremixedFlame(
@@ -136,4 +137,99 @@ def counterflowPartiallyPremixedFlame(
         return 0
 
 if __name__ == '__main__':
-    counterflowPartiallyPremixedFlame()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '-m', '--mechanism',
+        default = 'gri30.xml',
+        type = str,
+        help = 'reaction mechanism')
+
+    parser.add_argument(
+        '-t', '--transport',
+        default = 'UnityLewis',
+        type = str,
+        help = 'transport model')
+
+    parser.add_argument(
+        '--soret',
+        default = False,
+        type = bool,
+        help = 'Soret effect')
+
+    parser.add_argument(
+        '--radiation',
+        default = False,
+        type = bool,
+        help = 'radiation')
+
+    parser.add_argument(
+        '-f', '--fuel',
+        default = 'CH4',
+        type = str,
+        help = 'fuel name')
+
+    parser.add_argument(
+        '-a', '--strain',
+        default = 100.,
+        type = float,
+        help = 'mean strain rate (1/s)')
+
+    parser.add_argument(
+        '-w', '--width',
+        default = 0.01,
+        type = float,
+        help = 'flame domain (m)')
+
+    parser.add_argument(
+        '-p', '--pressure',
+        default = 1.,
+        type = float,
+        help = 'pressure (atm)')
+
+    parser.add_argument(
+        '--phif',
+        default = float('inf'),
+        type = float,
+        help = 'equivalence ratio of the rich stream')
+
+    parser.add_argument(
+        '--phio',
+        default = 0.,
+        type = float,
+        help = 'equivalence ratio of the lean stream')
+
+    parser.add_argument(
+        '--Tf',
+        default = 300.,
+        type = float,
+        help = 'temperature of the rich stream')
+
+    parser.add_argument(
+        '--To',
+        default = 300.,
+        type = float,
+        help = 'temperature of the lean stream')
+
+    parser.add_argument(
+        '-s', '--solution',
+        default = None,
+        type = str,
+        help = 'restart solution')
+
+    args = parser.parse_args()
+
+    counterflowPartiallyPremixedFlame(
+        mech = args.mechanism,
+        transport = args.transport,
+        flag_soret = args.soret, 
+        flag_radiation = args.radiation,
+        fuel_name = args.fuel, 
+        strain_rate = args.strain, 
+        width = args.width, 
+        p = args.pressure,
+        phi_f = args.phif, 
+        phi_o = args.phio, 
+        tin_f = args.Tf, 
+        tin_o = args.To, 
+        solution = args.solution)
