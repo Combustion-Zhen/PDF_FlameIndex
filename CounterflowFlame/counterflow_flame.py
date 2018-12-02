@@ -4,12 +4,13 @@ import sys
 from filename import params2name
 
 def counterflowPartiallyPremixedFlame(
-        mech='gri30.xml', transport='Multi',
-        flag_soret = True, flag_radiation = False,
-        fuel_name='CH4', strain_rate=100., width=0.01, p=1.,
+        mech='gri30.xml', transport='UnityLewis',
+        flag_soret = False, flag_radiation = False,
+        fuel_name='CH4', strain_rate=285., width=0.01, p=1.,
         phi_f='inf', phi_o=0., tin_f=300., tin_o=300., solution=None):
 
 ################################################################################
+
     # Create the gas object used to evaluate all thermodynamic, kinetic, and
     # transport properties.
     gas = ct.Solution(mech)
@@ -32,14 +33,38 @@ def counterflowPartiallyPremixedFlame(
 
     case_name = params2name(flame_params)
 
-    p *= ct.one_atm  # pressure
-
 ################################################################################
 
+    p *= ct.one_atm  # pressure
+
+    # Create an object representing the counterflow flame configuration,
+    # which consists of a fuel inlet on the left, the flow in the middle,
+    # and the oxidizer inlet on the right.
+    f = ct.CounterflowDiffusionFlame(gas, width=width)
+    f.transport_model = transport
+    f.P = p
+
+    if solution is not None:
+        f.restore(solution, loglevel=0)
+
+        solution_width = f.grid[-1] - f.grid[0]
+        width_factor = width / solution_width
+
+        solution_strain = (f.u[0] - f.u[-1])/solution_width
+        strain_factor = strain_rate / solution_strain
+
+        normalized_grid = f.grid / solution_width
+
+        u_factor = strain_factor * width_factor
+
+        # update solution initialization following Fiala & Sattelmayer
+        f.flame.grid = normalized_grid * width
+        f.set_profile('u', normalized_grid, f.u*u_factor)
+        f.set_profile('V', normalized_grid, f.V*strain_factor)
+        f.set_profile('lambda', normalized_grid, f.L*np.square(strain_factor))
+
     oxy = {'O2':1., 'N2':3.76}  # air composition
-
     fuel_index = gas.species_index(fuel_name)
-
     stoich_nu = gas.n_atoms(fuel_index,'C')+gas.n_atoms(fuel_index,'H')/4.
 
     comp_f = {}
@@ -51,30 +76,18 @@ def counterflowPartiallyPremixedFlame(
 
     comp_o[fuel_name] = phi_o/stoich_nu
 
+    gas.TPX = tin_f, p, comp_o
+    dens_o = gas.density
+
+    gas.TPX = tin_o, p, comp_f
+    dens_f = gas.density
+
     # fuel and oxidizer streams have the same velocity
     u = strain_rate*width/2.
 
     # get mass flow rate
-    gas.TPX = tin_f, p, comp_o
-    dens_o = gas.density
     mdot_o = u*dens_o
-
-    gas.TPX = tin_o, p, comp_f
-    dens_f = gas.density
     mdot_f = u*dens_f  # kg/m^2/s
-
-    # Create an object representing the counterflow flame configuration,
-    # which consists of a fuel inlet on the left, the flow in the middle,
-    # and the oxidizer inlet on the right.
-    f = ct.CounterflowDiffusionFlame(gas, width=width)
-
-    if solution is not None:
-        try:
-            f.restore(solution, loglevel=0)
-        except Exception as e:
-            print(e,'Start to solve from initialization')
-
-    f.transport_model = transport
 
     # Set the state of the two inlets
     f.fuel_inlet.mdot = mdot_f
