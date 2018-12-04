@@ -20,6 +20,17 @@ def ProgressVariable( flame, speciesList ):
 
     return c
 
+def StoichiometricMixtureFraction( fuel, oxidizer ):
+
+    zFuel = BilgerSpecificMoleNumber( fuel )
+    zOxidizer = BilgerSpecificMoleNumber( oxidizer )
+
+    nu = - zFuel / zOxidizer
+
+    Zst = 1. / ( 1. + nu )
+
+    return Zst
+
 def VectorMixtureFractionForMassFraction( fuel, oxidizer ):
 
     zFuel = BilgerSpecificMoleNumber( fuel )
