@@ -3,7 +3,7 @@ import os
 import sys
 sys.path.append('/home/luz0a/Documents/PDF_FlameIndex/CounterflowFlame')
 from filename import params2name
-from counterflow_flame import counterflowPartiallyPremixedFlame
+from counterflowFlame import CounterflowPartiallyPremixedFlame
 
 strain_init = 100.
 strain_max = 1000.
@@ -27,7 +27,7 @@ solution = None
 
 while True :
 
-    info = counterflowPartiallyPremixedFlame(
+    info = CounterflowPartiallyPremixedFlame(
             strain_rate = flame_params['a'],
             phi_f = flame_params['phif'],
             phi_o = flame_params['phio'],

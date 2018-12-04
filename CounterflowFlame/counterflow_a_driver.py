@@ -1,12 +1,12 @@
 import numpy as np
 import os
 import argparse
+from filename import params2name
 import sys
 sys.path.append('/home/luz0a/Documents/PDF_FlameIndex/CounterflowFlame')
-from filename import params2name
-from counterflow_flame import counterflowPartiallyPremixedFlame
+from counterflowFlame import CounterflowPartiallyPremixedFlame
 
-def counterflowFlameStrainDriver(
+def CounterflowFlameStrainDriver(
         mech='gri30.xml', transport='UnityLewis',
         flag_soret = False, flag_radiation = False,
         fuel_name='CH4', width=0.01, p=1.,
@@ -43,7 +43,7 @@ def counterflowFlameStrainDriver(
         case_name = params2name(flame_params)
         file_name = '{}.xml'.format(case_name)
 
-        info = counterflowPartiallyPremixedFlame(
+        info = CounterflowPartiallyPremixedFlame(
                 mech = mech,
                 transport = transport,
                 flag_soret = flag_soret,
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    counterflowFlameStrainDriver(
+    CounterflowFlameStrainDriver(
         mech = args.mechanism,
         transport = args.transport,
         flag_soret = args.soret, 
