@@ -60,6 +60,14 @@ def ProgressVariable( flame, speciesList ):
 
     return c
 
+def ProgressVariableReactionRate( flame, speciesList ):
+
+    v = VectorProgressVariableForMassFraction( flame.gas, speciesList )
+
+    omega = np.dot( flame.net_production_rates.transpose(), v )
+
+    return omega
+
 def ScalarDissipationRateMixtureFraction( flame, fuel, oxidizer ):
 
     mixtureFraction = BilgerMixtureFraction( flame, fuel, oxidizer )

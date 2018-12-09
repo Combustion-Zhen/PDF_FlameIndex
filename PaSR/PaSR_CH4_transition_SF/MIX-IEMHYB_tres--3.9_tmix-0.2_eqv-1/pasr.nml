@@ -1,0 +1,28 @@
+&pasrnml
+n=1000
+anres=50
+tres=1.258925e-04
+tmix=2.517851e-05
+flstrmd=1.0, 4.88, 8.71524
+cdtrp=0.01
+cdtmix=0.01
+part_in=.true.
+part_out=.true.
+full_op=.true.
+full_fi=.false.
+iblock=10000
+isave=100
+etola=1.e-4
+stomby=400.
+mxmode=4
+defC=2
+beta_transit=.true.
+Zdist=0
+Zmean=0.156215
+mech='CH4'
+prmax = 0.993
+prmin = 0.993
+screen = .false.
+bin_op = .true.
+op_ext = .false.
+/

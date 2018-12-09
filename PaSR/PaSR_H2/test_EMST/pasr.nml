@@ -1,0 +1,23 @@
+&pasrnml
+n=1000
+anres=20
+tres=0.002
+tmix=0.0007
+flstrmd=0.0, 1, 2.29
+cdtrp=0.1
+cdtmix=0.01
+part_in=.false.
+part_out=.true.
+full_op=false
+full_fi=false
+iblock=10000
+isave=50
+etola=1.e-5
+stomby=400.
+mxmode=3
+defC=1
+beta_transit=.true.
+Zdist=0
+Zmean=1
+mech='H2'
+/
