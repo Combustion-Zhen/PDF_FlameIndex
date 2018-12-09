@@ -4,9 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import figureSize
 from filename import params2name
-import sys
-sys.path.append('/home/luz0a/Documents/PDF_FlameIndex/CounterflowFlame')
-import flame
+import canteraFlame
 
 # figure specification
 plot_width      =9.0
@@ -66,7 +64,7 @@ fuel.TPX = flame_params['tf'], p, {flame_params['F']:1}
 oxidizer = ct.Solution('gri30.xml')
 oxidizer.TPX = flame_params['to'], p, {'O2':1,'N2':3.76}
 
-Zst = flame.StoichiometricMixtureFraction( fuel, oxidizer )
+Zst = canteraFlame.StoichiometricMixtureFraction( fuel, oxidizer )
 
 gas = ct.Solution('gri30.xml')
 f = ct.CounterflowDiffusionFlame(gas, width=0.01)
@@ -78,8 +76,8 @@ for i, a in enumerate(strain):
     flame_name = params2name( flame_params )
     f.restore( '{}.xml'.format(flame_name), loglevel=0 )
 
-    Z = flame.BilgerMixtureFraction( f, fuel, oxidizer )
-    c = flame.ProgressVariable( f, speciesProgressVariable )
+    Z = canteraFlame.BilgerMixtureFraction( f, fuel, oxidizer )
+    c = canteraFlame.ProgressVariable( f, speciesProgressVariable )
 
     flameGradient = np.gradient( c, Z )
 
