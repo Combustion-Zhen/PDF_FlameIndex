@@ -11,16 +11,15 @@ plot_width      =9.0
 margin_left     =1.5
 margin_right    =0.3
 margin_bottom   =1.2
-margin_top      =0.3
+margin_top      =0.2
 space_width     =1.0
 space_height    =1.0
 subplot_ratio   =0.8
-ftsize          =12
+ftsize          =11
 
 font = {'family':'serif',
         'weight':'normal',
         'size':ftsize}
-
 # use TEX for interpreter
 plt.rc('text',usetex=True)
 plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
@@ -40,9 +39,9 @@ fig, ax = plt.subplots(
 
 #
 
-linestyle = ['-', '--', '-.', ':']
+linestyle = ['-.', '--', '-']
 
-strain = np.array([50, 100, 200, 400])
+strain = np.array([100, 200, 400])
 
 speciesProgressVariable = ['CO2', 'CO', 'H2O', 'H2']
 slopeProgressVariable = 5.
@@ -68,7 +67,7 @@ Zst = canteraFlame.StoichiometricMixtureFraction( fuel, oxidizer )
 
 ax.plot([0., Zst, 1.], 
         [0., slopeProgressVariable*Zst, 0.], 
-        'k--', lw=2, label='BS')
+        'k:', lw=1, label=r'$\mathrm{Da}\rightarrow\infty$')
 
 gas = ct.Solution('gri30.xml')
 f = ct.CounterflowDiffusionFlame(gas, width=0.01)
@@ -77,15 +76,17 @@ for i, a in enumerate(strain):
 
     flame_params['a'] = a
 
+    label = r'$a=\;$'+'{:g}'.format(a)+r'$\;\mathrm{s}^{-1}$'
+
     flame_name = params2name( flame_params )
     f.restore( '{}.xml'.format(flame_name), loglevel=0 )
 
     Z = canteraFlame.BilgerMixtureFraction( f, fuel, oxidizer )
     c = canteraFlame.ProgressVariable( f, speciesProgressVariable )
 
-    ax.plot( Z, c, label='{:g}'.format(a), ls=linestyle[i], lw=1 )
+    ax.plot( Z, c, label=label, ls=linestyle[i], lw=1 )
 
-ax.legend(frameon=False)
+ax.legend(handlelength=3, frameon=False)
 
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 0.3)
