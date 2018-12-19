@@ -234,4 +234,5 @@ ax1.text(
 
 ax0.text(0.078,0.28, 'scale split')
 
-fig.savefig('fig_ZC_phi.eps')
+fig.savefig('figZCPhi.eps')
+fig.savefig('figZCPhi.png')

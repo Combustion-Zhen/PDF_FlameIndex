@@ -8,14 +8,14 @@ import canteraFlame
 
 # figure specification
 plot_width      =9.0
-margin_left     =1.5
+margin_left     =1.8
 margin_right    =0.3
 margin_bottom   =1.2
 margin_top      =0.3
 space_width     =1.0
 space_height    =1.0
 subplot_ratio   =0.8
-ftsize          =12
+ftsize          =11
 
 font = {'family':'serif',
         'weight':'normal',
@@ -40,9 +40,10 @@ fig, ax = plt.subplots(
 
 #
 
-linestyle = ['-', '--', '-.', ':']
+linestyle = ['-.', '--', '-']
+linecolor = ['b', 'k', 'r']
 
-strain = np.array([50, 100, 200, 400])
+strain = np.array([100, 200, 400])
 
 speciesProgressVariable = ['CO2', 'CO', 'H2O', 'H2']
 slopeProgressVariable = 5.
@@ -73,6 +74,8 @@ for i, a in enumerate(strain):
 
     flame_params['a'] = a
 
+    label = r'$a=\;$'+'{:g}'.format(a)+r'$\;\mathrm{s}^{-1}$'
+
     flame_name = params2name( flame_params )
     f.restore( '{}.xml'.format(flame_name), loglevel=0 )
 
@@ -80,15 +83,17 @@ for i, a in enumerate(strain):
 
     lagrangianFI = canteraFlame.LagrangianFlameIndex( f, fuel, oxidizer )
 
-    ax.plot( Z, lagrangianFI, label='{:g}'.format(a), ls=linestyle[i], lw=1 )
+    ax.plot( Z[Z<0.99], lagrangianFI[Z<0.99], 
+             label=label, 
+             ls=linestyle[i], c=linecolor[i], lw=1 )
 
 ax.legend(frameon=False)
 
-ax.set_xlim(0, 0.2)
+ax.set_xlim(0, 1)
 ax.set_ylim(-1, 1)
 
 ax.set_xlabel(r'$Z$')
-ax.set_ylabel(r'$c$')
+ax.set_ylabel('Lagrangian Partile Mixing Status')
 
 fig.subplots_adjust(
         left = margin_left/plot_width,
@@ -99,4 +104,5 @@ fig.subplots_adjust(
         hspace = space_height/subplot_height
         )
 
-fig.savefig('fig_FlameIndex_a.eps')
+fig.savefig('figParticleStatusStrain.eps')
+fig.savefig('figParticleStatusStrain.png')

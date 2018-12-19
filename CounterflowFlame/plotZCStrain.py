@@ -103,4 +103,5 @@ fig.subplots_adjust(
         hspace = space_height/subplot_height
         )
 
-fig.savefig('fig_ZC_a.eps')
+fig.savefig('figZCStrain.eps')
+fig.savefig('figZCStrain.png')

@@ -7,12 +7,12 @@ from filename import params2name
 import canteraFlame
 
 # figure specification
-plot_width      =9.0
+plot_width      =19.0
 margin_left     =1.8
 margin_right    =0.2
 margin_bottom   =1.2
 margin_top      =0.3
-space_width     =1.0
+space_width     =2.0
 space_height    =1.0
 subplot_ratio   =0.8
 ftsize          =11
@@ -27,7 +27,7 @@ plt.rc('text.latex', preamble=[r'\usepackage{amsmath}',r'\usepackage{bm}'])
 # use serif font
 plt.rc('font',**font)
 
-ncol = 1
+ncol = 2
 nrow = 1
 
 plot_height, subplot_height, subplot_width = figureSize.UniformSubplots(
@@ -36,12 +36,12 @@ plot_height, subplot_height, subplot_width = figureSize.UniformSubplots(
     [space_height, space_width])
 
 fig, ax = plt.subplots(
-        nrow, ncol, figsize=figureSize.cm2inch(plot_width,plot_height) )
+        nrow, ncol, sharex=True,
+        figsize=figureSize.cm2inch(plot_width,plot_height) )
 
 #
 
 phif = [1.2, 2.4, 4.8, float('inf')]
-limitZ = [0.0655, 0.122, 0.3, 1.]
 
 linestyle = ['-', '--', '-.', ':']
 linecolor = ['r', 'm', 'b', 'k']
@@ -94,18 +94,38 @@ for i, phi in enumerate(phif):
 
     Z = canteraFlame.BilgerMixtureFraction( f, fuel, oxidizer )
 
-    lagrangianFI = canteraFlame.LagrangianFlameIndex( f, fuel, oxidizer )
+    rangeIndex = np.where(np.logical_and( Z < 0.06, Z > 0.05 ))
+    rangeZ = Z[ rangeIndex ]
+    rangeGrid = f.grid[ rangeIndex ]
+    locZst = np.interp( Zst, rangeZ[::-1], rangeGrid[::-1])
 
-    ax.plot( Z[Z<limitZ[i]], lagrangianFI[Z<limitZ[i]], 
-             label=label, ls=linestyle[i], lw=1, c=linecolor[i] )
+    ax[0].plot( locZst-f.grid, f.T, label = label,
+                ls=linestyle[i], c=linecolor[i], lw=1 )
 
-ax.legend(frameon=False)
+    omega = canteraFlame.ProgressVariableReactionRate( 
+            f, speciesProgressVariable )
 
-ax.set_xlim(0, 0.21)
-ax.set_ylim(-1, 1)
+    ax[1].plot( locZst-f.grid, omega, label = label,
+                ls=linestyle[i], c=linecolor[i], lw=1 )
 
-ax.set_xlabel(r'$Z$')
-ax.set_ylabel('Lagrangian Partile Mixing Status')
+ax[1].legend(frameon=False,loc='upper left')
+
+xlim = 0.002
+ax[0].set_xlim(-xlim, xlim)
+ax[0].set_xticks(np.linspace(-xlim, xlim, num=5))
+ax[0].set_xticklabels(np.linspace(-xlim*1000,xlim*1000,num=5,dtype=np.int))
+
+ax[0].set_ylim(275, 2100)
+ax[1].set_ylim(0, 400)
+
+ax[0].set_xlabel(r'$x\;\mathrm{(mm)}$')
+ax[0].set_ylabel(r'$T\;\mathrm{(K)}$')
+
+ax[1].set_xlabel(r'$x\;\mathrm{(mm)}$')
+ax[1].set_ylabel(r'$\dot{\omega}_c\;\mathrm{(kg/(m^3\cdot s))}$')
+
+ax[0].text( 1.3/1000, 1735, '(a)' )
+ax[1].text( 1.3/1000, 320, '(b)' )
 
 fig.subplots_adjust(
         left = margin_left/plot_width,
@@ -116,5 +136,5 @@ fig.subplots_adjust(
         hspace = space_height/subplot_height
         )
 
-fig.savefig('figParticleStatusPhi.eps')
-fig.savefig('figParticleStatusPhi.png')
+fig.savefig('figFlameTOmegaPhi.eps')
+fig.savefig('figFlameTOmegaPhi.png')

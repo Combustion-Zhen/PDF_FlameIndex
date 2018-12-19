@@ -9,7 +9,7 @@ import canteraFlame
 # figure specification
 plot_width      =9.0
 margin_left     =1.8
-margin_right    =0.2
+margin_right    =0.3
 margin_bottom   =1.2
 margin_top      =0.3
 space_width     =1.0
@@ -40,18 +40,12 @@ fig, ax = plt.subplots(
 
 #
 
-phif = [1.2, 2.4, 4.8, float('inf')]
-limitZ = [0.0655, 0.122, 0.3, 1.]
-
 linestyle = ['-', '--', '-.', ':']
-linecolor = ['r', 'm', 'b', 'k']
+
+strain = np.array([50, 100, 200, 400])
 
 speciesProgressVariable = ['CO2', 'CO', 'H2O', 'H2']
 slopeProgressVariable = 5.
-
-folder_params = {}
-folder_params['phif'] = float('inf')
-folder_params['phio'] = 0
 
 flame_params = {}
 flame_params['F'] = 'CH4'
@@ -61,6 +55,7 @@ flame_params['phif'] = 'inf'
 flame_params['phio'] = 0
 flame_params['tf'] = 300
 flame_params['to'] = 300
+flame_name = params2name( flame_params )
 
 p = flame_params['p']*ct.one_atm
 
@@ -75,37 +70,47 @@ Zst = canteraFlame.StoichiometricMixtureFraction( fuel, oxidizer )
 gas = ct.Solution('gri30.xml')
 f = ct.CounterflowDiffusionFlame(gas, width=0.01)
 
-for i, phi in enumerate(phif):
+f.restore( '{}.xml'.format(flame_name), loglevel=0 )
 
-    folder_params['phif'] = phi
-    flame_params['phif'] = phi
+Z = canteraFlame.BilgerMixtureFraction( f, fuel, oxidizer )
 
-    label = r'$\varphi_r=\;$'+'{:g}'.format(phi)
+C, D, S = canteraFlame.TransportBudget( f )
 
-    if phi == float('inf'):
-        label = r'$\varphi_r=\infty$'
+vMixtureFraction = canteraFlame.VectorMixtureFractionForMassFraction(
+        fuel, oxidizer )
+vProgressVariable = canteraFlame.VectorProgressVariableForMassFraction(
+        gas, speciesProgressVariable )
 
-    folderName = params2name( folder_params )
-    flameName = params2name( flame_params )
+fluxMixtureFraction = np.dot( D.transpose(), vMixtureFraction )
+fluxProgressVariable = np.dot( D.transpose(), vProgressVariable )
 
-    fileName = '{}/{}.xml'.format( folderName, flameName )
+omegaProgressVariable = canteraFlame.ProgressVariableReactionRate(
+        f, speciesProgressVariable )
 
-    f.restore( fileName, loglevel=0 )
+convProgressVariable = np.dot( C.transpose(), vProgressVariable )
 
-    Z = canteraFlame.BilgerMixtureFraction( f, fuel, oxidizer )
+ax.plot( Z, fluxMixtureFraction, 'k-',
+         label = r'$\nabla\cdot(\rho D \nabla Z)$', 
+         lw = 1 )
 
-    lagrangianFI = canteraFlame.LagrangianFlameIndex( f, fuel, oxidizer )
+ax.plot( Z, convProgressVariable, 'm:',
+         label = r'$\rho u \nabla c$',
+         lw = 1 )
 
-    ax.plot( Z[Z<limitZ[i]], lagrangianFI[Z<limitZ[i]], 
-             label=label, ls=linestyle[i], lw=1, c=linecolor[i] )
+ax.plot( Z, fluxProgressVariable, 'b-.',
+         label = r'$\nabla\cdot(\rho D \nabla c)$', 
+         lw = 1 )
 
-ax.legend(frameon=False)
+ax.plot( Z, omegaProgressVariable, 'r--',
+         label = r'$\dot{\omega}_c$', 
+         lw = 1 )
 
-ax.set_xlim(0, 0.21)
-ax.set_ylim(-1, 1)
+ax.legend( frameon = False )
+
+ax.set_xlim(0,1)
 
 ax.set_xlabel(r'$Z$')
-ax.set_ylabel('Lagrangian Partile Mixing Status')
+ax.set_ylabel('Transport Budget '+r'$(\mathrm{kg/(m^3\cdot s)})$')
 
 fig.subplots_adjust(
         left = margin_left/plot_width,
@@ -116,5 +121,5 @@ fig.subplots_adjust(
         hspace = space_height/subplot_height
         )
 
-fig.savefig('figParticleStatusPhi.eps')
-fig.savefig('figParticleStatusPhi.png')
+fig.savefig('figZFluxes.eps')
+fig.savefig('figZFluxes.png')
