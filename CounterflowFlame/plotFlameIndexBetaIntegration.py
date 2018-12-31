@@ -16,7 +16,7 @@ flame_params = {}
 flame_params['F'] = 'CH4'
 flame_params['p'] = 1
 flame_params['a'] = 200
-flame_params['phif'] = 3.2
+flame_params['phif'] = 2.4
 flame_params['phio'] = 0
 flame_params['tf'] = 300
 flame_params['to'] = 300
@@ -58,18 +58,20 @@ lagrangianFI = np.insert( lagrangianFI, 0, lagrangianFI[0])
 differenceZ = Z[1:] - Z[:-1]
 indexNonDuplication = np.insert( np.array(np.where(differenceZ > 1.E-9)) + 1, 
                                  0, 0 )
-
 # generate integrated data
-axisMean = np.linspace(0, 1, num = 101)
+if Zlimit < 0.2:
+    axisMean = np.linspace(0, 1, num = 101)
+else:
+    axisMean = np.linspace(0, 0.2/Zlimit, num = 101)
+
 axisVar = np.linspace(0, 0.1, num = 81)
+X, Y = np.meshgrid(axisVar, axisMean*Zlimit)
 
 integratedFI = beta_integration.beta_integration_table(
     lagrangianFI[indexNonDuplication], 
     Z[indexNonDuplication], 
     axisMean, 
     axisVar)
-
-X, Y = np.meshgrid(axisVar, axisMean*Zlimit)
 
 ################################################################################
 
@@ -123,6 +125,8 @@ cax = fig.add_axes([0.3/plot_width, 2.5/plot_height, 0.3/plot_width, 3/plot_heig
 cbar = fig.colorbar(surf, cax=cax)
 cbar.set_ticks([-1, 0, 1])
 cax.set_title('FI')
+
+fig.text(1/plot_width, 8/plot_width, '(b)')
 
 fig.subplots_adjust(
         left = margin_left/plot_width,
